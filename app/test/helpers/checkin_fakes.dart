@@ -153,6 +153,7 @@ CheckinResult fakeResult({
   ConfidenceBand? band,
   bool withChanges = true,
   bool applied = false,
+  bool newMilestone = true,
 }) => CheckinResult(
   checkinId: id,
   stageCode: 'S2_late',
@@ -167,7 +168,7 @@ CheckinResult fakeResult({
     ),
   ],
   milestoneSeen: const CodeConfidence('TRUE_LEAVES', 0.9),
-  milestoneIsNew: true,
+  milestoneIsNew: newMilestone,
   band: band ?? bandOf(issueConfidence),
   xpTotal: 1280,
   level: 4,
@@ -251,6 +252,10 @@ Future<GoRouter> pumpCheckinApp(
     initialLocation: initial,
     routes: [
       GoRoute(path: '/garden', builder: (_, _) => const Text('GARDEN')),
+      GoRoute(
+        path: '/projects/:id/milestone/:code',
+        builder: (_, s) => Text('MILESTONE-${s.pathParameters['code']}'),
+      ),
       ...projectsRoutes,
       ...checkinRoutes,
     ],

@@ -10,6 +10,8 @@ import '../../plan/presentation/plan_labels.dart';
 import '../../plan/presentation/plan_providers.dart';
 import '../../checkin/domain/checkin_models.dart';
 import '../../checkin/presentation/checkin_providers.dart';
+import '../../gamification/gamification_routes.dart' show GamificationPaths;
+import '../../gamification/presentation/gamification_providers.dart';
 import '../domain/project.dart';
 import '../domain/project_progress.dart';
 import 'project_list_screen.dart' show plantGroupLabel;
@@ -459,6 +461,52 @@ class _Stat extends StatelessWidget {
   }
 }
 
+/// Stage milestone label; once reached it reopens the celebration screen.
+class _MilestoneLine extends StatelessWidget {
+  const _MilestoneLine({
+    required this.projectId,
+    required this.code,
+    required this.name,
+    required this.reached,
+  });
+
+  final String projectId;
+  final String code;
+  final String name;
+  final bool reached;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = Theme.of(context).textTheme;
+    if (!reached) {
+      return Text(
+        name,
+        style: t.bodySmall?.copyWith(color: AppColors.textSecondary),
+      );
+    }
+    return InkWell(
+      key: Key('milestone-$code'),
+      onTap: () => context.push(GamificationPaths.milestone(projectId, code)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.emoji_events_rounded, size: 16),
+            const SizedBox(width: 4),
+            Flexible(
+              child: Text(
+                name,
+                style: t.bodySmall?.copyWith(fontWeight: FontWeight.w600),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _PlanTab extends ConsumerWidget {
   const _PlanTab({required this.projectId});
 
@@ -471,6 +519,7 @@ class _PlanTab extends ConsumerWidget {
     final lang = Localizations.localeOf(context).languageCode;
     final bundle = ref.watch(planBundleProvider(projectId)).value;
     final renderer = watchRenderer(ref);
+    final reached = ref.watch(reachedMilestonesProvider(projectId)).value ?? {};
     if (bundle == null) {
       return _NoPlan(projectId: projectId, hasDraft: false);
     }
@@ -496,23 +545,25 @@ class _PlanTab extends ConsumerWidget {
                           ),
                         ),
                         Text(
-                          [
-                            l10n.planStageDays(s.dayFrom, s.dayTo),
-                            ?(s.milestoneCode == null
-                                ? null
-                                : l10n.planStageMilestone(
-                                    renderer.render(
-                                      'milestone',
-                                      s.milestoneCode!,
-                                      'name',
-                                      lang: lang,
-                                    ),
-                                  )),
-                          ].join(' · '),
+                          l10n.planStageDays(s.dayFrom, s.dayTo),
                           style: t.bodySmall?.copyWith(
                             color: AppColors.textSecondary,
                           ),
                         ),
+                        if (s.milestoneCode != null)
+                          _MilestoneLine(
+                            projectId: projectId,
+                            code: s.milestoneCode!,
+                            name: l10n.planStageMilestone(
+                              renderer.render(
+                                'milestone',
+                                s.milestoneCode!,
+                                'name',
+                                lang: lang,
+                              ),
+                            ),
+                            reached: reached.contains(s.milestoneCode),
+                          ),
                       ],
                     ),
                   ),

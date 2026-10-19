@@ -207,9 +207,17 @@ class FakeHouseholdRepository implements HouseholdRepository {
 }
 
 class FakeGamificationRepository implements GamificationRepository {
-  FakeGamificationRepository({this.data, this.milestone});
+  FakeGamificationRepository({
+    this.data,
+    this.milestone,
+    this.reached = const {},
+  });
   AchievementsData? data;
   MilestoneInfo? milestone;
+  Set<String> reached;
+
+  @override
+  Future<Set<String>> reachedMilestones(String projectId) async => reached;
 
   @override
   Future<AchievementsData> fetchAchievements() async => data!;

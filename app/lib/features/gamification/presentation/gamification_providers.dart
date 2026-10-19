@@ -27,3 +27,12 @@ final milestoneProvider = FutureProvider.family<MilestoneInfo?, MilestoneKey>((
       .watch(gamificationRepositoryProvider)
       .fetchMilestone(key.projectId, key.code, lang: lang);
 });
+
+/// Milestone codes already reached in a project (tappable in project detail).
+final reachedMilestonesProvider = FutureProvider.family<Set<String>, String>((
+  ref,
+  projectId,
+) {
+  ref.watch(authStateProvider);
+  return ref.watch(gamificationRepositoryProvider).reachedMilestones(projectId);
+});

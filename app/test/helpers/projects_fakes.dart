@@ -327,6 +327,10 @@ Future<GoRouter> pumpRouterApp(
           freeText: state.uri.queryParameters['name'],
         ),
       ),
+      GoRoute(
+        path: '/projects/:id/milestone/:code',
+        builder: (_, s) => Text('MILESTONE-${s.pathParameters['code']}'),
+      ),
       ...projectsRoutes,
       ...planRoutes,
     ],

@@ -1633,6 +1633,516 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Không tải được project. Thử lại nhé.'**
   String get projectDetailLoadError;
+
+  /// No description provided for @checkinEntryButton.
+  ///
+  /// In vi, this message translates to:
+  /// **'Check-in ảnh'**
+  String get checkinEntryButton;
+
+  /// No description provided for @checkinTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Check-in · {plant}'**
+  String checkinTitle(String plant);
+
+  /// No description provided for @checkinShotProgress.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ảnh {n}/{total} · {shot}'**
+  String checkinShotProgress(int n, int total, String shot);
+
+  /// No description provided for @checkinShotWhole.
+  ///
+  /// In vi, this message translates to:
+  /// **'Toàn cây'**
+  String get checkinShotWhole;
+
+  /// No description provided for @checkinShotLeaf.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cận lá'**
+  String get checkinShotLeaf;
+
+  /// No description provided for @checkinShotUnder.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mặt dưới lá'**
+  String get checkinShotUnder;
+
+  /// No description provided for @checkinFrameHint.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đặt cả cây trong khung'**
+  String get checkinFrameHint;
+
+  /// No description provided for @checkinShotsTaken.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã chụp {count}/{max} ảnh'**
+  String checkinShotsTaken(int count, int max);
+
+  /// No description provided for @checkinTakePhoto.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chụp ảnh'**
+  String get checkinTakePhoto;
+
+  /// No description provided for @checkinRetakeShot.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chụp lại ảnh này'**
+  String get checkinRetakeShot;
+
+  /// No description provided for @checkinGallery.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn từ thư viện ảnh'**
+  String get checkinGallery;
+
+  /// No description provided for @checkinTips.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xem mẹo chụp'**
+  String get checkinTips;
+
+  /// No description provided for @checkinClose.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đóng'**
+  String get checkinClose;
+
+  /// No description provided for @checkinQuickTags.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tình trạng nhanh'**
+  String get checkinQuickTags;
+
+  /// No description provided for @checkinTagLeafYellow.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lá vàng'**
+  String get checkinTagLeafYellow;
+
+  /// No description provided for @checkinTagWilt.
+  ///
+  /// In vi, this message translates to:
+  /// **'Héo'**
+  String get checkinTagWilt;
+
+  /// No description provided for @checkinTagPests.
+  ///
+  /// In vi, this message translates to:
+  /// **'Có sâu'**
+  String get checkinTagPests;
+
+  /// No description provided for @checkinTagSpots.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đốm'**
+  String get checkinTagSpots;
+
+  /// No description provided for @checkinNoteHint.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ghi chú ngắn (không bắt buộc)'**
+  String get checkinNoteHint;
+
+  /// No description provided for @checkinAnalyze.
+  ///
+  /// In vi, this message translates to:
+  /// **'Phân tích ảnh'**
+  String get checkinAnalyze;
+
+  /// No description provided for @checkinProcessing.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang xử lý ảnh...'**
+  String get checkinProcessing;
+
+  /// No description provided for @checkinAnalyzingTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'AI đang xem ảnh của bạn'**
+  String get checkinAnalyzingTitle;
+
+  /// No description provided for @checkinAnalyzingSub.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thường mất khoảng 15 giây'**
+  String get checkinAnalyzingSub;
+
+  /// No description provided for @checkinStepUpload.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tải ảnh lên'**
+  String get checkinStepUpload;
+
+  /// No description provided for @checkinStepAnalyze.
+  ///
+  /// In vi, this message translates to:
+  /// **'Phân tích tình trạng cây'**
+  String get checkinStepAnalyze;
+
+  /// No description provided for @checkinQuotaTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hôm nay đã hết lượt phân tích'**
+  String get checkinQuotaTitle;
+
+  /// No description provided for @checkinQuotaBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn đã dùng {used}/{cap} lượt phân tích AI hôm nay. Ảnh đã được lưu trong dòng thời gian, mai bạn thử lại nhé.'**
+  String checkinQuotaBody(int used, int cap);
+
+  /// No description provided for @checkinQuotaBodyPlain.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn đã dùng hết lượt phân tích AI hôm nay. Ảnh đã được lưu trong dòng thời gian, mai bạn thử lại nhé.'**
+  String get checkinQuotaBodyPlain;
+
+  /// No description provided for @checkinAiDownTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'AI chưa trả lời được'**
+  String get checkinAiDownTitle;
+
+  /// No description provided for @checkinAiDownBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Kế hoạch giữ nguyên và lượt phân tích không bị trừ. Thử lại sau ít phút nhé.'**
+  String get checkinAiDownBody;
+
+  /// No description provided for @checkinSkippedTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cây vừa được phân tích'**
+  String get checkinSkippedTitle;
+
+  /// No description provided for @checkinSkippedBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trong 24 giờ qua project này đã có kết quả. Chọn thêm tình trạng nếu có dấu hiệu mới.'**
+  String get checkinSkippedBody;
+
+  /// No description provided for @checkinSkippedView.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xem kết quả trước'**
+  String get checkinSkippedView;
+
+  /// No description provided for @checkinFailedTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa gửi được ảnh'**
+  String get checkinFailedTitle;
+
+  /// No description provided for @checkinFailedBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Kiểm tra kết nối rồi thử lại. Ảnh đã chụp vẫn được giữ.'**
+  String get checkinFailedBody;
+
+  /// No description provided for @checkinBackToCapture.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quay lại chụp'**
+  String get checkinBackToCapture;
+
+  /// No description provided for @checkinRetakeTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cần chụp lại'**
+  String get checkinRetakeTitle;
+
+  /// No description provided for @checkinRetakeReasonBlur.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ảnh bị mờ'**
+  String get checkinRetakeReasonBlur;
+
+  /// No description provided for @checkinRetakeReasonDark.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ảnh thiếu sáng'**
+  String get checkinRetakeReasonDark;
+
+  /// No description provided for @checkinRetakeReasonFar.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa thấy rõ cây'**
+  String get checkinRetakeReasonFar;
+
+  /// No description provided for @checkinRetakeReasonNotPlant.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ảnh không có cây'**
+  String get checkinRetakeReasonNotPlant;
+
+  /// No description provided for @checkinRetakeReasonUnreadable.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không đọc được ảnh'**
+  String get checkinRetakeReasonUnreadable;
+
+  /// No description provided for @checkinRetakeHeadline.
+  ///
+  /// In vi, this message translates to:
+  /// **'AI chưa đủ thông tin để đánh giá'**
+  String get checkinRetakeHeadline;
+
+  /// No description provided for @checkinRetakeBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Để tránh đoán sai, bạn chụp lại giúp mình nhé. Lần chụp này chưa tính vào lượt phân tích trong ngày.'**
+  String get checkinRetakeBody;
+
+  /// No description provided for @checkinRetakeTipsTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mẹo chụp rõ'**
+  String get checkinRetakeTipsTitle;
+
+  /// No description provided for @checkinRetakeTip1.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chụp ban ngày, tránh ngược sáng'**
+  String get checkinRetakeTip1;
+
+  /// No description provided for @checkinRetakeTip2.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giữ máy cách cây 40–60cm, chạm để lấy nét'**
+  String get checkinRetakeTip2;
+
+  /// No description provided for @checkinRetakeTip3.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm 1 ảnh cận lá có dấu hiệu lạ'**
+  String get checkinRetakeTip3;
+
+  /// No description provided for @checkinRetakeCta.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chụp lại'**
+  String get checkinRetakeCta;
+
+  /// No description provided for @checkinResultTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Kết quả check-in'**
+  String get checkinResultTitle;
+
+  /// No description provided for @checkinXpChip.
+  ///
+  /// In vi, this message translates to:
+  /// **'+{xp} XP'**
+  String checkinXpChip(int xp);
+
+  /// No description provided for @checkinAiLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Gợi ý từ AI'**
+  String get checkinAiLabel;
+
+  /// No description provided for @checkinStageLine.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giai đoạn: {stage} ({pct}%)'**
+  String checkinStageLine(String stage, int pct);
+
+  /// No description provided for @checkinStageEarly.
+  ///
+  /// In vi, this message translates to:
+  /// **'đầu {name}'**
+  String checkinStageEarly(String name);
+
+  /// No description provided for @checkinStageMid.
+  ///
+  /// In vi, this message translates to:
+  /// **'giữa {name}'**
+  String checkinStageMid(String name);
+
+  /// No description provided for @checkinStageLate.
+  ///
+  /// In vi, this message translates to:
+  /// **'cuối {name}'**
+  String checkinStageLate(String name);
+
+  /// No description provided for @checkinHealthLine.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sức khỏe: {health}'**
+  String checkinHealthLine(String health);
+
+  /// No description provided for @checkinHealthGood.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tốt'**
+  String get checkinHealthGood;
+
+  /// No description provided for @checkinHealthFair.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trung bình'**
+  String get checkinHealthFair;
+
+  /// No description provided for @checkinHealthPoor.
+  ///
+  /// In vi, this message translates to:
+  /// **'Kém'**
+  String get checkinHealthPoor;
+
+  /// No description provided for @checkinIssuesTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Dấu hiệu nghi ngờ'**
+  String get checkinIssuesTitle;
+
+  /// No description provided for @checkinNoIssues.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa thấy dấu hiệu bất thường.'**
+  String get checkinNoIssues;
+
+  /// No description provided for @checkinSafeActions.
+  ///
+  /// In vi, this message translates to:
+  /// **'Việc nên làm (an toàn, ưu tiên hữu cơ)'**
+  String get checkinSafeActions;
+
+  /// No description provided for @checkinMilestoneNote.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ảnh xác nhận đạt mốc {name}'**
+  String checkinMilestoneNote(String name);
+
+  /// No description provided for @checkinChangesTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đề xuất điều chỉnh plan'**
+  String get checkinChangesTitle;
+
+  /// No description provided for @checkinNoChanges.
+  ///
+  /// In vi, this message translates to:
+  /// **'AI không đề xuất thay đổi nào cho plan.'**
+  String get checkinNoChanges;
+
+  /// No description provided for @checkinKindAdd.
+  ///
+  /// In vi, this message translates to:
+  /// **'THÊM VIỆC'**
+  String get checkinKindAdd;
+
+  /// No description provided for @checkinKindFreq.
+  ///
+  /// In vi, this message translates to:
+  /// **'ĐỔI TẦN SUẤT'**
+  String get checkinKindFreq;
+
+  /// No description provided for @checkinKindShift.
+  ///
+  /// In vi, this message translates to:
+  /// **'DỜI MỐC'**
+  String get checkinKindShift;
+
+  /// No description provided for @checkinKindRemove.
+  ///
+  /// In vi, this message translates to:
+  /// **'BỎ VIỆC'**
+  String get checkinKindRemove;
+
+  /// No description provided for @checkinChangeFreq.
+  ///
+  /// In vi, this message translates to:
+  /// **'{task}: {from} → {to}'**
+  String checkinChangeFreq(String task, String from, String to);
+
+  /// No description provided for @checkinChangeFreqTo.
+  ///
+  /// In vi, this message translates to:
+  /// **'{task}: {to}'**
+  String checkinChangeFreqTo(String task, String to);
+
+  /// No description provided for @checkinChangeShift.
+  ///
+  /// In vi, this message translates to:
+  /// **'{milestone}: dời đến {date}'**
+  String checkinChangeShift(String milestone, String date);
+
+  /// No description provided for @checkinChangeApprove.
+  ///
+  /// In vi, this message translates to:
+  /// **'Áp dụng'**
+  String get checkinChangeApprove;
+
+  /// No description provided for @checkinChangeSkip.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bỏ qua'**
+  String get checkinChangeSkip;
+
+  /// No description provided for @checkinLowConfTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'AI chưa chắc chắn lắm'**
+  String get checkinLowConfTitle;
+
+  /// No description provided for @checkinLowConfBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn có thể mang ảnh hoặc mẫu lá đến cửa hàng nông nghiệp gần nhà để hỏi thêm. Thuốc và liều dùng nên theo đúng hướng dẫn trên nhãn sản phẩm.'**
+  String get checkinLowConfBody;
+
+  /// No description provided for @checkinLater.
+  ///
+  /// In vi, this message translates to:
+  /// **'Để sau'**
+  String get checkinLater;
+
+  /// No description provided for @checkinApply.
+  ///
+  /// In vi, this message translates to:
+  /// **'Áp dụng {count} thay đổi'**
+  String checkinApply(int count);
+
+  /// No description provided for @checkinSkipAll.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bỏ qua tất cả'**
+  String get checkinSkipAll;
+
+  /// No description provided for @checkinDone.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xong'**
+  String get checkinDone;
+
+  /// No description provided for @checkinApplyError.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa áp dụng được. Thử lại nhé.'**
+  String get checkinApplyError;
+
+  /// No description provided for @checkinApplied.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã áp dụng {count} thay đổi'**
+  String checkinApplied(int count);
+
+  /// No description provided for @checkinAlreadyAnswered.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn đã trả lời các đề xuất này rồi.'**
+  String get checkinAlreadyAnswered;
+
+  /// No description provided for @checkinResultLoadError.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tải được kết quả check-in.'**
+  String get checkinResultLoadError;
 }
 
 class _AppLocalizationsDelegate

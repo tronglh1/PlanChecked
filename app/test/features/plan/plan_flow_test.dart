@@ -98,7 +98,11 @@ void main() {
         ),
         bundle: fakeBundle(source: PlanSource.fallback, confidence: null),
       );
-      await pumpRouterApp(t, initial: '/projects/new1/generating', plans: plans);
+      await pumpRouterApp(
+        t,
+        initial: '/projects/new1/generating',
+        plans: plans,
+      );
 
       expect(find.byKey(const Key('fallback-message')), findsOneWidget);
       expect(find.textContaining('hết lượt AI'), findsOneWidget);
@@ -122,7 +126,11 @@ void main() {
           fallbackReason: FallbackReason.quotaExceeded,
         ),
       )..bundle = null;
-      await pumpRouterApp(t, initial: '/projects/new1/generating', plans: plans);
+      await pumpRouterApp(
+        t,
+        initial: '/projects/new1/generating',
+        plans: plans,
+      );
       expect(find.byKey(const Key('generating-failed')), findsOneWidget);
       expect(find.textContaining('hết lượt AI'), findsOneWidget);
     });
@@ -133,7 +141,11 @@ void main() {
       final plans = FakePlanRepository(
         bundle: fakeBundle(source: PlanSource.fallback, confidence: null),
       )..throwOnGenerate = true;
-      await pumpRouterApp(t, initial: '/projects/new1/generating', plans: plans);
+      await pumpRouterApp(
+        t,
+        initial: '/projects/new1/generating',
+        plans: plans,
+      );
       expect(find.byKey(const Key('fallback-message')), findsOneWidget);
       expect(find.textContaining('AI gặp sự cố'), findsWidgets);
     });

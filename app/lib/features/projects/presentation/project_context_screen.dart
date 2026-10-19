@@ -142,9 +142,7 @@ class _ProjectContextScreenState extends ConsumerState<ProjectContextScreen> {
             potType: _pot.text.trim().isEmpty ? null : _pot.text.trim(),
             watering: _watering,
             coverBytes: _cover,
-            plantGroup: plant == null && widget.plantId == null
-                ? _group
-                : null,
+            plantGroup: plant == null && widget.plantId == null ? _group : null,
           ),
         );
     if (!mounted) return;
@@ -175,7 +173,10 @@ class _ProjectContextScreenState extends ConsumerState<ProjectContextScreen> {
 
     Widget label(String s) => Padding(
       padding: const EdgeInsets.only(top: AppSpacing.lg, bottom: AppSpacing.sm),
-      child: Text(s, style: t.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
+      child: Text(
+        s,
+        style: t.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+      ),
     );
 
     Widget options<T>(

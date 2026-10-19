@@ -8,11 +8,10 @@ import 'presentation/plan_review_screen.dart';
 final List<RouteBase> planRoutes = [
   GoRoute(
     path: '/projects/:id/generating',
-    builder: (_, state) =>
-        GeneratingScreen(
-          projectId: state.pathParameters['id']!,
-          plantGroup: state.uri.queryParameters['group'],
-        ),
+    builder: (_, state) => GeneratingScreen(
+      projectId: state.pathParameters['id']!,
+      plantGroup: state.uri.queryParameters['group'],
+    ),
   ),
   GoRoute(
     path: '/projects/:id/plan',

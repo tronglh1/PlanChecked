@@ -858,4 +858,297 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get projectDetailLoadError => 'Không tải được project. Thử lại nhé.';
+
+  @override
+  String get checkinEntryButton => 'Check-in ảnh';
+
+  @override
+  String checkinTitle(String plant) {
+    return 'Check-in · $plant';
+  }
+
+  @override
+  String checkinShotProgress(int n, int total, String shot) {
+    return 'Ảnh $n/$total · $shot';
+  }
+
+  @override
+  String get checkinShotWhole => 'Toàn cây';
+
+  @override
+  String get checkinShotLeaf => 'Cận lá';
+
+  @override
+  String get checkinShotUnder => 'Mặt dưới lá';
+
+  @override
+  String get checkinFrameHint => 'Đặt cả cây trong khung';
+
+  @override
+  String checkinShotsTaken(int count, int max) {
+    return 'Đã chụp $count/$max ảnh';
+  }
+
+  @override
+  String get checkinTakePhoto => 'Chụp ảnh';
+
+  @override
+  String get checkinRetakeShot => 'Chụp lại ảnh này';
+
+  @override
+  String get checkinGallery => 'Chọn từ thư viện ảnh';
+
+  @override
+  String get checkinTips => 'Xem mẹo chụp';
+
+  @override
+  String get checkinClose => 'Đóng';
+
+  @override
+  String get checkinQuickTags => 'Tình trạng nhanh';
+
+  @override
+  String get checkinTagLeafYellow => 'Lá vàng';
+
+  @override
+  String get checkinTagWilt => 'Héo';
+
+  @override
+  String get checkinTagPests => 'Có sâu';
+
+  @override
+  String get checkinTagSpots => 'Đốm';
+
+  @override
+  String get checkinNoteHint => 'Ghi chú ngắn (không bắt buộc)';
+
+  @override
+  String get checkinAnalyze => 'Phân tích ảnh';
+
+  @override
+  String get checkinProcessing => 'Đang xử lý ảnh...';
+
+  @override
+  String get checkinAnalyzingTitle => 'AI đang xem ảnh của bạn';
+
+  @override
+  String get checkinAnalyzingSub => 'Thường mất khoảng 15 giây';
+
+  @override
+  String get checkinStepUpload => 'Tải ảnh lên';
+
+  @override
+  String get checkinStepAnalyze => 'Phân tích tình trạng cây';
+
+  @override
+  String get checkinQuotaTitle => 'Hôm nay đã hết lượt phân tích';
+
+  @override
+  String checkinQuotaBody(int used, int cap) {
+    return 'Bạn đã dùng $used/$cap lượt phân tích AI hôm nay. Ảnh đã được lưu trong dòng thời gian, mai bạn thử lại nhé.';
+  }
+
+  @override
+  String get checkinQuotaBodyPlain =>
+      'Bạn đã dùng hết lượt phân tích AI hôm nay. Ảnh đã được lưu trong dòng thời gian, mai bạn thử lại nhé.';
+
+  @override
+  String get checkinAiDownTitle => 'AI chưa trả lời được';
+
+  @override
+  String get checkinAiDownBody =>
+      'Kế hoạch giữ nguyên và lượt phân tích không bị trừ. Thử lại sau ít phút nhé.';
+
+  @override
+  String get checkinSkippedTitle => 'Cây vừa được phân tích';
+
+  @override
+  String get checkinSkippedBody =>
+      'Trong 24 giờ qua project này đã có kết quả. Chọn thêm tình trạng nếu có dấu hiệu mới.';
+
+  @override
+  String get checkinSkippedView => 'Xem kết quả trước';
+
+  @override
+  String get checkinFailedTitle => 'Chưa gửi được ảnh';
+
+  @override
+  String get checkinFailedBody =>
+      'Kiểm tra kết nối rồi thử lại. Ảnh đã chụp vẫn được giữ.';
+
+  @override
+  String get checkinBackToCapture => 'Quay lại chụp';
+
+  @override
+  String get checkinRetakeTitle => 'Cần chụp lại';
+
+  @override
+  String get checkinRetakeReasonBlur => 'Ảnh bị mờ';
+
+  @override
+  String get checkinRetakeReasonDark => 'Ảnh thiếu sáng';
+
+  @override
+  String get checkinRetakeReasonFar => 'Chưa thấy rõ cây';
+
+  @override
+  String get checkinRetakeReasonNotPlant => 'Ảnh không có cây';
+
+  @override
+  String get checkinRetakeReasonUnreadable => 'Không đọc được ảnh';
+
+  @override
+  String get checkinRetakeHeadline => 'AI chưa đủ thông tin để đánh giá';
+
+  @override
+  String get checkinRetakeBody =>
+      'Để tránh đoán sai, bạn chụp lại giúp mình nhé. Lần chụp này chưa tính vào lượt phân tích trong ngày.';
+
+  @override
+  String get checkinRetakeTipsTitle => 'Mẹo chụp rõ';
+
+  @override
+  String get checkinRetakeTip1 => 'Chụp ban ngày, tránh ngược sáng';
+
+  @override
+  String get checkinRetakeTip2 => 'Giữ máy cách cây 40–60cm, chạm để lấy nét';
+
+  @override
+  String get checkinRetakeTip3 => 'Thêm 1 ảnh cận lá có dấu hiệu lạ';
+
+  @override
+  String get checkinRetakeCta => 'Chụp lại';
+
+  @override
+  String get checkinResultTitle => 'Kết quả check-in';
+
+  @override
+  String checkinXpChip(int xp) {
+    return '+$xp XP';
+  }
+
+  @override
+  String get checkinAiLabel => 'Gợi ý từ AI';
+
+  @override
+  String checkinStageLine(String stage, int pct) {
+    return 'Giai đoạn: $stage ($pct%)';
+  }
+
+  @override
+  String checkinStageEarly(String name) {
+    return 'đầu $name';
+  }
+
+  @override
+  String checkinStageMid(String name) {
+    return 'giữa $name';
+  }
+
+  @override
+  String checkinStageLate(String name) {
+    return 'cuối $name';
+  }
+
+  @override
+  String checkinHealthLine(String health) {
+    return 'Sức khỏe: $health';
+  }
+
+  @override
+  String get checkinHealthGood => 'Tốt';
+
+  @override
+  String get checkinHealthFair => 'Trung bình';
+
+  @override
+  String get checkinHealthPoor => 'Kém';
+
+  @override
+  String get checkinIssuesTitle => 'Dấu hiệu nghi ngờ';
+
+  @override
+  String get checkinNoIssues => 'Chưa thấy dấu hiệu bất thường.';
+
+  @override
+  String get checkinSafeActions => 'Việc nên làm (an toàn, ưu tiên hữu cơ)';
+
+  @override
+  String checkinMilestoneNote(String name) {
+    return 'Ảnh xác nhận đạt mốc $name';
+  }
+
+  @override
+  String get checkinChangesTitle => 'Đề xuất điều chỉnh plan';
+
+  @override
+  String get checkinNoChanges => 'AI không đề xuất thay đổi nào cho plan.';
+
+  @override
+  String get checkinKindAdd => 'THÊM VIỆC';
+
+  @override
+  String get checkinKindFreq => 'ĐỔI TẦN SUẤT';
+
+  @override
+  String get checkinKindShift => 'DỜI MỐC';
+
+  @override
+  String get checkinKindRemove => 'BỎ VIỆC';
+
+  @override
+  String checkinChangeFreq(String task, String from, String to) {
+    return '$task: $from → $to';
+  }
+
+  @override
+  String checkinChangeFreqTo(String task, String to) {
+    return '$task: $to';
+  }
+
+  @override
+  String checkinChangeShift(String milestone, String date) {
+    return '$milestone: dời đến $date';
+  }
+
+  @override
+  String get checkinChangeApprove => 'Áp dụng';
+
+  @override
+  String get checkinChangeSkip => 'Bỏ qua';
+
+  @override
+  String get checkinLowConfTitle => 'AI chưa chắc chắn lắm';
+
+  @override
+  String get checkinLowConfBody =>
+      'Bạn có thể mang ảnh hoặc mẫu lá đến cửa hàng nông nghiệp gần nhà để hỏi thêm. Thuốc và liều dùng nên theo đúng hướng dẫn trên nhãn sản phẩm.';
+
+  @override
+  String get checkinLater => 'Để sau';
+
+  @override
+  String checkinApply(int count) {
+    return 'Áp dụng $count thay đổi';
+  }
+
+  @override
+  String get checkinSkipAll => 'Bỏ qua tất cả';
+
+  @override
+  String get checkinDone => 'Xong';
+
+  @override
+  String get checkinApplyError => 'Chưa áp dụng được. Thử lại nhé.';
+
+  @override
+  String checkinApplied(int count) {
+    return 'Đã áp dụng $count thay đổi';
+  }
+
+  @override
+  String get checkinAlreadyAnswered => 'Bạn đã trả lời các đề xuất này rồi.';
+
+  @override
+  String get checkinResultLoadError => 'Không tải được kết quả check-in.';
 }

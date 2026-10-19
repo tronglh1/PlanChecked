@@ -894,4 +894,300 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get projectDetailLoadError =>
       'Couldn\'t load the project. Please try again.';
+
+  @override
+  String get checkinEntryButton => 'Photo check-in';
+
+  @override
+  String checkinTitle(String plant) {
+    return 'Check-in · $plant';
+  }
+
+  @override
+  String checkinShotProgress(int n, int total, String shot) {
+    return 'Photo $n/$total · $shot';
+  }
+
+  @override
+  String get checkinShotWhole => 'Whole plant';
+
+  @override
+  String get checkinShotLeaf => 'Close-up leaf';
+
+  @override
+  String get checkinShotUnder => 'Underside of leaf';
+
+  @override
+  String get checkinFrameHint => 'Keep the whole plant in frame';
+
+  @override
+  String checkinShotsTaken(int count, int max) {
+    return '$count/$max photos taken';
+  }
+
+  @override
+  String get checkinTakePhoto => 'Take photo';
+
+  @override
+  String get checkinRetakeShot => 'Retake this photo';
+
+  @override
+  String get checkinGallery => 'Choose from gallery';
+
+  @override
+  String get checkinTips => 'Photo tips';
+
+  @override
+  String get checkinClose => 'Close';
+
+  @override
+  String get checkinQuickTags => 'Quick condition';
+
+  @override
+  String get checkinTagLeafYellow => 'Yellow leaves';
+
+  @override
+  String get checkinTagWilt => 'Wilting';
+
+  @override
+  String get checkinTagPests => 'Pests';
+
+  @override
+  String get checkinTagSpots => 'Spots';
+
+  @override
+  String get checkinNoteHint => 'Short note (optional)';
+
+  @override
+  String get checkinAnalyze => 'Analyze photos';
+
+  @override
+  String get checkinProcessing => 'Processing photo...';
+
+  @override
+  String get checkinAnalyzingTitle => 'AI is looking at your photos';
+
+  @override
+  String get checkinAnalyzingSub => 'Usually takes about 15 seconds';
+
+  @override
+  String get checkinStepUpload => 'Uploading photos';
+
+  @override
+  String get checkinStepAnalyze => 'Analyzing the plant';
+
+  @override
+  String get checkinQuotaTitle => 'Today\'s analyses are used up';
+
+  @override
+  String checkinQuotaBody(int used, int cap) {
+    return 'You\'ve used $used/$cap AI analyses today. Your photos are saved in the timeline; try again tomorrow.';
+  }
+
+  @override
+  String get checkinQuotaBodyPlain =>
+      'You\'ve used all of today\'s AI analyses. Your photos are saved in the timeline; try again tomorrow.';
+
+  @override
+  String get checkinAiDownTitle => 'AI couldn\'t answer right now';
+
+  @override
+  String get checkinAiDownBody =>
+      'Your plan is unchanged and no analysis was used. Please try again in a few minutes.';
+
+  @override
+  String get checkinSkippedTitle => 'This plant was just analyzed';
+
+  @override
+  String get checkinSkippedBody =>
+      'This project already has a result from the last 24 hours. Pick a condition tag if you see something new.';
+
+  @override
+  String get checkinSkippedView => 'View previous result';
+
+  @override
+  String get checkinFailedTitle => 'Couldn\'t send the photos';
+
+  @override
+  String get checkinFailedBody =>
+      'Check your connection and try again. Your photos are kept.';
+
+  @override
+  String get checkinBackToCapture => 'Back to camera';
+
+  @override
+  String get checkinRetakeTitle => 'Retake needed';
+
+  @override
+  String get checkinRetakeReasonBlur => 'The photo is blurry';
+
+  @override
+  String get checkinRetakeReasonDark => 'The photo is too dark';
+
+  @override
+  String get checkinRetakeReasonFar => 'The plant isn\'t clearly visible';
+
+  @override
+  String get checkinRetakeReasonNotPlant => 'No plant in the photo';
+
+  @override
+  String get checkinRetakeReasonUnreadable => 'The photo couldn\'t be read';
+
+  @override
+  String get checkinRetakeHeadline => 'AI doesn\'t have enough information';
+
+  @override
+  String get checkinRetakeBody =>
+      'To avoid guessing wrong, please retake it. This attempt doesn\'t count toward today\'s analyses.';
+
+  @override
+  String get checkinRetakeTipsTitle => 'Tips for a clear photo';
+
+  @override
+  String get checkinRetakeTip1 => 'Shoot in daylight, avoid backlight';
+
+  @override
+  String get checkinRetakeTip2 =>
+      'Hold the phone 40–60 cm from the plant, tap to focus';
+
+  @override
+  String get checkinRetakeTip3 => 'Add a close-up of any odd-looking leaf';
+
+  @override
+  String get checkinRetakeCta => 'Retake';
+
+  @override
+  String get checkinResultTitle => 'Check-in result';
+
+  @override
+  String checkinXpChip(int xp) {
+    return '+$xp XP';
+  }
+
+  @override
+  String get checkinAiLabel => 'AI suggestion';
+
+  @override
+  String checkinStageLine(String stage, int pct) {
+    return 'Stage: $stage ($pct%)';
+  }
+
+  @override
+  String checkinStageEarly(String name) {
+    return 'early $name';
+  }
+
+  @override
+  String checkinStageMid(String name) {
+    return 'mid $name';
+  }
+
+  @override
+  String checkinStageLate(String name) {
+    return 'late $name';
+  }
+
+  @override
+  String checkinHealthLine(String health) {
+    return 'Health: $health';
+  }
+
+  @override
+  String get checkinHealthGood => 'Good';
+
+  @override
+  String get checkinHealthFair => 'Fair';
+
+  @override
+  String get checkinHealthPoor => 'Poor';
+
+  @override
+  String get checkinIssuesTitle => 'Suspected problems';
+
+  @override
+  String get checkinNoIssues => 'No unusual signs spotted.';
+
+  @override
+  String get checkinSafeActions => 'Safe things to do (organic first)';
+
+  @override
+  String checkinMilestoneNote(String name) {
+    return 'The photo confirms the milestone: $name';
+  }
+
+  @override
+  String get checkinChangesTitle => 'Suggested plan changes';
+
+  @override
+  String get checkinNoChanges => 'AI suggests no changes to your plan.';
+
+  @override
+  String get checkinKindAdd => 'ADD TASK';
+
+  @override
+  String get checkinKindFreq => 'CHANGE FREQUENCY';
+
+  @override
+  String get checkinKindShift => 'MOVE MILESTONE';
+
+  @override
+  String get checkinKindRemove => 'REMOVE TASK';
+
+  @override
+  String checkinChangeFreq(String task, String from, String to) {
+    return '$task: $from → $to';
+  }
+
+  @override
+  String checkinChangeFreqTo(String task, String to) {
+    return '$task: $to';
+  }
+
+  @override
+  String checkinChangeShift(String milestone, String date) {
+    return '$milestone: moved to $date';
+  }
+
+  @override
+  String get checkinChangeApprove => 'Apply';
+
+  @override
+  String get checkinChangeSkip => 'Skip';
+
+  @override
+  String get checkinLowConfTitle => 'AI isn\'t very sure';
+
+  @override
+  String get checkinLowConfBody =>
+      'Bring the photo or a leaf sample to a local agricultural store and ask. Follow the product label for any treatment and amount.';
+
+  @override
+  String get checkinLater => 'Later';
+
+  @override
+  String checkinApply(int count) {
+    return 'Apply $count changes';
+  }
+
+  @override
+  String get checkinSkipAll => 'Skip all';
+
+  @override
+  String get checkinDone => 'Done';
+
+  @override
+  String get checkinApplyError =>
+      'Couldn\'t apply the changes. Please try again.';
+
+  @override
+  String checkinApplied(int count) {
+    return 'Applied $count changes';
+  }
+
+  @override
+  String get checkinAlreadyAnswered =>
+      'You\'ve already answered these suggestions.';
+
+  @override
+  String get checkinResultLoadError => 'Couldn\'t load the check-in result.';
 }

@@ -73,6 +73,10 @@ Future<void> pumpToday(
         builder: (_, _) => const Scaffold(body: TodayScreen()),
       ),
       ...todayRoutes,
+      GoRoute(
+        path: '/task/:id/assign',
+        builder: (_, _) => const Scaffold(body: Text('assign-stub')),
+      ),
     ],
   );
   await t.pumpWidget(

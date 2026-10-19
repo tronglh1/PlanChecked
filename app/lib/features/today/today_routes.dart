@@ -21,13 +21,6 @@ final List<RouteBase> todayRoutes = [
     builder: (_, state) =>
         TaskDetailScreen(taskId: state.pathParameters['id']!),
   ),
-  GoRoute(
-    path: '/task/:id/assign',
-    builder: (context, _) => _Placeholder(
-      title: AppLocalizations.of(context).taskAssign,
-      message: AppLocalizations.of(context).taskAssignPlaceholder,
-    ),
-  ),
   // Placeholder until the check-in milestone replaces it.
   GoRoute(
     path: '/projects/:id/checkin',

@@ -148,29 +148,71 @@
   "contextTitle": "Growing details & context",
   "projectsTitle": "My garden",
   "projectsFilterActive": "Growing · {count}",
-  "@projectsFilterActive": {"placeholders": {"count": {"type": "int"}}},
+  "@projectsFilterActive": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "projectsFilterDone": "Done · {count}",
-  "@projectsFilterDone": {"placeholders": {"count": {"type": "int"}}},
+  "@projectsFilterDone": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "projectsFilterArchived": "Archived",
   "projectsEmptyTitle": "No plants yet",
   "projectsEmptyMessage": "Start your first plant and AI will draft a care plan for you.",
   "projectsAddNew": "Plant something new",
   "projectsLoadError": "Couldn't load your garden. Please try again.",
   "projectsKindLine": "{group} · {pots} pots · day {day}",
-  "@projectsKindLine": {"placeholders": {"group": {"type": "String"}, "pots": {"type": "int"}, "day": {"type": "int"}}},
+  "@projectsKindLine": {
+    "placeholders": {
+      "group": {
+        "type": "String"
+      },
+      "pots": {
+        "type": "int"
+      },
+      "day": {
+        "type": "int"
+      }
+    }
+  },
   "projectsNoPlan": "No plan yet",
   "projectsPlanPending": "Plan awaiting review",
   "projectsStageBeforeStart": "Starting soon",
   "projectsTasksToday": "{count, plural, =1{1 task today} other{{count} tasks today}}",
-  "@projectsTasksToday": {"placeholders": {"count": {"type": "int"}}},
+  "@projectsTasksToday": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "projectsPhotoAgo": "Photo: {days} days ago",
-  "@projectsPhotoAgo": {"placeholders": {"days": {"type": "int"}}},
+  "@projectsPhotoAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "projectsPhotoToday": "Photo: today",
   "projectsNoPhoto": "No photo yet",
   "projectsLatestPhoto": "Latest photo",
   "projectsContextEyebrow": "New plant · Step 2/3",
   "projectsContextTitle": "Where will you grow {plant}?",
-  "@projectsContextTitle": {"placeholders": {"plant": {"type": "String"}}},
+  "@projectsContextTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
   "projectsContextTitleNoPlant": "Where will you grow it?",
   "projectsFieldPlantGroup": "Plant type",
   "projectsFieldName": "Project name",
@@ -200,7 +242,19 @@
   "projectsNameRequired": "Please name your project",
   "projectsCreateError": "Couldn't create the project. Please try again.",
   "projectsDefaultName": "{plant} – {month}/{year}",
-  "@projectsDefaultName": {"placeholders": {"plant": {"type": "String"}, "month": {"type": "int"}, "year": {"type": "int"}}},
+  "@projectsDefaultName": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      },
+      "month": {
+        "type": "int"
+      },
+      "year": {
+        "type": "int"
+      }
+    }
+  },
   "projectsPotsMinus": "Fewer pots",
   "projectsPotsPlus": "More pots",
   "planGeneratingEyebrow": "New plant · Step 3/3",
@@ -222,26 +276,77 @@
   "planFallbackAiFailure": "AI had a problem, so the app used a template plan for you.",
   "planFallbackQuota": "You've used today's AI limit, so the app used a template plan for you.",
   "planReviewTitle": "{days}-day plan",
-  "@planReviewTitle": {"placeholders": {"days": {"type": "int"}}},
+  "@planReviewTitle": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "planAiLabel": "AI suggestion",
   "planTemplateLabel": "Template plan",
   "planConfidenceHigh": "High confidence · {pct}%",
-  "@planConfidenceHigh": {"placeholders": {"pct": {"type": "int"}}},
+  "@planConfidenceHigh": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
   "planConfidenceMedium": "Medium confidence · {pct}%",
-  "@planConfidenceMedium": {"placeholders": {"pct": {"type": "int"}}},
+  "@planConfidenceMedium": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
   "planConfidenceLow": "Low confidence · {pct}%",
-  "@planConfidenceLow": {"placeholders": {"pct": {"type": "int"}}},
+  "@planConfidenceLow": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
   "planSources": "Sources: {sources}",
-  "@planSources": {"placeholders": {"sources": {"type": "String"}}},
+  "@planSources": {
+    "placeholders": {
+      "sources": {
+        "type": "String"
+      }
+    }
+  },
   "planSourcesDefault": "Vườn Nhà plant database",
   "planSegStages": "Stages",
   "planSegCalendar": "Calendar",
   "planStageDays": "Day {from}–{to}",
-  "@planStageDays": {"placeholders": {"from": {"type": "int"}, "to": {"type": "int"}}},
+  "@planStageDays": {
+    "placeholders": {
+      "from": {
+        "type": "int"
+      },
+      "to": {
+        "type": "int"
+      }
+    }
+  },
   "planStageMilestone": "Milestone: {milestone}",
-  "@planStageMilestone": {"placeholders": {"milestone": {"type": "String"}}},
+  "@planStageMilestone": {
+    "placeholders": {
+      "milestone": {
+        "type": "String"
+      }
+    }
+  },
   "planStageTaskCount": "{count, plural, =1{1 task} other{{count} tasks}}",
-  "@planStageTaskCount": {"placeholders": {"count": {"type": "int"}}},
+  "@planStageTaskCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "planAddTask": "+ Add task",
   "planStart": "Start growing",
   "planApproveError": "Couldn't approve the plan. Please try again.",
@@ -252,11 +357,29 @@
   "planFreqOnce": "Once",
   "planFreqDaily": "Daily",
   "planFreqEveryN": "Every {n} days",
-  "@planFreqEveryN": {"placeholders": {"n": {"type": "int"}}},
+  "@planFreqEveryN": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "planFreqFixedDay": "Day {day}",
-  "@planFreqFixedDay": {"placeholders": {"day": {"type": "int"}}},
+  "@planFreqFixedDay": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
   "planFreqFixedDate": "On {date}",
-  "@planFreqFixedDate": {"placeholders": {"date": {"type": "String"}}},
+  "@planFreqFixedDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "planWindowMorning": "Early morning · 6–8am",
   "planWindowAfternoon": "Cool afternoon · 4–6pm",
   "planWindowAllDay": "All day",
@@ -276,7 +399,16 @@
   "planTaskSaveError": "Couldn't save. Please try again.",
   "planCalendarTitle": "Care calendar",
   "planWeekLabel": "Week {from}–{to}",
-  "@planWeekLabel": {"placeholders": {"from": {"type": "String"}, "to": {"type": "String"}}},
+  "@planWeekLabel": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "planPrevWeek": "Previous week",
   "planNextWeek": "Next week",
   "planDow1": "Mon",
@@ -287,12 +419,45 @@
   "planDow6": "Sat",
   "planDow7": "Sun",
   "planDayTasks": "{count, plural, =1{1 task} other{{count} tasks}}",
-  "@planDayTasks": {"placeholders": {"count": {"type": "int"}}},
+  "@planDayTasks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "planStageBanner": "Stage {n} · {name} (day {from}–{to}) · {left} days left",
-  "@planStageBanner": {"placeholders": {"n": {"type": "int"}, "name": {"type": "String"}, "from": {"type": "int"}, "to": {"type": "int"}, "left": {"type": "int"}}},
+  "@planStageBanner": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      },
+      "from": {
+        "type": "int"
+      },
+      "to": {
+        "type": "int"
+      },
+      "left": {
+        "type": "int"
+      }
+    }
+  },
   "planOutsideStages": "Outside the plan's stages",
   "planDayLabel": "{dow}, {date}",
-  "@planDayLabel": {"placeholders": {"dow": {"type": "String"}, "date": {"type": "String"}}},
+  "@planDayLabel": {
+    "placeholders": {
+      "dow": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "planNoTasksDay": "No tasks on this day",
   "planAddManual": "+ Add a task manually",
   "planTimeline": "Stages",
@@ -302,29 +467,95 @@
   "projectDetailTabPhotos": "Photos",
   "projectDetailTabMembers": "Members",
   "projectDetailMeta": "{group} · {pots} pots · {space} {sun}",
-  "@projectDetailMeta": {"placeholders": {"group": {"type": "String"}, "pots": {"type": "int"}, "space": {"type": "String"}, "sun": {"type": "String"}}},
+  "@projectDetailMeta": {
+    "placeholders": {
+      "group": {
+        "type": "String"
+      },
+      "pots": {
+        "type": "int"
+      },
+      "space": {
+        "type": "String"
+      },
+      "sun": {
+        "type": "String"
+      }
+    }
+  },
   "projectDetailShared": "Shared with household",
   "projectDetailStageCard": "Stage {n}/{total} · {name}",
-  "@projectDetailStageCard": {"placeholders": {"n": {"type": "int"}, "total": {"type": "int"}, "name": {"type": "String"}}},
+  "@projectDetailStageCard": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "projectDetailDay": "Day {day}/{total}",
-  "@projectDetailDay": {"placeholders": {"day": {"type": "int"}, "total": {"type": "int"}}},
+  "@projectDetailDay": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "projectDetailNextMilestone": "Next milestone: {milestone}, around {date}",
-  "@projectDetailNextMilestone": {"placeholders": {"milestone": {"type": "String"}, "date": {"type": "String"}}},
+  "@projectDetailNextMilestone": {
+    "placeholders": {
+      "milestone": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "projectDetailStatDone": "Tasks done",
   "projectDetailStatCheckins": "Check-ins",
   "projectDetailStatMilestones": "Milestones",
   "projectDetailPhotos": "Growth photos",
   "projectDetailPhotosEmpty": "Your check-in photos will appear here over time.",
   "projectDetailPhotoCount": "{count, plural, =1{1 photo} other{{count} photos}}",
-  "@projectDetailPhotoCount": {"placeholders": {"count": {"type": "int"}}},
+  "@projectDetailPhotoCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "projectDetailHistory": "Task history",
   "projectDetailHistoryEmpty": "No tasks logged yet.",
   "projectDetailHistoryLine": "{task} · {action}",
-  "@projectDetailHistoryLine": {"placeholders": {"task": {"type": "String"}, "action": {"type": "String"}}},
+  "@projectDetailHistoryLine": {
+    "placeholders": {
+      "task": {
+        "type": "String"
+      },
+      "action": {
+        "type": "String"
+      }
+    }
+  },
   "projectDetailMembers": "Members with tasks",
   "projectDetailNoMembers": "No tasks assigned yet.",
   "projectDetailMemberTasks": "{count, plural, =1{1 task} other{{count} tasks}}",
-  "@projectDetailMemberTasks": {"placeholders": {"count": {"type": "int"}}},
+  "@projectDetailMemberTasks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "projectDetailNoPlan": "This project has no approved plan yet.",
   "projectDetailReviewPlan": "Review plan",
   "projectDetailOpenPlan": "Open plan",
@@ -510,5 +741,428 @@
   "taskNotDueToday": "This task is not due today",
   "taskNotFound": "Task not found",
   "taskAssignPlaceholder": "Assigning tasks will arrive in a later version.",
-  "taskCheckinPlaceholder": "Photo check-ins will arrive in a later version."
+  "taskCheckinPlaceholder": "Photo check-ins will arrive in a later version.",
+  "householdSetupStep": "Step 2/2",
+  "householdSetupSkip": "Skip",
+  "householdSetupTitle": "Grow plants together?",
+  "householdSetupSub": "Create a household to assign watering and feeding to each person and see who did what. You can do this later.",
+  "householdCreateTitle": "Create a new household",
+  "householdCreateSub": "You are the household Owner",
+  "householdJoinTitle": "Join with an invite code",
+  "householdJoinSub": "You will be a Member",
+  "householdJoinHint": "e.g. VUON-4821",
+  "householdJoinAction": "Join",
+  "householdSetupFooter": "Each person can be in one household only. There are no public friend lists.",
+  "householdNameLabel": "Household name",
+  "householdNameDefault": "Our home",
+  "householdCreateAction": "Create household",
+  "householdErrorGeneric": "That did not work. Please try again.",
+  "householdErrorInvalidCode": "Invalid invite code",
+  "householdErrorExpired": "This invite has expired",
+  "householdErrorAlreadyIn": "You are already in a household",
+  "householdErrorTooMany": "Too many wrong attempts, try again in an hour",
+  "householdErrorCodeFormat": "Codes look like VUON-1234",
+  "householdJoined": "You joined the household",
+  "householdEyebrow": "Household · {count} people",
+  "@householdEyebrow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "householdInvite": "+ Invite",
+  "householdRoleOwner": "Owner",
+  "householdRoleMember": "Member",
+  "householdYou": "{name} (you)",
+  "@householdYou": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdTasksWeek": "{count} tasks this week",
+  "@householdTasksWeek": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "householdAway": "away",
+  "householdSharedProjects": "Shared projects",
+  "householdNoShared": "No shared projects yet",
+  "householdShareMore": "+ Share more",
+  "householdShareTitle": "Share a project with the household",
+  "householdShare": "Share",
+  "householdUnshare": "Stop sharing",
+  "householdShareOwnerOnly": "Only the Owner can share projects",
+  "householdShareNoProjects": "You have no projects to share",
+  "householdActivity": "Activity",
+  "householdActivityEmpty": "No activity yet",
+  "householdActTaskDone": "{name} completed a task",
+  "@householdActTaskDone": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActCheckin": "{name} posted a check-in",
+  "@householdActCheckin": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActMilestone": "{name} reached a milestone",
+  "@householdActMilestone": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActJoined": "{name} joined the household",
+  "@householdActJoined": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActLeft": "{name} left the household",
+  "@householdActLeft": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActShared": "{name} shared “{project}”",
+  "@householdActShared": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActProject": "{text} · {project}",
+  "@householdActProject": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      },
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "householdSomeone": "A member",
+  "householdRemoveMember": "Remove from household",
+  "householdRemoveTitle": "Remove {name}?",
+  "@householdRemoveTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdRemoveBody": "Projects they shared become private again.",
+  "householdLoadError": "Could not load the household",
+  "householdNoneTitle": "You are not in a household",
+  "householdNoneSub": "Create one or enter an invite code to grow together.",
+  "householdInviteTitle": "Invite family",
+  "householdInviteCodeLabel": "Invite code for {name}",
+  "@householdInviteCodeLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdInviteExpires": "Expires in {days} days",
+  "@householdInviteExpires": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "householdInviteCopy": "Copy code",
+  "householdInviteCopied": "Code copied",
+  "householdInviteShareLink": "Share invite link",
+  "householdInviteShareText": "{inviter} invites you to grow plants together in “{name}” on Vườn Nhà. Code: {code}. Open: {link}",
+  "@householdInviteShareText": {
+    "placeholders": {
+      "inviter": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      },
+      "link": {
+        "type": "String"
+      }
+    }
+  },
+  "householdInviteOr": "or invite directly",
+  "householdInviteTargetLabel": "Phone or email",
+  "householdInviteTargetHint": "09xx xxx xxx",
+  "householdInviteRole": "Role",
+  "householdInviteRoleMemberDesc": "Does assigned tasks, sees shared projects",
+  "householdInviteRoleOwnerDesc": "Manages members, projects and assignments",
+  "householdInviteSend": "Send invite",
+  "householdInviteEmailSent": "Invite emailed to {target}",
+  "@householdInviteEmailSent": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "householdInviteEmailFailed": "Email could not be sent. Use the share button instead.",
+  "householdInviteTargetInvalid": "Enter a valid email or phone number",
+  "householdInviteOwnerOnly": "Only the Owner can invite people",
+  "householdInviteLoading": "Creating invite...",
+  "householdAssignTitle": "Assign task",
+  "householdAssignHow": "Assign how",
+  "householdModeOnce": "Just once",
+  "householdModeSeries": "Whole series",
+  "householdModeRotation": "Rotate",
+  "householdAssignOrder": "Rotation order",
+  "householdAssignTo": "Assign to",
+  "householdAssignAwayUntil": "Away until {date}",
+  "@householdAssignAwayUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "householdAssignHintRotation": "Rotation: {names} → repeat.",
+  "@householdAssignHintRotation": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "householdAssignHintSeries": "Every upcoming “{task}” goes to {name}.",
+  "@householdAssignHintSeries": {
+    "placeholders": {
+      "task": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdAssignHintOnce": "Only the next “{task}” goes to {name}.",
+  "@householdAssignHintOnce": {
+    "placeholders": {
+      "task": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdAssignDone": "Task assigned",
+  "householdAssignOwnerOnly": "Only the Owner can assign tasks",
+  "householdAssignNeedHousehold": "Create or join a household to assign tasks",
+  "householdAssignNoTask": "Task not found",
+  "householdAssignRotationMin": "Pick at least 2 people to rotate",
+  "householdAssignPickOne": "Pick a person",
+  "householdWindowMorning": "Early morning",
+  "householdWindowAfternoon": "Cool afternoon",
+  "householdWindowAllDay": "All day",
+  "householdEveryDays": "every {n} days",
+  "@householdEveryDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "householdLeaveRow": "Leave household “{name}”",
+  "@householdLeaveRow": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdLeaveTitle": "Leave the household?",
+  "householdLeaveBody": "You will no longer see shared projects. Your own projects become private.",
+  "householdLeaveOwnerBody": "Ownership passes to {name}, the longest-standing member.",
+  "@householdLeaveOwnerBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdLeaveLast": "You are the last member, so the household will be deleted.",
+  "householdLeaveAction": "Leave",
+  "householdLeft": "You left the household",
+  "householdJoinScreenTitle": "Join a household",
+  "householdJoinLinkBody": "You were invited with code {code}",
+  "@householdJoinLinkBody": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "householdJoinConfirm": "Join",
+  "gamTitle": "Achievements",
+  "gamTotalXp": "Total points",
+  "gamXpUnit": "{xp} XP",
+  "@gamXpUnit": {
+    "placeholders": {
+      "xp": {
+        "type": "String"
+      }
+    }
+  },
+  "gamLevelLabel": "Level",
+  "gamLevelLine": "Level {level} · {name}",
+  "@gamLevelLine": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gamToNext": "{xp} XP to Level {level} · {name}",
+  "@gamToNext": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      },
+      "level": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gamTopLevel": "You reached the top level",
+  "gamStreak": "{days}-day streak",
+  "@gamStreak": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gamStreakNone": "No streak yet",
+  "gamOnTime": "On-time tasks",
+  "gamCheckin": "Photo check-ins",
+  "gamMilestone": "Milestones",
+  "gamToday": "Today",
+  "gamTodayCap": "{xp}/{cap} XP",
+  "@gamTodayCap": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      },
+      "cap": {
+        "type": "int"
+      }
+    }
+  },
+  "gamAntiCheat": "Up to {cap} XP per day from regular tasks. Milestone points only count with a photo check-in as proof.",
+  "@gamAntiCheat": {
+    "placeholders": {
+      "cap": {
+        "type": "int"
+      }
+    }
+  },
+  "gamPendingPhoto": "{count} milestone(s) wait for a photo check-in and earn no XP yet.",
+  "@gamPendingPhoto": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gamBadges": "Badges · {earned}/{total}",
+  "@gamBadges": {
+    "placeholders": {
+      "earned": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "gamBadgesEmpty": "No badges yet",
+  "gamBadgeLocked": "Locked",
+  "gamLoadError": "Could not load achievements",
+  "gamMilestoneEyebrow": "NEW MILESTONE",
+  "gamMilestoneUnknown": "New milestone",
+  "gamMilestoneBody": "{project} passed a new milestone. A check-in photo confirmed it.",
+  "@gamMilestoneBody": {
+    "placeholders": {
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "gamMilestoneBodyPending": "{project} logged this milestone, but no check-in photo has confirmed it yet.",
+  "@gamMilestoneBodyPending": {
+    "placeholders": {
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "gamRewardXp": "+{xp} XP",
+  "@gamRewardXp": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "gamRewardPending": "Needs photo",
+  "gamRewardMilestone": "Milestone",
+  "gamRewardBadge": "Badge",
+  "gamRewardNoBadge": "None yet",
+  "gamPendingNote": "Milestone XP is only awarded when a check-in photo confirms it. Post a photo check-in to earn it.",
+  "gamKeepsake": "Keepsake",
+  "gamKeepsakeCard": "Keepsake card",
+  "gamKeepsakeSub": "Ready to share",
+  "gamShare": "Share keepsake",
+  "gamShareText": "{project} just reached “{milestone}” on Vườn Nhà!",
+  "@gamShareText": {
+    "placeholders": {
+      "project": {
+        "type": "String"
+      },
+      "milestone": {
+        "type": "String"
+      }
+    }
+  },
+  "gamShareError": "Could not share",
+  "gamViewAchievements": "View achievements"
 }

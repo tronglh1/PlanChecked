@@ -824,6 +824,12 @@ abstract class AppLocalizations {
   /// **'Cây của bạn trồng ở đâu?'**
   String get projectsContextTitleNoPlant;
 
+  /// No description provided for @projectsFieldPlantGroup.
+  ///
+  /// In vi, this message translates to:
+  /// **'Loại cây'**
+  String get projectsFieldPlantGroup;
+
   /// No description provided for @projectsFieldName.
   ///
   /// In vi, this message translates to:
@@ -1085,7 +1091,7 @@ abstract class AppLocalizations {
   /// No description provided for @planGenFailedMessage.
   ///
   /// In vi, this message translates to:
-  /// **'Bạn có thể dùng plan mẫu để bắt đầu ngay, hoặc thử lại.'**
+  /// **'Chưa lập được kế hoạch. Hãy thử lại sau ít giây.'**
   String get planGenFailedMessage;
 
   /// No description provided for @planUseTemplate.

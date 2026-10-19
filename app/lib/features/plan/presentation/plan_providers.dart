@@ -7,6 +7,7 @@ import '../../../core/utils/date_only.dart';
 import '../../plants/presentation/plant_providers.dart';
 import '../../settings/presentation/locale_provider.dart';
 import '../data/plan_repository.dart';
+import '../domain/enums.dart';
 import '../domain/models.dart';
 import '../domain/plan_bundle.dart';
 import '../domain/template_renderer.dart';
@@ -129,9 +130,27 @@ class GenerationState {
   );
 }
 
-class GenerationController extends Notifier<GenerationState> {
-  GenerationController(this.projectId);
+/// Family argument of [generationControllerProvider].
+class GenerationArgs {
+  const GenerationArgs(this.projectId, [this.plantGroup]);
   final String projectId;
+
+  /// Only for free-text plants (`rau_qua` | `cay_canh`).
+  final String? plantGroup;
+
+  @override
+  bool operator ==(Object other) =>
+      other is GenerationArgs &&
+      other.projectId == projectId &&
+      other.plantGroup == plantGroup;
+
+  @override
+  int get hashCode => Object.hash(projectId, plantGroup);
+}
+
+class GenerationController extends Notifier<GenerationState> {
+  GenerationController(this.args);
+  final GenerationArgs args;
 
   Timer? _ticker;
   bool _disposed = false;
@@ -144,16 +163,13 @@ class GenerationController extends Notifier<GenerationState> {
       _disposed = true;
       _ticker?.cancel();
     });
-    Future.microtask(() => _start(templateOnly: false));
+    Future.microtask(_start);
     return const GenerationState();
   }
 
-  void retry() => _start(templateOnly: false);
+  void retry() => _start();
 
-  /// "Dùng plan mẫu": skip AI and take the plant-type template.
-  void useTemplate() => _start(templateOnly: true);
-
-  Future<void> _start({required bool templateOnly}) async {
+  Future<void> _start() async {
     if (_disposed) return;
     final run = ++_run;
     state = const GenerationState();
@@ -166,39 +182,32 @@ class GenerationController extends Notifier<GenerationState> {
     });
 
     final repo = ref.read(planRepositoryProvider);
-    final lang = ref.read(localeProvider).languageCode;
     final timeout = ref.read(aiPlanTimeoutProvider);
 
     AiPlanResult? result;
     var reason = FallbackReason.none;
     try {
       result = await repo
-          .generatePlan(projectId, lang: lang, templateOnly: templateOnly)
+          .generatePlan(args.projectId, plantGroup: args.plantGroup)
           .timeout(timeout);
-      if (result.planId == null && !templateOnly) {
-        // Quota hit without a plan: take the template instead.
-        reason = result.fallbackReason;
-        result = await repo
-            .generatePlan(projectId, lang: lang, templateOnly: true)
-            .timeout(timeout);
-      }
     } catch (_) {
       reason = FallbackReason.aiFailure;
-      result = null;
     }
     if (_disposed || run != _run) return;
     _ticker?.cancel();
 
     var planId = result?.planId;
-    if (result != null && result.fallbackReason != FallbackReason.none) {
-      reason = result.fallbackReason;
-    } else if (result != null && result.isFallback) {
-      reason = reason == FallbackReason.none ? FallbackReason.aiFailure : reason;
+    if (result != null) {
+      if (result.fallbackReason != FallbackReason.none) {
+        reason = result.fallbackReason;
+      } else if (result.source == PlanSource.fallback) {
+        reason = FallbackReason.aiFailure;
+      }
     }
     if (planId == null) {
-      // Timeout / error: the server may still have stored a plan.
+      // Timeout / error: the server may still have stored a draft plan.
       try {
-        final existing = await repo.loadPlan(projectId);
+        final existing = await repo.loadPlan(args.projectId);
         planId = existing?.plan.id;
         if (planId != null && reason == FallbackReason.none) {
           reason = FallbackReason.aiFailure;
@@ -226,6 +235,6 @@ class GenerationController extends Notifier<GenerationState> {
 }
 
 final generationControllerProvider = NotifierProvider.autoDispose
-    .family<GenerationController, GenerationState, String>(
+    .family<GenerationController, GenerationState, GenerationArgs>(
       GenerationController.new,
     );

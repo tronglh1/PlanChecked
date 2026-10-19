@@ -195,7 +195,7 @@ void main() {
       );
     });
 
-    test('buildProjectSummaries counts today tasks only for approved plans', () {
+    test('buildProjectSummaries uses task_occurrences counts, stage and photo', () {
       final approved = fakeBundle(status: PlanStatus.approved, projectId: 'a');
       final draft = fakeBundle(planId: 'plan2', projectId: 'b');
       Map<String, dynamic> planRow(PlanBundleLike b) => {
@@ -228,10 +228,7 @@ void main() {
           planRow(PlanBundleLike(approved)),
           planRow(PlanBundleLike(draft)),
         ],
-        taskRows: [
-          for (final b in [approved, draft])
-            for (final task in b.tasks) task.toJson(),
-        ],
+        todayCounts: {'a': 2},
         checkinRows: [
           {
             'project_id': 'a',

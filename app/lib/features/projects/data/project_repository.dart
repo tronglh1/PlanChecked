@@ -1,12 +1,8 @@
-import 'dart:typed_data';
-
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../../core/utils/date_only.dart';
 import '../../plan/domain/enums.dart';
 import '../../plan/domain/models.dart';
-import '../../plan/domain/task_scheduler.dart';
 import '../../plants/domain/plant.dart';
 import '../domain/project.dart';
 import '../domain/project_progress.dart';
@@ -25,16 +21,15 @@ abstract class ProjectRepository {
   /// Done / skip / snooze log of the project's tasks, newest first (TSK-06).
   Future<List<TaskHistoryEntry>> taskHistory(String projectId, {int limit = 50});
 
-  /// Uploads an optional cover photo, returns its storage path.
-  Future<String> uploadCover(Uint8List bytes, {String ext = 'jpg'});
 }
 
 /// Raw rows needed to build the project list; separated from Supabase so the
-/// assembly rule is unit-testable.
+/// assembly rule is unit-testable. [todayCounts] = rows of `task_occurrences`
+/// due [today], counted per project (materialized by `approve_plan`).
 List<ProjectSummary> buildProjectSummaries({
   required List<Map<String, dynamic>> projectRows,
   required List<Map<String, dynamic>> planRows,
-  required List<Map<String, dynamic>> taskRows,
+  required Map<String, int> todayCounts,
   required List<Map<String, dynamic>> checkinRows,
   required DateTime today,
 }) {
@@ -43,11 +38,6 @@ List<ProjectSummary> buildProjectSummaries({
     final p = Plan.fromJson(Map<String, dynamic>.from(r));
     if (p.status == PlanStatus.superseded) continue;
     plansByProject.putIfAbsent(p.projectId, () => []).add(p);
-  }
-  final tasksByProject = <String, List<Task>>{};
-  for (final r in taskRows) {
-    final t = Task.fromJson(Map<String, dynamic>.from(r));
-    tasksByProject.putIfAbsent(t.projectId, () => []).add(t);
   }
   final photoByProject = <String, ({String path, DateTime at})>{};
   for (final r in checkinRows) {
@@ -87,20 +77,6 @@ List<ProjectSummary> buildProjectSummaries({
             projectStart: project.startDate,
             today: today,
           );
-    var todayCount = 0;
-    if (plan != null && plan.status == PlanStatus.approved) {
-      final stageIds = {for (final s in plan.stages) s.id};
-      final tasks = (tasksByProject[project.id] ?? const [])
-          .where((t) => t.stageId == null || stageIds.contains(t.stageId))
-          .toList();
-      todayCount = TaskScheduler.expandAll(
-        tasks: tasks,
-        stages: plan.stages,
-        projectStart: project.startDate,
-        from: today,
-        to: today,
-      ).length;
-    }
     final photo = photoByProject[project.id];
     out.add(
       ProjectSummary(
@@ -110,7 +86,7 @@ List<ProjectSummary> buildProjectSummaries({
         group: PlantGroup.fromCode(plant?['group'] as String?),
         progress: progress,
         planStatus: plan?.status.db,
-        todayTaskCount: todayCount,
+        todayTaskCount: todayCounts[project.id] ?? 0,
         latestPhotoPath: photo?.path,
         latestPhotoAt: photo?.at,
       ),
@@ -160,6 +136,7 @@ class SupabaseProjectRepository implements ProjectRepository {
           'household_id': await _householdId(),
           'owner_id': _uid,
           'plant_id': input.plantId,
+          if (input.plantId == null) 'plant_name_custom': input.plantName,
           'name': input.name,
           'start_date': formatIsoDate(input.startDate),
           'start_stage': input.startStage.db,
@@ -168,12 +145,38 @@ class SupabaseProjectRepository implements ProjectRepository {
           'sun_level': input.sunLevel.db,
           'pot_type': input.potType,
           'watering': input.watering.db,
-          'cover_path': input.coverPath,
           'status': ProjectStatus.active.db,
         })
         .select()
         .single();
-    return Project.fromJson(row);
+    var project = Project.fromJson(row);
+    final cover = input.coverBytes;
+    if (cover != null) {
+      // Covers share the private `checkins` bucket: {user}/{project}/cover.jpg.
+      try {
+        final path = '$_uid/${project.id}/cover.jpg';
+        await _client.storage
+            .from('checkins')
+            .uploadBinary(
+              path,
+              cover,
+              fileOptions: const FileOptions(
+                contentType: 'image/jpeg',
+                upsert: true,
+              ),
+            );
+        final updated = await _client
+            .from('projects')
+            .update({'cover_path': path})
+            .eq('id', project.id)
+            .select()
+            .single();
+        project = Project.fromJson(updated);
+      } catch (_) {
+        // Cover is optional; the project exists without it.
+      }
+    }
+    return project;
   }
 
   @override
@@ -188,11 +191,16 @@ class SupabaseProjectRepository implements ProjectRepository {
         .from('plans')
         .select('*, stages(*)')
         .inFilter('project_id', ids);
-    final tasks = await _client
-        .from('tasks')
-        .select()
+    final occ = await _client
+        .from('task_occurrences')
+        .select('project_id')
         .inFilter('project_id', ids)
-        .eq('status', 'active');
+        .eq('due_date', formatIsoDate(today));
+    final todayCounts = <String, int>{};
+    for (final o in occ) {
+      final pid = o['project_id'].toString();
+      todayCounts[pid] = (todayCounts[pid] ?? 0) + 1;
+    }
     final checkins = await _client
         .from('checkins')
         .select('project_id, shots, created_at')
@@ -201,7 +209,7 @@ class SupabaseProjectRepository implements ProjectRepository {
     return buildProjectSummaries(
       projectRows: List<Map<String, dynamic>>.from(projects),
       planRows: List<Map<String, dynamic>>.from(plans),
-      taskRows: List<Map<String, dynamic>>.from(tasks),
+      todayCounts: todayCounts,
       checkinRows: List<Map<String, dynamic>>.from(checkins),
       today: today,
     );
@@ -229,7 +237,9 @@ class SupabaseProjectRepository implements ProjectRepository {
     ];
     final members = <String, String>{};
     try {
-      final users = await _client.from('users').select('id, display_name');
+      final users = await _client
+          .from('member_profiles')
+          .select('id, display_name');
       for (final u in users) {
         members[u['id'].toString()] = (u['display_name'] as String?) ?? '';
       }
@@ -277,18 +287,5 @@ class SupabaseProjectRepository implements ProjectRepository {
           createdAt: DateTime.parse(l['created_at'] as String),
         ),
     ];
-  }
-
-  @override
-  Future<String> uploadCover(Uint8List bytes, {String ext = 'jpg'}) async {
-    final path = '$_uid/${const Uuid().v4()}.$ext';
-    await _client.storage
-        .from('covers')
-        .uploadBinary(
-          path,
-          bytes,
-          fileOptions: FileOptions(contentType: 'image/$ext'),
-        );
-    return path;
   }
 }

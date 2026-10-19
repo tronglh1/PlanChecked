@@ -176,12 +176,19 @@ class Task {
     fixedDate: j['fixed_date'] == null
         ? null
         : parseIsoDate(j['fixed_date'] as String),
-    reminderTime: j['reminder_time'] as String?,
+    reminderTime: (j['reminder_time'] as String?)?.substring(
+      0,
+      (j['reminder_time'] as String).length < 5
+          ? (j['reminder_time'] as String).length
+          : 5,
+    ), // Postgres time -> HH:mm
     assigneeId: j['assignee_id'] as String?,
     assignmentMode: j['assignment_mode'] == null
         ? AssignmentMode.once
         : AssignmentMode.fromDb(j['assignment_mode']),
-    rotationOrder: (j['rotation_order'] as num?)?.toInt(),
+    rotationOrder: j['rotation_order'] is num
+        ? (j['rotation_order'] as num).toInt()
+        : null, // DB column is uuid[]
     source: j['source'] == null
         ? TaskSource.template
         : TaskSource.fromDb(j['source']),

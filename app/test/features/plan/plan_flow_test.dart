@@ -41,12 +41,12 @@ void main() {
       expect(c.name, 'Cà chua bi – 10/2026');
       expect(c.space.db, 'yard');
       expect(c.startStage.db, 'seedling');
-      expect(c.sunLevel.db, 3);
+      expect(c.sunLevel.db, 2);
 
       // Generating finished with AI result -> review screen.
       expect(plans.generateCalls, hasLength(1));
       expect(plans.generateCalls.single.projectId, 'new1');
-      expect(plans.generateCalls.single.templateOnly, isFalse);
+      expect(plans.generateCalls.single.plantGroup, isNull);
       expect(find.text('Kế hoạch 25 ngày'), findsOneWidget);
 
       await t.tap(find.byKey(const Key('approve-plan')));
@@ -113,17 +113,17 @@ void main() {
       expect(find.byKey(const Key('plan-confidence-chip')), findsNothing);
     });
 
-    testWidgets('quota without a plan retries with the template', (t) async {
+    testWidgets('quota without any plan -> failed card with quota text', (
+      t,
+    ) async {
       final plans = FakePlanRepository(
         result: const AiPlanResult(
           source: PlanSource.fallback,
           fallbackReason: FallbackReason.quotaExceeded,
         ),
-        bundle: fakeBundle(source: PlanSource.fallback, confidence: null),
-      );
+      )..bundle = null;
       await pumpRouterApp(t, initial: '/projects/new1/generating', plans: plans);
-      expect(plans.generateCalls.map((c) => c.templateOnly), [false, true]);
-      expect(find.byKey(const Key('fallback-message')), findsOneWidget);
+      expect(find.byKey(const Key('generating-failed')), findsOneWidget);
       expect(find.textContaining('hết lượt AI'), findsOneWidget);
     });
 
@@ -138,34 +138,46 @@ void main() {
       expect(find.textContaining('AI gặp sự cố'), findsWidgets);
     });
 
-    testWidgets('timeout with no plan -> failed card -> use template', (
-      t,
-    ) async {
-      final plans = FakePlanRepository(bundle: null)..hangOnGenerate = true;
-      plans.templateResult = const AiPlanResult(
-        planId: 'plan1',
-        source: PlanSource.fallback,
-        fallbackReason: FallbackReason.aiFailure,
-      );
+    testWidgets('timeout with no plan -> failed card -> retry', (t) async {
+      final plans = FakePlanRepository()
+        ..bundle = null
+        ..hangOnGenerate = true;
       await pumpRouterApp(
         t,
         initial: '/projects/new1/generating',
         plans: plans,
         aiTimeout: const Duration(milliseconds: 100),
       );
-      // Spinner is still running; wait past the timeout.
-      expect(find.byKey(const Key('generating-spinner')), findsOneWidget);
-      expect(find.textContaining('dưới 20 giây'), findsOneWidget);
-      await t.pump(const Duration(milliseconds: 300));
-      await t.pump();
       expect(find.byKey(const Key('generating-failed')), findsOneWidget);
       expect(find.text('AI đang gặp sự cố'), findsOneWidget);
 
-      plans.bundle = fakeBundle(source: PlanSource.fallback, confidence: null);
-      await t.tap(find.byKey(const Key('use-template')));
+      // Server recovered and returns its fallback template plan.
+      plans
+        ..hangOnGenerate = false
+        ..bundle = fakeBundle(source: PlanSource.fallback, confidence: null)
+        ..result = const AiPlanResult(
+          planId: 'plan1',
+          source: PlanSource.fallback,
+          fallbackReason: FallbackReason.aiFailure,
+        );
+      await t.tap(find.byKey(const Key('generating-retry')));
       await t.pumpAndSettle();
-      expect(plans.generateCalls.last.templateOnly, isTrue);
+      expect(plans.generateCalls, hasLength(2));
       expect(find.byKey(const Key('fallback-message')), findsOneWidget);
+    });
+
+    testWidgets('free-text plant passes plant_group to ai-plan', (t) async {
+      final plans = FakePlanRepository();
+      await pumpRouterApp(
+        t,
+        initial: '/projects/new/context?name=Xoai',
+        plans: plans,
+      );
+      await t.tap(find.byKey(const Key('group-cay_canh')));
+      await t.pump();
+      await t.tap(find.byKey(const Key('create-plan')));
+      await t.pumpAndSettle();
+      expect(plans.generateCalls.single.plantGroup, 'cay_canh');
     });
   });
 

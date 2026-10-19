@@ -9,7 +9,10 @@ final List<RouteBase> planRoutes = [
   GoRoute(
     path: '/projects/:id/generating',
     builder: (_, state) =>
-        GeneratingScreen(projectId: state.pathParameters['id']!),
+        GeneratingScreen(
+          projectId: state.pathParameters['id']!,
+          plantGroup: state.uri.queryParameters['group'],
+        ),
   ),
   GoRoute(
     path: '/projects/:id/plan',

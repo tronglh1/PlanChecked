@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -154,9 +153,6 @@ class FakeProjectRepository implements ProjectRepository {
     int limit = 50,
   }) async => history;
 
-  @override
-  Future<String> uploadCover(Uint8List bytes, {String ext = 'jpg'}) async =>
-      'u1/cover.$ext';
 }
 
 class FakePlanRepository implements PlanRepository {
@@ -167,16 +163,10 @@ class FakePlanRepository implements PlanRepository {
 
   AiPlanResult result;
 
-  /// Result for the `templateOnly` retry; defaults to a fallback plan.
-  AiPlanResult templateResult = const AiPlanResult(
-    planId: 'plan1',
-    source: PlanSource.fallback,
-    fallbackReason: FallbackReason.aiFailure,
-  );
   PlanBundle? bundle;
   bool throwOnGenerate = false;
   bool hangOnGenerate = false;
-  final List<({String projectId, bool templateOnly})> generateCalls = [];
+  final List<({String projectId, String? plantGroup})> generateCalls = [];
   final List<String> approved = [];
   final List<Task> updated = [];
   final List<NewTask> added = [];
@@ -189,17 +179,13 @@ class FakePlanRepository implements PlanRepository {
   @override
   Future<AiPlanResult> generatePlan(
     String projectId, {
-    String lang = 'vi',
-    bool templateOnly = false,
+    String? plantGroup,
+    bool regenerate = false,
   }) async {
-    generateCalls.add((projectId: projectId, templateOnly: templateOnly));
-    if (hangOnGenerate && !templateOnly) {
-      return Completer<AiPlanResult>().future;
-    }
-    if (throwOnGenerate && !templateOnly) {
-      throw const PlanGenerationException('down');
-    }
-    return templateOnly ? templateResult : result;
+    generateCalls.add((projectId: projectId, plantGroup: plantGroup));
+    if (hangOnGenerate) return Completer<AiPlanResult>().future;
+    if (throwOnGenerate) throw const PlanGenerationException('down');
+    return result;
   }
 
   @override

@@ -41,6 +41,7 @@ class _ProjectContextScreenState extends ConsumerState<ProjectContextScreen> {
   SunLevel _sun = SunLevel.medium;
   Watering _watering = Watering.manual;
   Uint8List? _cover;
+  String _group = 'rau_qua'; // free-text plants only
   bool _nameMissing = false;
   bool _error = false;
   bool _init = false;
@@ -125,16 +126,6 @@ class _ProjectContextScreenState extends ConsumerState<ProjectContextScreen> {
       _nameMissing = false;
       _error = false;
     });
-    String? coverPath;
-    if (_cover != null) {
-      try {
-        coverPath = await ref
-            .read(projectRepositoryProvider)
-            .uploadCover(_cover!);
-      } catch (_) {
-        coverPath = null; // optional; continue without it
-      }
-    }
     final plant = _plant();
     final project = await ref
         .read(createProjectProvider.notifier)
@@ -150,7 +141,10 @@ class _ProjectContextScreenState extends ConsumerState<ProjectContextScreen> {
             sunLevel: _sun,
             potType: _pot.text.trim().isEmpty ? null : _pot.text.trim(),
             watering: _watering,
-            coverPath: coverPath,
+            coverBytes: _cover,
+            plantGroup: plant == null && widget.plantId == null
+                ? _group
+                : null,
           ),
         );
     if (!mounted) return;
@@ -158,7 +152,11 @@ class _ProjectContextScreenState extends ConsumerState<ProjectContextScreen> {
       setState(() => _error = true);
       return;
     }
-    context.go('/projects/${project.id}/generating');
+    context.go(
+      widget.plantId == null
+          ? '/projects/${project.id}/generating?group=$_group'
+          : '/projects/${project.id}/generating',
+    );
   }
 
   @override
@@ -233,6 +231,26 @@ class _ProjectContextScreenState extends ConsumerState<ProjectContextScreen> {
                       : l10n.projectsContextTitle(plantLabel),
                   style: t.titleLarge?.copyWith(fontWeight: FontWeight.w700),
                 ),
+                if (widget.plantId == null) ...[
+                  label(l10n.projectsFieldPlantGroup),
+                  Row(
+                    children: [
+                      TagChip(
+                        key: const Key('group-rau_qua'),
+                        label: l10n.filterVeg,
+                        selected: _group == 'rau_qua',
+                        onTap: () => setState(() => _group = 'rau_qua'),
+                      ),
+                      const SizedBox(width: AppSpacing.sm),
+                      TagChip(
+                        key: const Key('group-cay_canh'),
+                        label: l10n.filterOrnamental,
+                        selected: _group == 'cay_canh',
+                        onTap: () => setState(() => _group = 'cay_canh'),
+                      ),
+                    ],
+                  ),
+                ],
                 label(l10n.projectsFieldName),
                 GlassTextField(
                   key: const Key('project-name'),

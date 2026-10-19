@@ -412,6 +412,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get projectsContextTitleNoPlant => 'Where will you grow it?';
 
   @override
+  String get projectsFieldPlantGroup => 'Plant type';
+
+  @override
   String get projectsFieldName => 'Project name';
 
   @override
@@ -546,7 +549,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get planGenFailedMessage =>
-      'You can start with a template plan right away, or try again.';
+      'We couldn\'t build a plan yet. Please try again in a moment.';
 
   @override
   String get planUseTemplate => 'Use template plan';

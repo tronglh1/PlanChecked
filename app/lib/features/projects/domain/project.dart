@@ -1,6 +1,8 @@
 /// Project models (docs/spec-mvp.md §4.1/§4.2). Pure Dart.
 library;
 
+import 'dart:typed_data';
+
 import '../../../core/utils/date_only.dart';
 import '../../plan/domain/models.dart';
 import '../../plants/domain/plant.dart';
@@ -20,21 +22,20 @@ enum Space {
       values.firstWhere((e) => e.db == v, orElse: () => Space.balcony);
 }
 
-/// `sun_level` (1-4 in the AI doc, three labelled options in the mockup).
-/// Mapping used: under 3h = 2, 3-6h = 3 (matches the `sun3` example key),
-/// over 6h = 4.
+/// `sun_level` int 1..4 (docs/backend.md): under 3h = 1, 3-6h = 2, over 6h = 3;
+/// 4 is reserved for open rooftops and reads back as [high].
 enum SunLevel {
-  low(2),
-  medium(3),
-  high(4);
+  low(1),
+  medium(2),
+  high(3);
 
   const SunLevel(this.db);
   final int db;
 
   static SunLevel fromDb(Object? v) {
-    final n = v is num ? v.toInt() : int.tryParse('$v') ?? 3;
-    if (n <= 2) return SunLevel.low;
-    if (n == 3) return SunLevel.medium;
+    final n = v is num ? v.toInt() : int.tryParse('$v') ?? 2;
+    if (n <= 1) return SunLevel.low;
+    if (n == 2) return SunLevel.medium;
     return SunLevel.high;
   }
 }
@@ -143,12 +144,17 @@ class NewProject {
     this.sunLevel = SunLevel.medium,
     this.potType,
     this.watering = Watering.manual,
-    this.coverPath,
+    this.coverBytes,
+    this.plantGroup,
   });
 
-  /// Catalogue plant, or null for a free-text plant (then [plantName] set).
+  /// Catalogue plant slug, or null for a free-text plant (then [plantName]
+  /// is stored in `plant_name_custom`).
   final String? plantId;
   final String? plantName;
+
+  /// `rau_qua` | `cay_canh`, only for free-text plants (passed to `ai-plan`).
+  final String? plantGroup;
   final String name;
   final DateTime startDate;
   final StartStage startStage;
@@ -157,7 +163,9 @@ class NewProject {
   final SunLevel sunLevel;
   final String? potType;
   final Watering watering;
-  final String? coverPath;
+
+  /// Optional cover; uploaded after the project row exists.
+  final Uint8List? coverBytes;
 }
 
 /// One card of the project list (PRJ-01, PRJ-04).

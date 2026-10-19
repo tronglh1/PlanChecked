@@ -403,6 +403,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get projectsContextTitleNoPlant => 'Cây của bạn trồng ở đâu?';
 
   @override
+  String get projectsFieldPlantGroup => 'Loại cây';
+
+  @override
   String get projectsFieldName => 'Tên project';
 
   @override
@@ -536,7 +539,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get planGenFailedMessage =>
-      'Bạn có thể dùng plan mẫu để bắt đầu ngay, hoặc thử lại.';
+      'Chưa lập được kế hoạch. Hãy thử lại sau ít giây.';
 
   @override
   String get planUseTemplate => 'Dùng plan mẫu';

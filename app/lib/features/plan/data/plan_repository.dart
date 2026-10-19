@@ -5,15 +5,15 @@ import '../domain/models.dart';
 import '../domain/plan_bundle.dart';
 
 abstract class PlanRepository {
-  /// Calls Edge Function `ai-plan` for [projectId]. Quota exceeded and AI
-  /// failure come back as an [AiPlanResult] with a fallback reason (the
-  /// server substitutes the plant-type template, `source = fallback`).
-  /// [templateOnly] asks the server to skip AI and use the template.
+  /// Calls Edge Function `ai-plan` for [projectId] (docs/backend.md). Quota
+  /// exceeded and AI failure come back as an [AiPlanResult] whose
+  /// `source = fallback` plan is already stored as a draft. [plantGroup]
+  /// (`rau_qua` | `cay_canh`) is only for plants not in the catalogue.
   /// Throws [PlanGenerationException] when no plan could be produced at all.
   Future<AiPlanResult> generatePlan(
     String projectId, {
-    String lang = 'vi',
-    bool templateOnly = false,
+    String? plantGroup,
+    bool regenerate = false,
   });
 
   /// The approved plan, else the newest draft; null when none. Tasks are the
@@ -30,7 +30,7 @@ abstract class PlanRepository {
   /// Persists frequency / interval / window / reminder changes (PLN-05).
   Future<Task> updateTask(Task task);
 
-  /// Soft delete (`status = 'deleted'`) so task_logs keep their reference.
+  /// Soft delete (`status = 'archived'`) so task_logs keep their reference.
   Future<void> deleteTask(String taskId);
 }
 
@@ -43,16 +43,16 @@ class SupabasePlanRepository implements PlanRepository {
   @override
   Future<AiPlanResult> generatePlan(
     String projectId, {
-    String lang = 'vi',
-    bool templateOnly = false,
+    String? plantGroup,
+    bool regenerate = false,
   }) async {
     try {
       final res = await _client.functions.invoke(
         'ai-plan',
         body: {
           'project_id': projectId,
-          'lang': lang,
-          if (templateOnly) 'template_only': true,
+          if (regenerate) 'regenerate': true,
+          'plant_group': ?plantGroup,
         },
       );
       final data = res.data;
@@ -123,24 +123,8 @@ class SupabasePlanRepository implements PlanRepository {
 
   @override
   Future<void> approvePlan(String planId) async {
-    final plan = await _client
-        .from('plans')
-        .select('project_id')
-        .eq('id', planId)
-        .single();
-    await _client
-        .from('plans')
-        .update({'status': PlanStatus.superseded.db})
-        .eq('project_id', plan['project_id'])
-        .eq('status', PlanStatus.approved.db)
-        .neq('id', planId);
-    await _client
-        .from('plans')
-        .update({
-          'status': PlanStatus.approved.db,
-          'approved_at': DateTime.now().toUtc().toIso8601String(),
-        })
-        .eq('id', planId);
+    // Marks approved, supersedes the old plan, materializes 14 days.
+    await _client.rpc('approve_plan', params: {'p_plan': planId});
   }
 
   @override
@@ -214,6 +198,6 @@ class SupabasePlanRepository implements PlanRepository {
 
   @override
   Future<void> deleteTask(String taskId) async {
-    await _client.from('tasks').update({'status': 'deleted'}).eq('id', taskId);
+    await _client.from('tasks').update({'status': 'archived'}).eq('id', taskId);
   }
 }

@@ -12,9 +12,10 @@ import 'plan_providers.dart';
 /// Screen 09 (PLN-01): AI is building the plan. Target <= 20 s; on timeout or
 /// error the plant-type template plan is offered instead.
 class GeneratingScreen extends ConsumerWidget {
-  const GeneratingScreen({super.key, required this.projectId});
+  const GeneratingScreen({super.key, required this.projectId, this.plantGroup});
 
   final String projectId;
+  final String? plantGroup;
 
   void _openPlan(BuildContext context) =>
       context.go('/projects/$projectId/plan');
@@ -23,7 +24,7 @@ class GeneratingScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final t = Theme.of(context).textTheme;
-    final provider = generationControllerProvider(projectId);
+    final provider = generationControllerProvider(GenerationArgs(projectId, plantGroup));
     final state = ref.watch(provider);
     final name = ref.watch(projectDetailProvider(projectId)).value;
 
@@ -131,15 +132,8 @@ class GeneratingScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   GlowButton(
-                    key: const Key('use-template'),
-                    label: l10n.planUseTemplate,
-                    onPressed: () => ref.read(provider.notifier).useTemplate(),
-                  ),
-                  const SizedBox(height: AppSpacing.sm),
-                  GlowButton(
                     key: const Key('generating-retry'),
                     label: l10n.commonRetry,
-                    variant: GlowButtonVariant.secondary,
                     onPressed: () => ref.read(provider.notifier).retry(),
                   ),
                 ],

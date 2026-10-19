@@ -43,7 +43,11 @@ enum FallbackReason {
 
   static FallbackReason fromWire(Object? v) => switch (v) {
     'quota_exceeded' || 'quota' || 'limit_reached' => quotaExceeded,
-    'ai_failure' || 'ai_error' || 'error' || 'timeout' => aiFailure,
+    'ai_failure' ||
+    'ai_error' ||
+    'invalid_output' ||
+    'error' ||
+    'timeout' => aiFailure,
     _ => none,
   };
 }

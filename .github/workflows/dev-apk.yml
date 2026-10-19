@@ -17,6 +17,9 @@ on:
         description: Supabase anon / publishable key
         required: true
 
+permissions:
+  contents: write
+
 jobs:
   apk:
     runs-on: ubuntu-latest
@@ -53,3 +56,9 @@ jobs:
           name: vuon-nha-apk
           path: app/build/app/outputs/flutter-apk/vuon-nha.apk
           retention-days: 14
+      - name: Publish to the dev-apk release (direct phone download)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view dev-apk >/dev/null 2>&1 || gh release create dev-apk --prerelease --target "$GITHUB_SHA" --title "Vườn Nhà – bản thử" --notes "Bản thử nội bộ. Gỡ bản cũ trước khi cài."
+          gh release upload dev-apk build/app/outputs/flutter-apk/vuon-nha.apk --clobber

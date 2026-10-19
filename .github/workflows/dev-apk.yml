@@ -1,0 +1,45 @@
+name: Dev APK
+
+# Builds an installable APK wired to a real Supabase project. The URL and anon key
+# are public values (they ship inside the app), so they are passed as run inputs.
+# Signed with the runner's debug key, so uninstall an older build before installing.
+on:
+  workflow_dispatch:
+    inputs:
+      supabase_url:
+        description: Supabase project URL
+        required: true
+      supabase_anon_key:
+        description: Supabase anon / publishable key
+        required: true
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.7'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Write env
+        env:
+          SUPABASE_URL: ${{ inputs.supabase_url }}
+          SUPABASE_ANON_KEY: ${{ inputs.supabase_anon_key }}
+        run: jq -n --arg u "$SUPABASE_URL" --arg k "$SUPABASE_ANON_KEY" '{SUPABASE_URL:$u, SUPABASE_ANON_KEY:$k}' > env/dev.json
+      - run: flutter build apk --release --dart-define-from-file=env/dev.json
+      - run: mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/vuon-nha.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vuon-nha-apk
+          path: app/build/app/outputs/flutter-apk/vuon-nha.apk
+          retention-days: 14

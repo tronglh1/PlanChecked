@@ -703,6 +703,930 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Thông tin & bối cảnh trồng'**
   String get contextTitle;
+
+  /// No description provided for @projectsTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vườn của tôi'**
+  String get projectsTitle;
+
+  /// No description provided for @projectsFilterActive.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang trồng · {count}'**
+  String projectsFilterActive(int count);
+
+  /// No description provided for @projectsFilterDone.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã xong · {count}'**
+  String projectsFilterDone(int count);
+
+  /// No description provided for @projectsFilterArchived.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lưu trữ'**
+  String get projectsFilterArchived;
+
+  /// No description provided for @projectsEmptyTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có cây nào'**
+  String get projectsEmptyTitle;
+
+  /// No description provided for @projectsEmptyMessage.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bắt đầu trồng cây đầu tiên, AI sẽ lập kế hoạch chăm sóc cho bạn.'**
+  String get projectsEmptyMessage;
+
+  /// No description provided for @projectsAddNew.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trồng cây mới'**
+  String get projectsAddNew;
+
+  /// No description provided for @projectsLoadError.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tải được danh sách. Thử lại nhé.'**
+  String get projectsLoadError;
+
+  /// No description provided for @projectsKindLine.
+  ///
+  /// In vi, this message translates to:
+  /// **'{group} · {pots} chậu · ngày {day}'**
+  String projectsKindLine(String group, int pots, int day);
+
+  /// No description provided for @projectsNoPlan.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có kế hoạch'**
+  String get projectsNoPlan;
+
+  /// No description provided for @projectsPlanPending.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chờ duyệt kế hoạch'**
+  String get projectsPlanPending;
+
+  /// No description provided for @projectsStageBeforeStart.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sắp bắt đầu'**
+  String get projectsStageBeforeStart;
+
+  /// No description provided for @projectsTasksToday.
+  ///
+  /// In vi, this message translates to:
+  /// **'{count} việc hôm nay'**
+  String projectsTasksToday(int count);
+
+  /// No description provided for @projectsPhotoAgo.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ảnh: {days} ngày trước'**
+  String projectsPhotoAgo(int days);
+
+  /// No description provided for @projectsPhotoToday.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ảnh: hôm nay'**
+  String get projectsPhotoToday;
+
+  /// No description provided for @projectsNoPhoto.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có ảnh'**
+  String get projectsNoPhoto;
+
+  /// No description provided for @projectsLatestPhoto.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ảnh mới nhất'**
+  String get projectsLatestPhoto;
+
+  /// No description provided for @projectsContextEyebrow.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trồng cây mới · Bước 2/3'**
+  String get projectsContextEyebrow;
+
+  /// No description provided for @projectsContextTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'{plant} trồng ở đâu?'**
+  String projectsContextTitle(String plant);
+
+  /// No description provided for @projectsContextTitleNoPlant.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cây của bạn trồng ở đâu?'**
+  String get projectsContextTitleNoPlant;
+
+  /// No description provided for @projectsFieldName.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tên project'**
+  String get projectsFieldName;
+
+  /// No description provided for @projectsFieldStartDate.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngày bắt đầu'**
+  String get projectsFieldStartDate;
+
+  /// No description provided for @projectsFieldPots.
+  ///
+  /// In vi, this message translates to:
+  /// **'Số chậu'**
+  String get projectsFieldPots;
+
+  /// No description provided for @projectsFieldStartStage.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bắt đầu từ'**
+  String get projectsFieldStartStage;
+
+  /// No description provided for @projectsStartSeed.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hạt giống'**
+  String get projectsStartSeed;
+
+  /// No description provided for @projectsStartSeedling.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cây con'**
+  String get projectsStartSeedling;
+
+  /// No description provided for @projectsStartMature.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trưởng thành'**
+  String get projectsStartMature;
+
+  /// No description provided for @projectsFieldSpace.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nơi trồng'**
+  String get projectsFieldSpace;
+
+  /// No description provided for @projectsSpaceIndoor.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trong nhà'**
+  String get projectsSpaceIndoor;
+
+  /// No description provided for @projectsSpaceBalcony.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ban công'**
+  String get projectsSpaceBalcony;
+
+  /// No description provided for @projectsSpaceYard.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sân vườn'**
+  String get projectsSpaceYard;
+
+  /// No description provided for @projectsSpaceRooftop.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sân thượng'**
+  String get projectsSpaceRooftop;
+
+  /// No description provided for @projectsFieldSun.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nắng mỗi ngày'**
+  String get projectsFieldSun;
+
+  /// No description provided for @projectsSunLow.
+  ///
+  /// In vi, this message translates to:
+  /// **'Dưới 3 giờ'**
+  String get projectsSunLow;
+
+  /// No description provided for @projectsSunMedium.
+  ///
+  /// In vi, this message translates to:
+  /// **'3–6 giờ'**
+  String get projectsSunMedium;
+
+  /// No description provided for @projectsSunHigh.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trên 6 giờ'**
+  String get projectsSunHigh;
+
+  /// No description provided for @projectsFieldPot.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chậu / đất'**
+  String get projectsFieldPot;
+
+  /// No description provided for @projectsPotDefault.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chậu nhựa 20L, đất trộn'**
+  String get projectsPotDefault;
+
+  /// No description provided for @projectsFieldWatering.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cách tưới'**
+  String get projectsFieldWatering;
+
+  /// No description provided for @projectsWateringManual.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tưới tay'**
+  String get projectsWateringManual;
+
+  /// No description provided for @projectsWateringAuto.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tự động'**
+  String get projectsWateringAuto;
+
+  /// No description provided for @projectsCoverAdd.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm ảnh bìa (không bắt buộc)'**
+  String get projectsCoverAdd;
+
+  /// No description provided for @projectsCoverAdded.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã chọn ảnh bìa'**
+  String get projectsCoverAdded;
+
+  /// No description provided for @projectsCreatePlan.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tạo kế hoạch chăm sóc'**
+  String get projectsCreatePlan;
+
+  /// No description provided for @projectsNameRequired.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hãy đặt tên cho project'**
+  String get projectsNameRequired;
+
+  /// No description provided for @projectsCreateError.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tạo được project. Thử lại nhé.'**
+  String get projectsCreateError;
+
+  /// No description provided for @projectsDefaultName.
+  ///
+  /// In vi, this message translates to:
+  /// **'{plant} – {month}/{year}'**
+  String projectsDefaultName(String plant, int month, int year);
+
+  /// No description provided for @projectsPotsMinus.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giảm số chậu'**
+  String get projectsPotsMinus;
+
+  /// No description provided for @projectsPotsPlus.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tăng số chậu'**
+  String get projectsPotsPlus;
+
+  /// No description provided for @planGeneratingEyebrow.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trồng cây mới · Bước 3/3'**
+  String get planGeneratingEyebrow;
+
+  /// No description provided for @planGeneratingTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang lập kế hoạch cho'**
+  String get planGeneratingTitle;
+
+  /// No description provided for @planGeneratingHint.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thường mất dưới 20 giây'**
+  String get planGeneratingHint;
+
+  /// No description provided for @planGenStep1.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đọc dữ liệu chuẩn của cây'**
+  String get planGenStep1;
+
+  /// No description provided for @planGenStep1Sub.
+  ///
+  /// In vi, this message translates to:
+  /// **'Từ cơ sở dữ liệu cây Vườn Nhà'**
+  String get planGenStep1Sub;
+
+  /// No description provided for @planGenStep2.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tính khí hậu và mùa vụ'**
+  String get planGenStep2;
+
+  /// No description provided for @planGenStep2Sub.
+  ///
+  /// In vi, this message translates to:
+  /// **'Theo vùng và tháng bạn bắt đầu'**
+  String get planGenStep2Sub;
+
+  /// No description provided for @planGenStep3.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chia giai đoạn và mốc'**
+  String get planGenStep3;
+
+  /// No description provided for @planGenStep3Sub.
+  ///
+  /// In vi, this message translates to:
+  /// **'Từ lúc bắt đầu đến thu hoạch'**
+  String get planGenStep3Sub;
+
+  /// No description provided for @planGenStep4.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tạo việc chăm sóc hằng ngày'**
+  String get planGenStep4;
+
+  /// No description provided for @planGenStep4Sub.
+  ///
+  /// In vi, this message translates to:
+  /// **'Theo khung giờ sáng sớm / chiều mát'**
+  String get planGenStep4Sub;
+
+  /// No description provided for @planGeneratingFallbackNote.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nếu AI gặp sự cố, app dùng plan mẫu để bạn bắt đầu ngay.'**
+  String get planGeneratingFallbackNote;
+
+  /// No description provided for @planViewPlan.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xem kế hoạch'**
+  String get planViewPlan;
+
+  /// No description provided for @planGenFailedTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'AI đang gặp sự cố'**
+  String get planGenFailedTitle;
+
+  /// No description provided for @planGenFailedMessage.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn có thể dùng plan mẫu để bắt đầu ngay, hoặc thử lại.'**
+  String get planGenFailedMessage;
+
+  /// No description provided for @planUseTemplate.
+  ///
+  /// In vi, this message translates to:
+  /// **'Dùng plan mẫu'**
+  String get planUseTemplate;
+
+  /// No description provided for @planFallbackAiFailure.
+  ///
+  /// In vi, this message translates to:
+  /// **'AI gặp sự cố nên app dùng plan mẫu cho bạn.'**
+  String get planFallbackAiFailure;
+
+  /// No description provided for @planFallbackQuota.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn đã dùng hết lượt AI hôm nay nên app dùng plan mẫu cho bạn.'**
+  String get planFallbackQuota;
+
+  /// No description provided for @planReviewTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Kế hoạch {days} ngày'**
+  String planReviewTitle(int days);
+
+  /// No description provided for @planAiLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Gợi ý từ AI'**
+  String get planAiLabel;
+
+  /// No description provided for @planTemplateLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Plan mẫu'**
+  String get planTemplateLabel;
+
+  /// No description provided for @planConfidenceHigh.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tin cậy cao · {pct}%'**
+  String planConfidenceHigh(int pct);
+
+  /// No description provided for @planConfidenceMedium.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tin cậy trung bình · {pct}%'**
+  String planConfidenceMedium(int pct);
+
+  /// No description provided for @planConfidenceLow.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tin cậy thấp · {pct}%'**
+  String planConfidenceLow(int pct);
+
+  /// No description provided for @planSources.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nguồn: {sources}'**
+  String planSources(String sources);
+
+  /// No description provided for @planSourcesDefault.
+  ///
+  /// In vi, this message translates to:
+  /// **'CSDL cây Vườn Nhà'**
+  String get planSourcesDefault;
+
+  /// No description provided for @planSegStages.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giai đoạn'**
+  String get planSegStages;
+
+  /// No description provided for @planSegCalendar.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lịch'**
+  String get planSegCalendar;
+
+  /// No description provided for @planStageDays.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngày {from}–{to}'**
+  String planStageDays(int from, int to);
+
+  /// No description provided for @planStageMilestone.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mốc: {milestone}'**
+  String planStageMilestone(String milestone);
+
+  /// No description provided for @planStageTaskCount.
+  ///
+  /// In vi, this message translates to:
+  /// **'{count} việc'**
+  String planStageTaskCount(int count);
+
+  /// No description provided for @planAddTask.
+  ///
+  /// In vi, this message translates to:
+  /// **'+ Thêm việc'**
+  String get planAddTask;
+
+  /// No description provided for @planStart.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bắt đầu trồng'**
+  String get planStart;
+
+  /// No description provided for @planApproveError.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không duyệt được kế hoạch. Thử lại nhé.'**
+  String get planApproveError;
+
+  /// No description provided for @planSafetyTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lưu ý an toàn'**
+  String get planSafetyTitle;
+
+  /// No description provided for @planSafetyOrganic.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ưu tiên cách an toàn, hữu cơ. App không ghi liều lượng phân hay thuốc: hãy đọc nhãn sản phẩm.'**
+  String get planSafetyOrganic;
+
+  /// No description provided for @planEmpty.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có kế hoạch cho project này'**
+  String get planEmpty;
+
+  /// No description provided for @planLoadError.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tải được kế hoạch. Thử lại nhé.'**
+  String get planLoadError;
+
+  /// No description provided for @planFreqOnce.
+  ///
+  /// In vi, this message translates to:
+  /// **'Một lần'**
+  String get planFreqOnce;
+
+  /// No description provided for @planFreqDaily.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hằng ngày'**
+  String get planFreqDaily;
+
+  /// No description provided for @planFreqEveryN.
+  ///
+  /// In vi, this message translates to:
+  /// **'{n} ngày/lần'**
+  String planFreqEveryN(int n);
+
+  /// No description provided for @planFreqFixedDay.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngày {day}'**
+  String planFreqFixedDay(int day);
+
+  /// No description provided for @planFreqFixedDate.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngày {date}'**
+  String planFreqFixedDate(String date);
+
+  /// No description provided for @planWindowMorning.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sáng sớm · 6–8h'**
+  String get planWindowMorning;
+
+  /// No description provided for @planWindowAfternoon.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chiều mát · 16–18h'**
+  String get planWindowAfternoon;
+
+  /// No description provided for @planWindowAllDay.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cả ngày'**
+  String get planWindowAllDay;
+
+  /// No description provided for @planWindowMorningShort.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sáng sớm'**
+  String get planWindowMorningShort;
+
+  /// No description provided for @planWindowAfternoonShort.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chiều mát'**
+  String get planWindowAfternoonShort;
+
+  /// No description provided for @planTaskAddTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm việc'**
+  String get planTaskAddTitle;
+
+  /// No description provided for @planTaskEditTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sửa việc'**
+  String get planTaskEditTitle;
+
+  /// No description provided for @planTaskCode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Loại việc'**
+  String get planTaskCode;
+
+  /// No description provided for @planTaskWindow.
+  ///
+  /// In vi, this message translates to:
+  /// **'Khung giờ'**
+  String get planTaskWindow;
+
+  /// No description provided for @planTaskFrequency.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tần suất'**
+  String get planTaskFrequency;
+
+  /// No description provided for @planTaskInterval.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cách nhau (ngày)'**
+  String get planTaskInterval;
+
+  /// No description provided for @planTaskFixedDay.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngày thứ (của project)'**
+  String get planTaskFixedDay;
+
+  /// No description provided for @planTaskReminder.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhắc lúc'**
+  String get planTaskReminder;
+
+  /// No description provided for @planTaskNoReminder.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không nhắc'**
+  String get planTaskNoReminder;
+
+  /// No description provided for @planTaskStage.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giai đoạn'**
+  String get planTaskStage;
+
+  /// No description provided for @planTaskDelete.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa việc'**
+  String get planTaskDelete;
+
+  /// No description provided for @planTaskSaveError.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không lưu được. Thử lại nhé.'**
+  String get planTaskSaveError;
+
+  /// No description provided for @planCalendarTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lịch chăm sóc'**
+  String get planCalendarTitle;
+
+  /// No description provided for @planWeekLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tuần {from}–{to}'**
+  String planWeekLabel(String from, String to);
+
+  /// No description provided for @planPrevWeek.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tuần trước'**
+  String get planPrevWeek;
+
+  /// No description provided for @planNextWeek.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tuần sau'**
+  String get planNextWeek;
+
+  /// No description provided for @planDow1.
+  ///
+  /// In vi, this message translates to:
+  /// **'T2'**
+  String get planDow1;
+
+  /// No description provided for @planDow2.
+  ///
+  /// In vi, this message translates to:
+  /// **'T3'**
+  String get planDow2;
+
+  /// No description provided for @planDow3.
+  ///
+  /// In vi, this message translates to:
+  /// **'T4'**
+  String get planDow3;
+
+  /// No description provided for @planDow4.
+  ///
+  /// In vi, this message translates to:
+  /// **'T5'**
+  String get planDow4;
+
+  /// No description provided for @planDow5.
+  ///
+  /// In vi, this message translates to:
+  /// **'T6'**
+  String get planDow5;
+
+  /// No description provided for @planDow6.
+  ///
+  /// In vi, this message translates to:
+  /// **'T7'**
+  String get planDow6;
+
+  /// No description provided for @planDow7.
+  ///
+  /// In vi, this message translates to:
+  /// **'CN'**
+  String get planDow7;
+
+  /// No description provided for @planDayTasks.
+  ///
+  /// In vi, this message translates to:
+  /// **'{count} việc'**
+  String planDayTasks(int count);
+
+  /// No description provided for @planStageBanner.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giai đoạn {n} · {name} (ngày {from}–{to}) · còn {left} ngày'**
+  String planStageBanner(int n, String name, int from, int to, int left);
+
+  /// No description provided for @planOutsideStages.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngoài các giai đoạn của kế hoạch'**
+  String get planOutsideStages;
+
+  /// No description provided for @planDayLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'{dow}, {date}'**
+  String planDayLabel(String dow, String date);
+
+  /// No description provided for @planNoTasksDay.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không có việc trong ngày này'**
+  String get planNoTasksDay;
+
+  /// No description provided for @planAddManual.
+  ///
+  /// In vi, this message translates to:
+  /// **'+ Thêm việc thủ công'**
+  String get planAddManual;
+
+  /// No description provided for @planTimeline.
+  ///
+  /// In vi, this message translates to:
+  /// **'Các giai đoạn'**
+  String get planTimeline;
+
+  /// No description provided for @projectDetailTabOverview.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tổng quan'**
+  String get projectDetailTabOverview;
+
+  /// No description provided for @projectDetailTabPlan.
+  ///
+  /// In vi, this message translates to:
+  /// **'Plan'**
+  String get projectDetailTabPlan;
+
+  /// No description provided for @projectDetailTabCalendar.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lịch'**
+  String get projectDetailTabCalendar;
+
+  /// No description provided for @projectDetailTabPhotos.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ảnh'**
+  String get projectDetailTabPhotos;
+
+  /// No description provided for @projectDetailTabMembers.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thành viên'**
+  String get projectDetailTabMembers;
+
+  /// No description provided for @projectDetailMeta.
+  ///
+  /// In vi, this message translates to:
+  /// **'{group} · {pots} chậu · {space} {sun}'**
+  String projectDetailMeta(String group, int pots, String space, String sun);
+
+  /// No description provided for @projectDetailShared.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chia sẻ với gia đình'**
+  String get projectDetailShared;
+
+  /// No description provided for @projectDetailStageCard.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giai đoạn {n}/{total} · {name}'**
+  String projectDetailStageCard(int n, int total, String name);
+
+  /// No description provided for @projectDetailDay.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngày {day}/{total}'**
+  String projectDetailDay(int day, int total);
+
+  /// No description provided for @projectDetailNextMilestone.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mốc tiếp theo: {milestone}, dự kiến khoảng {date}'**
+  String projectDetailNextMilestone(String milestone, String date);
+
+  /// No description provided for @projectDetailStatDone.
+  ///
+  /// In vi, this message translates to:
+  /// **'Việc đã xong'**
+  String get projectDetailStatDone;
+
+  /// No description provided for @projectDetailStatCheckins.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lần check-in'**
+  String get projectDetailStatCheckins;
+
+  /// No description provided for @projectDetailStatMilestones.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mốc đã đạt'**
+  String get projectDetailStatMilestones;
+
+  /// No description provided for @projectDetailPhotos.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ảnh tăng trưởng'**
+  String get projectDetailPhotos;
+
+  /// No description provided for @projectDetailPhotosEmpty.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ảnh check-in sẽ xuất hiện ở đây theo thời gian.'**
+  String get projectDetailPhotosEmpty;
+
+  /// No description provided for @projectDetailPhotoCount.
+  ///
+  /// In vi, this message translates to:
+  /// **'{count} ảnh'**
+  String projectDetailPhotoCount(int count);
+
+  /// No description provided for @projectDetailHistory.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lịch sử việc'**
+  String get projectDetailHistory;
+
+  /// No description provided for @projectDetailHistoryEmpty.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có việc nào được ghi nhận.'**
+  String get projectDetailHistoryEmpty;
+
+  /// No description provided for @projectDetailHistoryLine.
+  ///
+  /// In vi, this message translates to:
+  /// **'{task} · {action}'**
+  String projectDetailHistoryLine(String task, String action);
+
+  /// No description provided for @projectDetailMembers.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thành viên được giao việc'**
+  String get projectDetailMembers;
+
+  /// No description provided for @projectDetailNoMembers.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa giao việc cho ai.'**
+  String get projectDetailNoMembers;
+
+  /// No description provided for @projectDetailMemberTasks.
+  ///
+  /// In vi, this message translates to:
+  /// **'{count} việc'**
+  String projectDetailMemberTasks(int count);
+
+  /// No description provided for @projectDetailNoPlan.
+  ///
+  /// In vi, this message translates to:
+  /// **'Project này chưa có kế hoạch được duyệt.'**
+  String get projectDetailNoPlan;
+
+  /// No description provided for @projectDetailReviewPlan.
+  ///
+  /// In vi, this message translates to:
+  /// **'Duyệt kế hoạch'**
+  String get projectDetailReviewPlan;
+
+  /// No description provided for @projectDetailOpenPlan.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xem kế hoạch'**
+  String get projectDetailOpenPlan;
+
+  /// No description provided for @projectDetailOpenCalendar.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mở lịch'**
+  String get projectDetailOpenCalendar;
+
+  /// No description provided for @projectDetailLoadError.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tải được project. Thử lại nhé.'**
+  String get projectDetailLoadError;
 }
 
 class _AppLocalizationsDelegate

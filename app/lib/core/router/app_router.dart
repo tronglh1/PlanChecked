@@ -8,7 +8,10 @@ import '../../features/auth/presentation/login_screen.dart';
 import '../../features/plants/presentation/plant_search_screen.dart';
 import '../../features/profile/presentation/profile_providers.dart';
 import '../../features/profile/presentation/profile_setup_screen.dart';
+import '../../features/plan/plan_routes.dart';
 import '../../features/projects/presentation/project_context_screen.dart';
+import '../../features/projects/presentation/project_list_screen.dart';
+import '../../features/projects/projects_routes.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import '../../l10n/app_localizations.dart';
 import '../widgets/glass_scaffold.dart';
@@ -91,11 +94,20 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.configError,
         builder: (_, _) => const ConfigErrorScreen(),
       ),
+      ...projectsRoutes,
+      ...planRoutes,
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => _Shell(shell: shell),
         branches: [
           _branch(AppRoutes.today, Icons.today_rounded, (l) => l.tabToday),
-          _branch(AppRoutes.garden, Icons.yard_rounded, (l) => l.tabGarden),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.garden,
+                builder: (_, _) => const ProjectListScreen(),
+              ),
+            ],
+          ),
           _branch(
             AppRoutes.family,
             Icons.family_restroom_rounded,

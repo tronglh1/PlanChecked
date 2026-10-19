@@ -3,7 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/auth/presentation/auth_state.dart';
-import '../../features/auth/presentation/placeholder_screens.dart';
+import '../../features/auth/presentation/config_error_screen.dart';
+import '../../features/auth/presentation/login_screen.dart';
+import '../../features/plants/presentation/plant_search_screen.dart';
+import '../../features/profile/presentation/profile_providers.dart';
+import '../../features/profile/presentation/profile_setup_screen.dart';
+import '../../features/projects/presentation/project_context_screen.dart';
+import '../../features/settings/presentation/settings_screen.dart';
 import '../../l10n/app_localizations.dart';
 import '../widgets/glass_scaffold.dart';
 import 'glass_bottom_bar.dart';
@@ -17,18 +23,32 @@ class AppRoutes {
   static const achievements = '/achievements';
   static const settings = '/settings';
   static const login = '/login';
-  static const onboarding = '/onboarding';
+  static const onboardingProfile = '/onboarding/profile';
+  static const plantSearch = '/projects/new/search';
+  static const projectContext = '/projects/new/context';
   static const configError = '/config-error';
 }
 
 /// Pure redirect rule so it can be unit tested.
-String? authRedirect(AuthStatus status, String location) {
+///
+/// [profile] only matters when signed in: a signed-in user whose profile is
+/// [ProfileStatus.missing] is held on the onboarding profile screen.
+String? authRedirect(
+  AuthStatus status,
+  String location, {
+  ProfileStatus profile = ProfileStatus.complete,
+}) {
   switch (status) {
     case AuthStatus.configMissing:
       return location == AppRoutes.configError ? null : AppRoutes.configError;
     case AuthStatus.signedOut:
       return location == AppRoutes.login ? null : AppRoutes.login;
     case AuthStatus.signedIn:
+      if (profile == ProfileStatus.missing) {
+        return location == AppRoutes.onboardingProfile
+            ? null
+            : AppRoutes.onboardingProfile;
+      }
       if (location == AppRoutes.login || location == AppRoutes.configError) {
         return AppRoutes.today;
       }
@@ -39,18 +59,33 @@ String? authRedirect(AuthStatus status, String location) {
 final appRouterProvider = Provider<GoRouter>((ref) {
   final refresh = ValueNotifier<int>(0);
   ref.listen<AuthStatus>(authStateProvider, (_, _) => refresh.value++);
+  ref.listen<ProfileStatus>(profileStatusProvider, (_, _) => refresh.value++);
   ref.onDispose(refresh.dispose);
 
   final router = GoRouter(
     initialLocation: AppRoutes.today,
     refreshListenable: refresh,
-    redirect: (context, state) =>
-        authRedirect(ref.read(authStateProvider), state.matchedLocation),
+    redirect: (context, state) => authRedirect(
+      ref.read(authStateProvider),
+      state.matchedLocation,
+      profile: ref.read(profileStatusProvider),
+    ),
     routes: [
       GoRoute(path: AppRoutes.login, builder: (_, _) => const LoginScreen()),
       GoRoute(
-        path: AppRoutes.onboarding,
-        builder: (_, _) => const OnboardingScreen(),
+        path: AppRoutes.onboardingProfile,
+        builder: (_, _) => const ProfileSetupScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.plantSearch,
+        builder: (_, _) => const PlantSearchScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.projectContext,
+        builder: (_, state) => ProjectContextScreen(
+          plantId: state.uri.queryParameters['plant'],
+          freeText: state.uri.queryParameters['name'],
+        ),
       ),
       GoRoute(
         path: AppRoutes.configError,
@@ -71,10 +106,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             Icons.emoji_events_rounded,
             (l) => l.tabAchievements,
           ),
-          _branch(
-            AppRoutes.settings,
-            Icons.settings_rounded,
-            (l) => l.tabSettings,
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.settings,
+                builder: (_, _) => const SettingsScreen(),
+              ),
+            ],
           ),
         ],
       ),

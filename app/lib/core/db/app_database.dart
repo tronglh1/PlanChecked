@@ -22,11 +22,27 @@ class CachedTasks extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-@DriftDatabase(tables: [Outbox, CachedTasks])
+/// Small key/value store for local preferences (language, notification toggles).
+class LocalSettings extends Table {
+  TextColumn get key => text()();
+  TextColumn get value => text()();
+
+  @override
+  Set<Column> get primaryKey => {key};
+}
+
+@DriftDatabase(tables: [Outbox, CachedTasks, LocalSettings])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor])
     : super(executor ?? driftDatabase(name: 'vuon_nha'));
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+    onUpgrade: (m, from, to) async {
+      if (from < 2) await m.createTable(localSettings);
+    },
+  );
 }

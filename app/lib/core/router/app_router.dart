@@ -5,9 +5,13 @@ import 'package:go_router/go_router.dart';
 import '../../features/auth/presentation/auth_state.dart';
 import '../../features/auth/presentation/config_error_screen.dart';
 import '../../features/auth/presentation/login_screen.dart';
+import '../../features/gamification/gamification_routes.dart';
+import '../../features/household/household_routes.dart';
+import '../../features/household/presentation/household_providers.dart';
 import '../../features/plants/presentation/plant_search_screen.dart';
 import '../../features/profile/presentation/profile_providers.dart';
 import '../../features/profile/presentation/profile_setup_screen.dart';
+import '../../features/checkin/checkin_routes.dart';
 import '../../features/plan/plan_routes.dart';
 import '../../features/projects/presentation/project_context_screen.dart';
 import '../../features/projects/presentation/project_list_screen.dart';
@@ -16,6 +20,7 @@ import '../../features/settings/presentation/settings_screen.dart';
 import '../../features/today/presentation/today_screen.dart';
 import '../../features/today/today_routes.dart';
 import '../../l10n/app_localizations.dart';
+import '../env.dart';
 import '../widgets/glass_scaffold.dart';
 import 'glass_bottom_bar.dart';
 import 'tab_placeholder.dart';
@@ -24,11 +29,12 @@ class AppRoutes {
   const AppRoutes._();
   static const today = '/today';
   static const garden = '/garden';
-  static const family = '/family';
+  static const family = '/household';
   static const achievements = '/achievements';
   static const settings = '/settings';
   static const login = '/login';
   static const onboardingProfile = '/onboarding/profile';
+  static const onboardingHousehold = '/onboarding/household';
   static const plantSearch = '/projects/new/search';
   static const projectContext = '/projects/new/context';
   static const configError = '/config-error';
@@ -42,6 +48,7 @@ String? authRedirect(
   AuthStatus status,
   String location, {
   ProfileStatus profile = ProfileStatus.complete,
+  HouseholdGate household = HouseholdGate.done,
 }) {
   switch (status) {
     case AuthStatus.configMissing:
@@ -54,6 +61,11 @@ String? authRedirect(
             ? null
             : AppRoutes.onboardingProfile;
       }
+      // Onboarding step 2: no household yet and not skipped.
+      if (household == HouseholdGate.needsSetup &&
+          !householdSetupExempt(location)) {
+        return AppRoutes.onboardingHousehold;
+      }
       if (location == AppRoutes.login || location == AppRoutes.configError) {
         return AppRoutes.today;
       }
@@ -65,6 +77,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
   final refresh = ValueNotifier<int>(0);
   ref.listen<AuthStatus>(authStateProvider, (_, _) => refresh.value++);
   ref.listen<ProfileStatus>(profileStatusProvider, (_, _) => refresh.value++);
+  ref.listen<HouseholdGate>(householdGateProvider, (_, _) => refresh.value++);
   ref.onDispose(refresh.dispose);
 
   final router = GoRouter(
@@ -74,6 +87,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ref.read(authStateProvider),
       state.matchedLocation,
       profile: ref.read(profileStatusProvider),
+      household: ref.read(householdGateProvider),
     ),
     routes: [
       GoRoute(path: AppRoutes.login, builder: (_, _) => const LoginScreen()),
@@ -92,12 +106,15 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           freeText: state.uri.queryParameters['name'],
         ),
       ),
+      ...householdRoutes(),
+      ...gamificationRoutes(),
       GoRoute(
         path: AppRoutes.configError,
         builder: (_, _) => const ConfigErrorScreen(),
       ),
       ...projectsRoutes,
       ...planRoutes,
+      ...checkinRoutes,
       ...todayRoutes,
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => _Shell(shell: shell),
@@ -116,16 +133,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               ),
             ],
           ),
-          _branch(
-            AppRoutes.family,
-            Icons.family_restroom_rounded,
-            (l) => l.tabFamily,
-          ),
-          _branch(
-            AppRoutes.achievements,
-            Icons.emoji_events_rounded,
-            (l) => l.tabAchievements,
-          ),
+          StatefulShellBranch(routes: householdTabRoutes()),
+          StatefulShellBranch(routes: gamificationTabRoutes()),
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -138,6 +147,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
     ],
   );
+  if (Env.isConfigured) {
+    final links = attachJoinDeepLinks(ref, router);
+    ref.onDispose(() => links?.cancel());
+  }
   ref.onDispose(router.dispose);
   return router;
 });

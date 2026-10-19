@@ -108,5 +108,4 @@ void main() {
   });
 }
 
-Text tester(WidgetTester t, String key) =>
-    t.widget<Text>(find.byKey(Key(key)));
+Text tester(WidgetTester t, String key) => t.widget<Text>(find.byKey(Key(key)));

@@ -2113,6 +2113,1355 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Chụp ảnh check-in sẽ có ở bản sau.'**
   String get taskCheckinPlaceholder;
+
+  /// No description provided for @householdSetupStep.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bước 2/2'**
+  String get householdSetupStep;
+
+  /// No description provided for @householdSetupSkip.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bỏ qua'**
+  String get householdSetupSkip;
+
+  /// No description provided for @householdSetupTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chăm cây cùng người nhà?'**
+  String get householdSetupTitle;
+
+  /// No description provided for @householdSetupSub.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tạo gia đình để giao việc tưới, bón cho từng người và xem ai đã làm gì. Bạn có thể làm việc này sau.'**
+  String get householdSetupSub;
+
+  /// No description provided for @householdCreateTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tạo gia đình mới'**
+  String get householdCreateTitle;
+
+  /// No description provided for @householdCreateSub.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn là chủ nhà (Owner)'**
+  String get householdCreateSub;
+
+  /// No description provided for @householdJoinTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tham gia bằng mã mời'**
+  String get householdJoinTitle;
+
+  /// No description provided for @householdJoinSub.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn sẽ là thành viên (Member)'**
+  String get householdJoinSub;
+
+  /// No description provided for @householdJoinHint.
+  ///
+  /// In vi, this message translates to:
+  /// **'VD: VUON-4821'**
+  String get householdJoinHint;
+
+  /// No description provided for @householdJoinAction.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vào'**
+  String get householdJoinAction;
+
+  /// No description provided for @householdSetupFooter.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mỗi người chỉ ở trong một gia đình. App không có kết bạn công khai.'**
+  String get householdSetupFooter;
+
+  /// No description provided for @householdNameLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tên gia đình'**
+  String get householdNameLabel;
+
+  /// No description provided for @householdNameDefault.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhà mình'**
+  String get householdNameDefault;
+
+  /// No description provided for @householdCreateAction.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tạo gia đình'**
+  String get householdCreateAction;
+
+  /// No description provided for @householdErrorGeneric.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa thực hiện được. Thử lại nhé.'**
+  String get householdErrorGeneric;
+
+  /// No description provided for @householdErrorInvalidCode.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mã mời không đúng'**
+  String get householdErrorInvalidCode;
+
+  /// No description provided for @householdErrorExpired.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mã mời đã hết hạn'**
+  String get householdErrorExpired;
+
+  /// No description provided for @householdErrorAlreadyIn.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn đã ở trong một gia đình'**
+  String get householdErrorAlreadyIn;
+
+  /// No description provided for @householdErrorTooMany.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập sai quá nhiều lần, thử lại sau 1 giờ'**
+  String get householdErrorTooMany;
+
+  /// No description provided for @householdErrorCodeFormat.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mã có dạng VUON-1234'**
+  String get householdErrorCodeFormat;
+
+  /// No description provided for @householdJoined.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã tham gia gia đình'**
+  String get householdJoined;
+
+  /// No description provided for @householdEyebrow.
+  ///
+  /// In vi, this message translates to:
+  /// **'Gia đình · {count} người'**
+  String householdEyebrow(int count);
+
+  /// No description provided for @householdInvite.
+  ///
+  /// In vi, this message translates to:
+  /// **'+ Mời'**
+  String get householdInvite;
+
+  /// No description provided for @householdRoleOwner.
+  ///
+  /// In vi, this message translates to:
+  /// **'Owner'**
+  String get householdRoleOwner;
+
+  /// No description provided for @householdRoleMember.
+  ///
+  /// In vi, this message translates to:
+  /// **'Member'**
+  String get householdRoleMember;
+
+  /// No description provided for @householdYou.
+  ///
+  /// In vi, this message translates to:
+  /// **'{name} (bạn)'**
+  String householdYou(String name);
+
+  /// No description provided for @householdTasksWeek.
+  ///
+  /// In vi, this message translates to:
+  /// **'{count} việc tuần này'**
+  String householdTasksWeek(int count);
+
+  /// No description provided for @householdAway.
+  ///
+  /// In vi, this message translates to:
+  /// **'đang vắng nhà'**
+  String get householdAway;
+
+  /// No description provided for @householdSharedProjects.
+  ///
+  /// In vi, this message translates to:
+  /// **'Project chia sẻ'**
+  String get householdSharedProjects;
+
+  /// No description provided for @householdNoShared.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa chia sẻ project nào'**
+  String get householdNoShared;
+
+  /// No description provided for @householdShareMore.
+  ///
+  /// In vi, this message translates to:
+  /// **'+ Chia sẻ thêm'**
+  String get householdShareMore;
+
+  /// No description provided for @householdShareTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chia sẻ project với gia đình'**
+  String get householdShareTitle;
+
+  /// No description provided for @householdShare.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chia sẻ'**
+  String get householdShare;
+
+  /// No description provided for @householdUnshare.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngừng chia sẻ'**
+  String get householdUnshare;
+
+  /// No description provided for @householdShareOwnerOnly.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chỉ Owner mới chia sẻ được project'**
+  String get householdShareOwnerOnly;
+
+  /// No description provided for @householdShareNoProjects.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn chưa có project nào để chia sẻ'**
+  String get householdShareNoProjects;
+
+  /// No description provided for @householdActivity.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hoạt động'**
+  String get householdActivity;
+
+  /// No description provided for @householdActivityEmpty.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có hoạt động nào'**
+  String get householdActivityEmpty;
+
+  /// No description provided for @householdActTaskDone.
+  ///
+  /// In vi, this message translates to:
+  /// **'{name} đã hoàn thành một việc'**
+  String householdActTaskDone(String name);
+
+  /// No description provided for @householdActCheckin.
+  ///
+  /// In vi, this message translates to:
+  /// **'{name} đã check-in ảnh'**
+  String householdActCheckin(String name);
+
+  /// No description provided for @householdActMilestone.
+  ///
+  /// In vi, this message translates to:
+  /// **'{name} đạt mốc mới'**
+  String householdActMilestone(String name);
+
+  /// No description provided for @householdActJoined.
+  ///
+  /// In vi, this message translates to:
+  /// **'{name} đã tham gia gia đình'**
+  String householdActJoined(String name);
+
+  /// No description provided for @householdActLeft.
+  ///
+  /// In vi, this message translates to:
+  /// **'{name} đã rời gia đình'**
+  String householdActLeft(String name);
+
+  /// No description provided for @householdActShared.
+  ///
+  /// In vi, this message translates to:
+  /// **'{name} chia sẻ project “{project}”'**
+  String householdActShared(String name, String project);
+
+  /// No description provided for @householdActProject.
+  ///
+  /// In vi, this message translates to:
+  /// **'{text} · {project}'**
+  String householdActProject(String text, String project);
+
+  /// No description provided for @householdSomeone.
+  ///
+  /// In vi, this message translates to:
+  /// **'Một thành viên'**
+  String get householdSomeone;
+
+  /// No description provided for @householdRemoveMember.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa khỏi gia đình'**
+  String get householdRemoveMember;
+
+  /// No description provided for @householdRemoveTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa {name} khỏi gia đình?'**
+  String householdRemoveTitle(String name);
+
+  /// No description provided for @householdRemoveBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Project họ chia sẻ sẽ trở lại riêng tư.'**
+  String get householdRemoveBody;
+
+  /// No description provided for @householdLoadError.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tải được gia đình'**
+  String get householdLoadError;
+
+  /// No description provided for @householdNoneTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn chưa có gia đình'**
+  String get householdNoneTitle;
+
+  /// No description provided for @householdNoneSub.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tạo gia đình mới hoặc nhập mã mời để cùng chăm cây.'**
+  String get householdNoneSub;
+
+  /// No description provided for @householdInviteTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mời người nhà'**
+  String get householdInviteTitle;
+
+  /// No description provided for @householdInviteCodeLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mã mời của {name}'**
+  String householdInviteCodeLabel(String name);
+
+  /// No description provided for @householdInviteExpires.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hết hạn sau {days} ngày'**
+  String householdInviteExpires(int days);
+
+  /// No description provided for @householdInviteCopy.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sao chép mã'**
+  String get householdInviteCopy;
+
+  /// No description provided for @householdInviteCopied.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã sao chép mã'**
+  String get householdInviteCopied;
+
+  /// No description provided for @householdInviteShareLink.
+  ///
+  /// In vi, this message translates to:
+  /// **'Gửi link mời'**
+  String get householdInviteShareLink;
+
+  /// No description provided for @householdInviteShareText.
+  ///
+  /// In vi, this message translates to:
+  /// **'{inviter} mời bạn cùng chăm cây trong “{name}” trên Vườn Nhà. Mã: {code}. Mở: {link}'**
+  String householdInviteShareText(
+    String inviter,
+    String name,
+    String code,
+    String link,
+  );
+
+  /// No description provided for @householdInviteOr.
+  ///
+  /// In vi, this message translates to:
+  /// **'hoặc mời trực tiếp'**
+  String get householdInviteOr;
+
+  /// No description provided for @householdInviteTargetLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Số điện thoại hoặc email'**
+  String get householdInviteTargetLabel;
+
+  /// No description provided for @householdInviteTargetHint.
+  ///
+  /// In vi, this message translates to:
+  /// **'09xx xxx xxx'**
+  String get householdInviteTargetHint;
+
+  /// No description provided for @householdInviteRole.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vai trò'**
+  String get householdInviteRole;
+
+  /// No description provided for @householdInviteRoleMemberDesc.
+  ///
+  /// In vi, this message translates to:
+  /// **'Làm việc được giao, xem project được chia sẻ'**
+  String get householdInviteRoleMemberDesc;
+
+  /// No description provided for @householdInviteRoleOwnerDesc.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quản lý thành viên, project và giao việc'**
+  String get householdInviteRoleOwnerDesc;
+
+  /// No description provided for @householdInviteSend.
+  ///
+  /// In vi, this message translates to:
+  /// **'Gửi lời mời'**
+  String get householdInviteSend;
+
+  /// No description provided for @householdInviteEmailSent.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã gửi email mời tới {target}'**
+  String householdInviteEmailSent(String target);
+
+  /// No description provided for @householdInviteEmailFailed.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa gửi được email. Hãy dùng nút gửi link.'**
+  String get householdInviteEmailFailed;
+
+  /// No description provided for @householdInviteTargetInvalid.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập email hợp lệ hoặc số điện thoại'**
+  String get householdInviteTargetInvalid;
+
+  /// No description provided for @householdInviteOwnerOnly.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chỉ Owner mới mời được người nhà'**
+  String get householdInviteOwnerOnly;
+
+  /// No description provided for @householdInviteLoading.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang tạo mã mời...'**
+  String get householdInviteLoading;
+
+  /// No description provided for @householdAssignTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giao việc'**
+  String get householdAssignTitle;
+
+  /// No description provided for @householdAssignHow.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cách giao'**
+  String get householdAssignHow;
+
+  /// No description provided for @householdModeOnce.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chỉ lần này'**
+  String get householdModeOnce;
+
+  /// No description provided for @householdModeSeries.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cả chuỗi lặp'**
+  String get householdModeSeries;
+
+  /// No description provided for @householdModeRotation.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xoay vòng'**
+  String get householdModeRotation;
+
+  /// No description provided for @householdAssignOrder.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thứ tự xoay vòng'**
+  String get householdAssignOrder;
+
+  /// No description provided for @householdAssignTo.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giao cho'**
+  String get householdAssignTo;
+
+  /// No description provided for @householdAssignAwayUntil.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vắng nhà đến {date}'**
+  String householdAssignAwayUntil(String date);
+
+  /// No description provided for @householdAssignHintRotation.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xoay vòng: {names} → lặp lại.'**
+  String householdAssignHintRotation(String names);
+
+  /// No description provided for @householdAssignHintSeries.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mọi lần “{task}” tiếp theo sẽ giao cho {name}.'**
+  String householdAssignHintSeries(String task, String name);
+
+  /// No description provided for @householdAssignHintOnce.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chỉ lần “{task}” tới giao cho {name}.'**
+  String householdAssignHintOnce(String task, String name);
+
+  /// No description provided for @householdAssignDone.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã giao việc'**
+  String get householdAssignDone;
+
+  /// No description provided for @householdAssignOwnerOnly.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chỉ Owner mới giao được việc'**
+  String get householdAssignOwnerOnly;
+
+  /// No description provided for @householdAssignNeedHousehold.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hãy tạo hoặc tham gia gia đình để giao việc'**
+  String get householdAssignNeedHousehold;
+
+  /// No description provided for @householdAssignNoTask.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tìm thấy việc này'**
+  String get householdAssignNoTask;
+
+  /// No description provided for @householdAssignRotationMin.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn ít nhất 2 người để xoay vòng'**
+  String get householdAssignRotationMin;
+
+  /// No description provided for @householdAssignPickOne.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn một người'**
+  String get householdAssignPickOne;
+
+  /// No description provided for @householdWindowMorning.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sáng sớm'**
+  String get householdWindowMorning;
+
+  /// No description provided for @householdWindowAfternoon.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chiều mát'**
+  String get householdWindowAfternoon;
+
+  /// No description provided for @householdWindowAllDay.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cả ngày'**
+  String get householdWindowAllDay;
+
+  /// No description provided for @householdEveryDays.
+  ///
+  /// In vi, this message translates to:
+  /// **'{n} ngày/lần'**
+  String householdEveryDays(int n);
+
+  /// No description provided for @householdLeaveRow.
+  ///
+  /// In vi, this message translates to:
+  /// **'Rời gia đình “{name}”'**
+  String householdLeaveRow(String name);
+
+  /// No description provided for @householdLeaveTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Rời gia đình?'**
+  String get householdLeaveTitle;
+
+  /// No description provided for @householdLeaveBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn sẽ không còn thấy project chia sẻ. Project của bạn trở lại riêng tư.'**
+  String get householdLeaveBody;
+
+  /// No description provided for @householdLeaveOwnerBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quyền Owner sẽ chuyển cho {name}, thành viên lâu nhất.'**
+  String householdLeaveOwnerBody(String name);
+
+  /// No description provided for @householdLeaveLast.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn là người cuối cùng, nên gia đình sẽ bị xóa.'**
+  String get householdLeaveLast;
+
+  /// No description provided for @householdLeaveAction.
+  ///
+  /// In vi, this message translates to:
+  /// **'Rời gia đình'**
+  String get householdLeaveAction;
+
+  /// No description provided for @householdLeft.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã rời gia đình'**
+  String get householdLeft;
+
+  /// No description provided for @householdJoinScreenTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tham gia gia đình'**
+  String get householdJoinScreenTitle;
+
+  /// No description provided for @householdJoinLinkBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn được mời bằng mã {code}'**
+  String householdJoinLinkBody(String code);
+
+  /// No description provided for @householdJoinConfirm.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tham gia'**
+  String get householdJoinConfirm;
+
+  /// No description provided for @gamTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thành tích'**
+  String get gamTitle;
+
+  /// No description provided for @gamTotalXp.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tổng điểm'**
+  String get gamTotalXp;
+
+  /// No description provided for @gamXpUnit.
+  ///
+  /// In vi, this message translates to:
+  /// **'{xp} XP'**
+  String gamXpUnit(String xp);
+
+  /// No description provided for @gamLevelLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Level'**
+  String get gamLevelLabel;
+
+  /// No description provided for @gamLevelLine.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cấp {level} · {name}'**
+  String gamLevelLine(int level, String name);
+
+  /// No description provided for @gamToNext.
+  ///
+  /// In vi, this message translates to:
+  /// **'Còn {xp} XP để lên Cấp {level} · {name}'**
+  String gamToNext(int xp, int level, String name);
+
+  /// No description provided for @gamTopLevel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn đã đạt cấp cao nhất'**
+  String get gamTopLevel;
+
+  /// No description provided for @gamStreak.
+  ///
+  /// In vi, this message translates to:
+  /// **'{days} ngày liên tục'**
+  String gamStreak(int days);
+
+  /// No description provided for @gamStreakNone.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có chuỗi ngày'**
+  String get gamStreakNone;
+
+  /// No description provided for @gamOnTime.
+  ///
+  /// In vi, this message translates to:
+  /// **'Việc đúng hạn'**
+  String get gamOnTime;
+
+  /// No description provided for @gamCheckin.
+  ///
+  /// In vi, this message translates to:
+  /// **'Check-in ảnh'**
+  String get gamCheckin;
+
+  /// No description provided for @gamMilestone.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đạt milestone'**
+  String get gamMilestone;
+
+  /// No description provided for @gamToday.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hôm nay'**
+  String get gamToday;
+
+  /// No description provided for @gamTodayCap.
+  ///
+  /// In vi, this message translates to:
+  /// **'{xp}/{cap} XP'**
+  String gamTodayCap(int xp, int cap);
+
+  /// No description provided for @gamAntiCheat.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mỗi ngày tối đa {cap} XP từ việc thường. Điểm milestone chỉ cộng khi có ảnh check-in xác nhận.'**
+  String gamAntiCheat(int cap);
+
+  /// No description provided for @gamPendingPhoto.
+  ///
+  /// In vi, this message translates to:
+  /// **'{count} mốc đang chờ ảnh check-in xác nhận, chưa tính XP.'**
+  String gamPendingPhoto(int count);
+
+  /// No description provided for @gamBadges.
+  ///
+  /// In vi, this message translates to:
+  /// **'Huy hiệu · {earned}/{total}'**
+  String gamBadges(int earned, int total);
+
+  /// No description provided for @gamBadgesEmpty.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có huy hiệu nào'**
+  String get gamBadgesEmpty;
+
+  /// No description provided for @gamBadgeLocked.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa đạt'**
+  String get gamBadgeLocked;
+
+  /// No description provided for @gamLoadError.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tải được thành tích'**
+  String get gamLoadError;
+
+  /// No description provided for @gamMilestoneEyebrow.
+  ///
+  /// In vi, this message translates to:
+  /// **'ĐẠT MỐC MỚI'**
+  String get gamMilestoneEyebrow;
+
+  /// No description provided for @gamMilestoneUnknown.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mốc mới'**
+  String get gamMilestoneUnknown;
+
+  /// No description provided for @gamMilestoneBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'{project} đã qua một mốc mới. Ảnh check-in hôm nay đã xác nhận.'**
+  String gamMilestoneBody(String project);
+
+  /// No description provided for @gamMilestoneBodyPending.
+  ///
+  /// In vi, this message translates to:
+  /// **'{project} ghi nhận mốc này, nhưng chưa có ảnh check-in xác nhận.'**
+  String gamMilestoneBodyPending(String project);
+
+  /// No description provided for @gamRewardXp.
+  ///
+  /// In vi, this message translates to:
+  /// **'+{xp} XP'**
+  String gamRewardXp(int xp);
+
+  /// No description provided for @gamRewardPending.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chờ ảnh'**
+  String get gamRewardPending;
+
+  /// No description provided for @gamRewardMilestone.
+  ///
+  /// In vi, this message translates to:
+  /// **'Milestone'**
+  String get gamRewardMilestone;
+
+  /// No description provided for @gamRewardBadge.
+  ///
+  /// In vi, this message translates to:
+  /// **'Huy hiệu'**
+  String get gamRewardBadge;
+
+  /// No description provided for @gamRewardNoBadge.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có'**
+  String get gamRewardNoBadge;
+
+  /// No description provided for @gamPendingNote.
+  ///
+  /// In vi, this message translates to:
+  /// **'Điểm milestone chỉ cộng khi có ảnh check-in xác nhận. Hãy check-in ảnh để nhận XP.'**
+  String get gamPendingNote;
+
+  /// No description provided for @gamKeepsake.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ảnh kỷ niệm'**
+  String get gamKeepsake;
+
+  /// No description provided for @gamKeepsakeCard.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thẻ kỷ niệm'**
+  String get gamKeepsakeCard;
+
+  /// No description provided for @gamKeepsakeSub.
+  ///
+  /// In vi, this message translates to:
+  /// **'Có thể chia sẻ'**
+  String get gamKeepsakeSub;
+
+  /// No description provided for @gamShare.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chia sẻ ảnh kỷ niệm'**
+  String get gamShare;
+
+  /// No description provided for @gamShareText.
+  ///
+  /// In vi, this message translates to:
+  /// **'{project} vừa đạt mốc “{milestone}” trên Vườn Nhà!'**
+  String gamShareText(String project, String milestone);
+
+  /// No description provided for @gamShareError.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa chia sẻ được'**
+  String get gamShareError;
+
+  /// No description provided for @gamViewAchievements.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xem thành tích'**
+  String get gamViewAchievements;
+
+  /// No description provided for @checkinEntryButton.
+  ///
+  /// In vi, this message translates to:
+  /// **'Check-in ảnh'**
+  String get checkinEntryButton;
+
+  /// No description provided for @checkinTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Check-in · {plant}'**
+  String checkinTitle(String plant);
+
+  /// No description provided for @checkinShotProgress.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ảnh {n}/{total} · {shot}'**
+  String checkinShotProgress(int n, int total, String shot);
+
+  /// No description provided for @checkinShotWhole.
+  ///
+  /// In vi, this message translates to:
+  /// **'Toàn cây'**
+  String get checkinShotWhole;
+
+  /// No description provided for @checkinShotLeaf.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cận lá'**
+  String get checkinShotLeaf;
+
+  /// No description provided for @checkinShotUnder.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mặt dưới lá'**
+  String get checkinShotUnder;
+
+  /// No description provided for @checkinFrameHint.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đặt cả cây trong khung'**
+  String get checkinFrameHint;
+
+  /// No description provided for @checkinShotsTaken.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã chụp {count}/{max} ảnh'**
+  String checkinShotsTaken(int count, int max);
+
+  /// No description provided for @checkinTakePhoto.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chụp ảnh'**
+  String get checkinTakePhoto;
+
+  /// No description provided for @checkinRetakeShot.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chụp lại ảnh này'**
+  String get checkinRetakeShot;
+
+  /// No description provided for @checkinGallery.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn từ thư viện ảnh'**
+  String get checkinGallery;
+
+  /// No description provided for @checkinTips.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xem mẹo chụp'**
+  String get checkinTips;
+
+  /// No description provided for @checkinClose.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đóng'**
+  String get checkinClose;
+
+  /// No description provided for @checkinQuickTags.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tình trạng nhanh'**
+  String get checkinQuickTags;
+
+  /// No description provided for @checkinTagLeafYellow.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lá vàng'**
+  String get checkinTagLeafYellow;
+
+  /// No description provided for @checkinTagWilt.
+  ///
+  /// In vi, this message translates to:
+  /// **'Héo'**
+  String get checkinTagWilt;
+
+  /// No description provided for @checkinTagPests.
+  ///
+  /// In vi, this message translates to:
+  /// **'Có sâu'**
+  String get checkinTagPests;
+
+  /// No description provided for @checkinTagSpots.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đốm'**
+  String get checkinTagSpots;
+
+  /// No description provided for @checkinNoteHint.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ghi chú ngắn (không bắt buộc)'**
+  String get checkinNoteHint;
+
+  /// No description provided for @checkinAnalyze.
+  ///
+  /// In vi, this message translates to:
+  /// **'Phân tích ảnh'**
+  String get checkinAnalyze;
+
+  /// No description provided for @checkinProcessing.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang xử lý ảnh...'**
+  String get checkinProcessing;
+
+  /// No description provided for @checkinAnalyzingTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'AI đang xem ảnh của bạn'**
+  String get checkinAnalyzingTitle;
+
+  /// No description provided for @checkinAnalyzingSub.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thường mất khoảng 15 giây'**
+  String get checkinAnalyzingSub;
+
+  /// No description provided for @checkinStepUpload.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tải ảnh lên'**
+  String get checkinStepUpload;
+
+  /// No description provided for @checkinStepAnalyze.
+  ///
+  /// In vi, this message translates to:
+  /// **'Phân tích tình trạng cây'**
+  String get checkinStepAnalyze;
+
+  /// No description provided for @checkinQuotaTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hôm nay đã hết lượt phân tích'**
+  String get checkinQuotaTitle;
+
+  /// No description provided for @checkinQuotaBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn đã dùng {used}/{cap} lượt phân tích AI hôm nay. Ảnh đã được lưu trong dòng thời gian, mai bạn thử lại nhé.'**
+  String checkinQuotaBody(int used, int cap);
+
+  /// No description provided for @checkinQuotaBodyPlain.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn đã dùng hết lượt phân tích AI hôm nay. Ảnh đã được lưu trong dòng thời gian, mai bạn thử lại nhé.'**
+  String get checkinQuotaBodyPlain;
+
+  /// No description provided for @checkinAiDownTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'AI chưa trả lời được'**
+  String get checkinAiDownTitle;
+
+  /// No description provided for @checkinAiDownBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Kế hoạch giữ nguyên và lượt phân tích không bị trừ. Thử lại sau ít phút nhé.'**
+  String get checkinAiDownBody;
+
+  /// No description provided for @checkinSkippedTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cây vừa được phân tích'**
+  String get checkinSkippedTitle;
+
+  /// No description provided for @checkinSkippedBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trong 24 giờ qua project này đã có kết quả. Chọn thêm tình trạng nếu có dấu hiệu mới.'**
+  String get checkinSkippedBody;
+
+  /// No description provided for @checkinSkippedView.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xem kết quả trước'**
+  String get checkinSkippedView;
+
+  /// No description provided for @checkinFailedTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa gửi được ảnh'**
+  String get checkinFailedTitle;
+
+  /// No description provided for @checkinFailedBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Kiểm tra kết nối rồi thử lại. Ảnh đã chụp vẫn được giữ.'**
+  String get checkinFailedBody;
+
+  /// No description provided for @checkinBackToCapture.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quay lại chụp'**
+  String get checkinBackToCapture;
+
+  /// No description provided for @checkinRetakeTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cần chụp lại'**
+  String get checkinRetakeTitle;
+
+  /// No description provided for @checkinRetakeReasonBlur.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ảnh bị mờ'**
+  String get checkinRetakeReasonBlur;
+
+  /// No description provided for @checkinRetakeReasonDark.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ảnh thiếu sáng'**
+  String get checkinRetakeReasonDark;
+
+  /// No description provided for @checkinRetakeReasonFar.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa thấy rõ cây'**
+  String get checkinRetakeReasonFar;
+
+  /// No description provided for @checkinRetakeReasonNotPlant.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ảnh không có cây'**
+  String get checkinRetakeReasonNotPlant;
+
+  /// No description provided for @checkinRetakeReasonUnreadable.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không đọc được ảnh'**
+  String get checkinRetakeReasonUnreadable;
+
+  /// No description provided for @checkinRetakeHeadline.
+  ///
+  /// In vi, this message translates to:
+  /// **'AI chưa đủ thông tin để đánh giá'**
+  String get checkinRetakeHeadline;
+
+  /// No description provided for @checkinRetakeBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Để tránh đoán sai, bạn chụp lại giúp mình nhé. Lần chụp này chưa tính vào lượt phân tích trong ngày.'**
+  String get checkinRetakeBody;
+
+  /// No description provided for @checkinRetakeTipsTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mẹo chụp rõ'**
+  String get checkinRetakeTipsTitle;
+
+  /// No description provided for @checkinRetakeTip1.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chụp ban ngày, tránh ngược sáng'**
+  String get checkinRetakeTip1;
+
+  /// No description provided for @checkinRetakeTip2.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giữ máy cách cây 40–60cm, chạm để lấy nét'**
+  String get checkinRetakeTip2;
+
+  /// No description provided for @checkinRetakeTip3.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm 1 ảnh cận lá có dấu hiệu lạ'**
+  String get checkinRetakeTip3;
+
+  /// No description provided for @checkinRetakeCta.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chụp lại'**
+  String get checkinRetakeCta;
+
+  /// No description provided for @checkinResultTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Kết quả check-in'**
+  String get checkinResultTitle;
+
+  /// No description provided for @checkinXpChip.
+  ///
+  /// In vi, this message translates to:
+  /// **'+{xp} XP'**
+  String checkinXpChip(int xp);
+
+  /// No description provided for @checkinAiLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Gợi ý từ AI'**
+  String get checkinAiLabel;
+
+  /// No description provided for @checkinStageLine.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giai đoạn: {stage} ({pct}%)'**
+  String checkinStageLine(String stage, int pct);
+
+  /// No description provided for @checkinStageEarly.
+  ///
+  /// In vi, this message translates to:
+  /// **'đầu {name}'**
+  String checkinStageEarly(String name);
+
+  /// No description provided for @checkinStageMid.
+  ///
+  /// In vi, this message translates to:
+  /// **'giữa {name}'**
+  String checkinStageMid(String name);
+
+  /// No description provided for @checkinStageLate.
+  ///
+  /// In vi, this message translates to:
+  /// **'cuối {name}'**
+  String checkinStageLate(String name);
+
+  /// No description provided for @checkinHealthLine.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sức khỏe: {health}'**
+  String checkinHealthLine(String health);
+
+  /// No description provided for @checkinHealthGood.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tốt'**
+  String get checkinHealthGood;
+
+  /// No description provided for @checkinHealthFair.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trung bình'**
+  String get checkinHealthFair;
+
+  /// No description provided for @checkinHealthPoor.
+  ///
+  /// In vi, this message translates to:
+  /// **'Kém'**
+  String get checkinHealthPoor;
+
+  /// No description provided for @checkinIssuesTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Dấu hiệu nghi ngờ'**
+  String get checkinIssuesTitle;
+
+  /// No description provided for @checkinNoIssues.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa thấy dấu hiệu bất thường.'**
+  String get checkinNoIssues;
+
+  /// No description provided for @checkinSafeActions.
+  ///
+  /// In vi, this message translates to:
+  /// **'Việc nên làm (an toàn, ưu tiên hữu cơ)'**
+  String get checkinSafeActions;
+
+  /// No description provided for @checkinMilestoneNote.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ảnh xác nhận đạt mốc {name}'**
+  String checkinMilestoneNote(String name);
+
+  /// No description provided for @checkinChangesTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đề xuất điều chỉnh plan'**
+  String get checkinChangesTitle;
+
+  /// No description provided for @checkinNoChanges.
+  ///
+  /// In vi, this message translates to:
+  /// **'AI không đề xuất thay đổi nào cho plan.'**
+  String get checkinNoChanges;
+
+  /// No description provided for @checkinKindAdd.
+  ///
+  /// In vi, this message translates to:
+  /// **'THÊM VIỆC'**
+  String get checkinKindAdd;
+
+  /// No description provided for @checkinKindFreq.
+  ///
+  /// In vi, this message translates to:
+  /// **'ĐỔI TẦN SUẤT'**
+  String get checkinKindFreq;
+
+  /// No description provided for @checkinKindShift.
+  ///
+  /// In vi, this message translates to:
+  /// **'DỜI MỐC'**
+  String get checkinKindShift;
+
+  /// No description provided for @checkinKindRemove.
+  ///
+  /// In vi, this message translates to:
+  /// **'BỎ VIỆC'**
+  String get checkinKindRemove;
+
+  /// No description provided for @checkinChangeFreq.
+  ///
+  /// In vi, this message translates to:
+  /// **'{task}: {from} → {to}'**
+  String checkinChangeFreq(String task, String from, String to);
+
+  /// No description provided for @checkinChangeFreqTo.
+  ///
+  /// In vi, this message translates to:
+  /// **'{task}: {to}'**
+  String checkinChangeFreqTo(String task, String to);
+
+  /// No description provided for @checkinChangeShift.
+  ///
+  /// In vi, this message translates to:
+  /// **'{milestone}: dời đến {date}'**
+  String checkinChangeShift(String milestone, String date);
+
+  /// No description provided for @checkinChangeApprove.
+  ///
+  /// In vi, this message translates to:
+  /// **'Áp dụng'**
+  String get checkinChangeApprove;
+
+  /// No description provided for @checkinChangeSkip.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bỏ qua'**
+  String get checkinChangeSkip;
+
+  /// No description provided for @checkinLowConfTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'AI chưa chắc chắn lắm'**
+  String get checkinLowConfTitle;
+
+  /// No description provided for @checkinLowConfBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn có thể mang ảnh hoặc mẫu lá đến cửa hàng nông nghiệp gần nhà để hỏi thêm. Thuốc và liều dùng nên theo đúng hướng dẫn trên nhãn sản phẩm.'**
+  String get checkinLowConfBody;
+
+  /// No description provided for @checkinLater.
+  ///
+  /// In vi, this message translates to:
+  /// **'Để sau'**
+  String get checkinLater;
+
+  /// No description provided for @checkinApply.
+  ///
+  /// In vi, this message translates to:
+  /// **'Áp dụng {count} thay đổi'**
+  String checkinApply(int count);
+
+  /// No description provided for @checkinSkipAll.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bỏ qua tất cả'**
+  String get checkinSkipAll;
+
+  /// No description provided for @checkinDone.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xong'**
+  String get checkinDone;
+
+  /// No description provided for @checkinApplyError.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa áp dụng được. Thử lại nhé.'**
+  String get checkinApplyError;
+
+  /// No description provided for @checkinApplied.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã áp dụng {count} thay đổi'**
+  String checkinApplied(int count);
+
+  /// No description provided for @checkinAlreadyAnswered.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn đã trả lời các đề xuất này rồi.'**
+  String get checkinAlreadyAnswered;
+
+  /// No description provided for @checkinResultLoadError.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tải được kết quả check-in.'**
+  String get checkinResultLoadError;
 }
 
 class _AppLocalizationsDelegate

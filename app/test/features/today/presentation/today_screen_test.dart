@@ -73,6 +73,14 @@ Future<void> pumpToday(
         builder: (_, _) => const Scaffold(body: TodayScreen()),
       ),
       ...todayRoutes,
+      GoRoute(
+        path: '/task/:id/assign',
+        builder: (_, _) => const Scaffold(body: Text('assign-stub')),
+      ),
+      GoRoute(
+        path: '/projects/:id/checkin',
+        builder: (_, _) => const Scaffold(body: Text('checkin-stub')),
+      ),
     ],
   );
   await t.pumpWidget(
@@ -261,7 +269,7 @@ void main() {
     await pumpToday(t, env);
     await t.tap(find.byKey(const Key('checkin-p1')));
     await t.pumpAndSettle();
-    expect(find.text('Chụp ảnh check-in sẽ có ở bản sau.'), findsOneWidget);
+    expect(find.text('checkin-stub'), findsOneWidget);
   });
 
   testWidgets('empty state when nothing is planned', (t) async {

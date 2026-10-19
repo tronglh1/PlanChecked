@@ -73,6 +73,9 @@ class AppColors {
   static const Color dividerSoft = Color(0xFFEEF1EC); // line-soft
   static const Color danger = Color(0xFFB42318);
   static const Color dangerLine = Color(0xFFF1C4BF);
+
+  /// Check-in camera screen background (spec screen 13).
+  static const Color cameraDark = Color(0xFF0F1712);
 }
 
 class AppGradients {

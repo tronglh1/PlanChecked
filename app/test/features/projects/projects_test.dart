@@ -195,66 +195,72 @@ void main() {
       );
     });
 
-    test('buildProjectSummaries uses task_occurrences counts, stage and photo', () {
-      final approved = fakeBundle(status: PlanStatus.approved, projectId: 'a');
-      final draft = fakeBundle(planId: 'plan2', projectId: 'b');
-      Map<String, dynamic> planRow(PlanBundleLike b) => {
-        ...b.bundle.plan.toJson(),
-        'stages': [for (final s in b.bundle.stages) s.toJson()],
-      };
-      final rows = buildProjectSummaries(
-        projectRows: [
-          {
-            'id': 'a',
-            'owner_id': 'u1',
-            'name': 'A',
-            'start_date': '2026-10-13',
-            'plants': {'name_vi': 'Cà chua bi', 'group': 'rau_qua'},
-          },
-          {
-            'id': 'b',
-            'owner_id': 'u1',
-            'name': 'B',
-            'start_date': '2026-10-13',
-          },
-          {
-            'id': 'c',
-            'owner_id': 'u1',
-            'name': 'C',
-            'start_date': '2026-10-13',
-          },
-        ],
-        planRows: [
-          planRow(PlanBundleLike(approved)),
-          planRow(PlanBundleLike(draft)),
-        ],
-        todayCounts: {'a': 2},
-        checkinRows: [
-          {
-            'project_id': 'a',
-            'created_at': '2026-10-10T01:00:00Z',
-            'shots': [
-              {'type': 'whole_plant', 'path': 'old.jpg'},
-            ],
-          },
-          {
-            'project_id': 'a',
-            'created_at': '2026-10-12T01:00:00Z',
-            'shots': [
-              {'type': 'whole_plant', 'path': 'new.jpg'},
-            ],
-          },
-        ],
-        today: DateTime.utc(2026, 10, 13),
-      );
-      expect(rows[0].todayTaskCount, 2);
-      expect(rows[0].currentStage!.code, 'S1');
-      expect(rows[0].latestPhotoPath, 'new.jpg');
-      expect(rows[0].plantNameVi, 'Cà chua bi');
-      expect(rows[1].todayTaskCount, 0); // draft: nothing scheduled yet
-      expect(rows[1].planStatus, 'draft');
-      expect(rows[2].progress, isNull);
-    });
+    test(
+      'buildProjectSummaries uses task_occurrences counts, stage and photo',
+      () {
+        final approved = fakeBundle(
+          status: PlanStatus.approved,
+          projectId: 'a',
+        );
+        final draft = fakeBundle(planId: 'plan2', projectId: 'b');
+        Map<String, dynamic> planRow(PlanBundleLike b) => {
+          ...b.bundle.plan.toJson(),
+          'stages': [for (final s in b.bundle.stages) s.toJson()],
+        };
+        final rows = buildProjectSummaries(
+          projectRows: [
+            {
+              'id': 'a',
+              'owner_id': 'u1',
+              'name': 'A',
+              'start_date': '2026-10-13',
+              'plants': {'name_vi': 'Cà chua bi', 'group': 'rau_qua'},
+            },
+            {
+              'id': 'b',
+              'owner_id': 'u1',
+              'name': 'B',
+              'start_date': '2026-10-13',
+            },
+            {
+              'id': 'c',
+              'owner_id': 'u1',
+              'name': 'C',
+              'start_date': '2026-10-13',
+            },
+          ],
+          planRows: [
+            planRow(PlanBundleLike(approved)),
+            planRow(PlanBundleLike(draft)),
+          ],
+          todayCounts: {'a': 2},
+          checkinRows: [
+            {
+              'project_id': 'a',
+              'created_at': '2026-10-10T01:00:00Z',
+              'shots': [
+                {'type': 'whole_plant', 'path': 'old.jpg'},
+              ],
+            },
+            {
+              'project_id': 'a',
+              'created_at': '2026-10-12T01:00:00Z',
+              'shots': [
+                {'type': 'whole_plant', 'path': 'new.jpg'},
+              ],
+            },
+          ],
+          today: DateTime.utc(2026, 10, 13),
+        );
+        expect(rows[0].todayTaskCount, 2);
+        expect(rows[0].currentStage!.code, 'S1');
+        expect(rows[0].latestPhotoPath, 'new.jpg');
+        expect(rows[0].plantNameVi, 'Cà chua bi');
+        expect(rows[1].todayTaskCount, 0); // draft: nothing scheduled yet
+        expect(rows[1].planStatus, 'draft');
+        expect(rows[2].progress, isNull);
+      },
+    );
 
     test('AiPlanResult.fromJson maps quota and failure', () {
       final q = AiPlanResult.fromJson({'error': 'quota_exceeded'}, status: 429);

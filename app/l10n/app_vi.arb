@@ -148,29 +148,71 @@
   "contextTitle": "Thông tin & bối cảnh trồng",
   "projectsTitle": "Vườn của tôi",
   "projectsFilterActive": "Đang trồng · {count}",
-  "@projectsFilterActive": {"placeholders": {"count": {"type": "int"}}},
+  "@projectsFilterActive": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "projectsFilterDone": "Đã xong · {count}",
-  "@projectsFilterDone": {"placeholders": {"count": {"type": "int"}}},
+  "@projectsFilterDone": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "projectsFilterArchived": "Lưu trữ",
   "projectsEmptyTitle": "Chưa có cây nào",
   "projectsEmptyMessage": "Bắt đầu trồng cây đầu tiên, AI sẽ lập kế hoạch chăm sóc cho bạn.",
   "projectsAddNew": "Trồng cây mới",
   "projectsLoadError": "Không tải được danh sách. Thử lại nhé.",
   "projectsKindLine": "{group} · {pots} chậu · ngày {day}",
-  "@projectsKindLine": {"placeholders": {"group": {"type": "String"}, "pots": {"type": "int"}, "day": {"type": "int"}}},
+  "@projectsKindLine": {
+    "placeholders": {
+      "group": {
+        "type": "String"
+      },
+      "pots": {
+        "type": "int"
+      },
+      "day": {
+        "type": "int"
+      }
+    }
+  },
   "projectsNoPlan": "Chưa có kế hoạch",
   "projectsPlanPending": "Chờ duyệt kế hoạch",
   "projectsStageBeforeStart": "Sắp bắt đầu",
   "projectsTasksToday": "{count} việc hôm nay",
-  "@projectsTasksToday": {"placeholders": {"count": {"type": "int"}}},
+  "@projectsTasksToday": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "projectsPhotoAgo": "Ảnh: {days} ngày trước",
-  "@projectsPhotoAgo": {"placeholders": {"days": {"type": "int"}}},
+  "@projectsPhotoAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "projectsPhotoToday": "Ảnh: hôm nay",
   "projectsNoPhoto": "Chưa có ảnh",
   "projectsLatestPhoto": "Ảnh mới nhất",
   "projectsContextEyebrow": "Trồng cây mới · Bước 2/3",
   "projectsContextTitle": "{plant} trồng ở đâu?",
-  "@projectsContextTitle": {"placeholders": {"plant": {"type": "String"}}},
+  "@projectsContextTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
   "projectsContextTitleNoPlant": "Cây của bạn trồng ở đâu?",
   "projectsFieldPlantGroup": "Loại cây",
   "projectsFieldName": "Tên project",
@@ -200,7 +242,19 @@
   "projectsNameRequired": "Hãy đặt tên cho project",
   "projectsCreateError": "Không tạo được project. Thử lại nhé.",
   "projectsDefaultName": "{plant} – {month}/{year}",
-  "@projectsDefaultName": {"placeholders": {"plant": {"type": "String"}, "month": {"type": "int"}, "year": {"type": "int"}}},
+  "@projectsDefaultName": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      },
+      "month": {
+        "type": "int"
+      },
+      "year": {
+        "type": "int"
+      }
+    }
+  },
   "projectsPotsMinus": "Giảm số chậu",
   "projectsPotsPlus": "Tăng số chậu",
   "planGeneratingEyebrow": "Trồng cây mới · Bước 3/3",
@@ -222,26 +276,77 @@
   "planFallbackAiFailure": "AI gặp sự cố nên app dùng plan mẫu cho bạn.",
   "planFallbackQuota": "Bạn đã dùng hết lượt AI hôm nay nên app dùng plan mẫu cho bạn.",
   "planReviewTitle": "Kế hoạch {days} ngày",
-  "@planReviewTitle": {"placeholders": {"days": {"type": "int"}}},
+  "@planReviewTitle": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "planAiLabel": "Gợi ý từ AI",
   "planTemplateLabel": "Plan mẫu",
   "planConfidenceHigh": "Tin cậy cao · {pct}%",
-  "@planConfidenceHigh": {"placeholders": {"pct": {"type": "int"}}},
+  "@planConfidenceHigh": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
   "planConfidenceMedium": "Tin cậy trung bình · {pct}%",
-  "@planConfidenceMedium": {"placeholders": {"pct": {"type": "int"}}},
+  "@planConfidenceMedium": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
   "planConfidenceLow": "Tin cậy thấp · {pct}%",
-  "@planConfidenceLow": {"placeholders": {"pct": {"type": "int"}}},
+  "@planConfidenceLow": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
   "planSources": "Nguồn: {sources}",
-  "@planSources": {"placeholders": {"sources": {"type": "String"}}},
+  "@planSources": {
+    "placeholders": {
+      "sources": {
+        "type": "String"
+      }
+    }
+  },
   "planSourcesDefault": "CSDL cây Vườn Nhà",
   "planSegStages": "Giai đoạn",
   "planSegCalendar": "Lịch",
   "planStageDays": "Ngày {from}–{to}",
-  "@planStageDays": {"placeholders": {"from": {"type": "int"}, "to": {"type": "int"}}},
+  "@planStageDays": {
+    "placeholders": {
+      "from": {
+        "type": "int"
+      },
+      "to": {
+        "type": "int"
+      }
+    }
+  },
   "planStageMilestone": "Mốc: {milestone}",
-  "@planStageMilestone": {"placeholders": {"milestone": {"type": "String"}}},
+  "@planStageMilestone": {
+    "placeholders": {
+      "milestone": {
+        "type": "String"
+      }
+    }
+  },
   "planStageTaskCount": "{count} việc",
-  "@planStageTaskCount": {"placeholders": {"count": {"type": "int"}}},
+  "@planStageTaskCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "planAddTask": "+ Thêm việc",
   "planStart": "Bắt đầu trồng",
   "planApproveError": "Không duyệt được kế hoạch. Thử lại nhé.",
@@ -252,11 +357,29 @@
   "planFreqOnce": "Một lần",
   "planFreqDaily": "Hằng ngày",
   "planFreqEveryN": "{n} ngày/lần",
-  "@planFreqEveryN": {"placeholders": {"n": {"type": "int"}}},
+  "@planFreqEveryN": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "planFreqFixedDay": "Ngày {day} hằng tháng",
-  "@planFreqFixedDay": {"placeholders": {"day": {"type": "int"}}},
+  "@planFreqFixedDay": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
   "planFreqFixedDate": "Ngày {date}",
-  "@planFreqFixedDate": {"placeholders": {"date": {"type": "String"}}},
+  "@planFreqFixedDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "planWindowMorning": "Sáng sớm · 6–8h",
   "planWindowAfternoon": "Chiều mát · 16–18h",
   "planWindowAllDay": "Cả ngày",
@@ -276,7 +399,16 @@
   "planTaskSaveError": "Không lưu được. Thử lại nhé.",
   "planCalendarTitle": "Lịch chăm sóc",
   "planWeekLabel": "Tuần {from}–{to}",
-  "@planWeekLabel": {"placeholders": {"from": {"type": "String"}, "to": {"type": "String"}}},
+  "@planWeekLabel": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "planPrevWeek": "Tuần trước",
   "planNextWeek": "Tuần sau",
   "planDow1": "T2",
@@ -287,12 +419,45 @@
   "planDow6": "T7",
   "planDow7": "CN",
   "planDayTasks": "{count} việc",
-  "@planDayTasks": {"placeholders": {"count": {"type": "int"}}},
+  "@planDayTasks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "planStageBanner": "Giai đoạn {n} · {name} (ngày {from}–{to}) · còn {left} ngày",
-  "@planStageBanner": {"placeholders": {"n": {"type": "int"}, "name": {"type": "String"}, "from": {"type": "int"}, "to": {"type": "int"}, "left": {"type": "int"}}},
+  "@planStageBanner": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      },
+      "from": {
+        "type": "int"
+      },
+      "to": {
+        "type": "int"
+      },
+      "left": {
+        "type": "int"
+      }
+    }
+  },
   "planOutsideStages": "Ngoài các giai đoạn của kế hoạch",
   "planDayLabel": "{dow}, {date}",
-  "@planDayLabel": {"placeholders": {"dow": {"type": "String"}, "date": {"type": "String"}}},
+  "@planDayLabel": {
+    "placeholders": {
+      "dow": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "planNoTasksDay": "Không có việc trong ngày này",
   "planAddManual": "+ Thêm việc thủ công",
   "planTimeline": "Các giai đoạn",
@@ -302,29 +467,95 @@
   "projectDetailTabPhotos": "Ảnh",
   "projectDetailTabMembers": "Thành viên",
   "projectDetailMeta": "{group} · {pots} chậu · {space} {sun}",
-  "@projectDetailMeta": {"placeholders": {"group": {"type": "String"}, "pots": {"type": "int"}, "space": {"type": "String"}, "sun": {"type": "String"}}},
+  "@projectDetailMeta": {
+    "placeholders": {
+      "group": {
+        "type": "String"
+      },
+      "pots": {
+        "type": "int"
+      },
+      "space": {
+        "type": "String"
+      },
+      "sun": {
+        "type": "String"
+      }
+    }
+  },
   "projectDetailShared": "Chia sẻ với gia đình",
   "projectDetailStageCard": "Giai đoạn {n}/{total} · {name}",
-  "@projectDetailStageCard": {"placeholders": {"n": {"type": "int"}, "total": {"type": "int"}, "name": {"type": "String"}}},
+  "@projectDetailStageCard": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "projectDetailDay": "Ngày {day}/{total}",
-  "@projectDetailDay": {"placeholders": {"day": {"type": "int"}, "total": {"type": "int"}}},
+  "@projectDetailDay": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "projectDetailNextMilestone": "Mốc tiếp theo: {milestone}, dự kiến khoảng {date}",
-  "@projectDetailNextMilestone": {"placeholders": {"milestone": {"type": "String"}, "date": {"type": "String"}}},
+  "@projectDetailNextMilestone": {
+    "placeholders": {
+      "milestone": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "projectDetailStatDone": "Việc đã xong",
   "projectDetailStatCheckins": "Lần check-in",
   "projectDetailStatMilestones": "Mốc đã đạt",
   "projectDetailPhotos": "Ảnh tăng trưởng",
   "projectDetailPhotosEmpty": "Ảnh check-in sẽ xuất hiện ở đây theo thời gian.",
   "projectDetailPhotoCount": "{count} ảnh",
-  "@projectDetailPhotoCount": {"placeholders": {"count": {"type": "int"}}},
+  "@projectDetailPhotoCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "projectDetailHistory": "Lịch sử việc",
   "projectDetailHistoryEmpty": "Chưa có việc nào được ghi nhận.",
   "projectDetailHistoryLine": "{task} · {action}",
-  "@projectDetailHistoryLine": {"placeholders": {"task": {"type": "String"}, "action": {"type": "String"}}},
+  "@projectDetailHistoryLine": {
+    "placeholders": {
+      "task": {
+        "type": "String"
+      },
+      "action": {
+        "type": "String"
+      }
+    }
+  },
   "projectDetailMembers": "Thành viên được giao việc",
   "projectDetailNoMembers": "Chưa giao việc cho ai.",
   "projectDetailMemberTasks": "{count} việc",
-  "@projectDetailMemberTasks": {"placeholders": {"count": {"type": "int"}}},
+  "@projectDetailMemberTasks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "projectDetailNoPlan": "Project này chưa có kế hoạch được duyệt.",
   "projectDetailReviewPlan": "Duyệt kế hoạch",
   "projectDetailOpenPlan": "Xem kế hoạch",
@@ -510,5 +741,652 @@
   "taskNotDueToday": "Việc này không đến hạn hôm nay",
   "taskNotFound": "Không tìm thấy việc này",
   "taskAssignPlaceholder": "Giao việc cho thành viên sẽ có ở bản sau.",
-  "taskCheckinPlaceholder": "Chụp ảnh check-in sẽ có ở bản sau."
+  "taskCheckinPlaceholder": "Chụp ảnh check-in sẽ có ở bản sau.",
+  "householdSetupStep": "Bước 2/2",
+  "householdSetupSkip": "Bỏ qua",
+  "householdSetupTitle": "Chăm cây cùng người nhà?",
+  "householdSetupSub": "Tạo gia đình để giao việc tưới, bón cho từng người và xem ai đã làm gì. Bạn có thể làm việc này sau.",
+  "householdCreateTitle": "Tạo gia đình mới",
+  "householdCreateSub": "Bạn là chủ nhà (Owner)",
+  "householdJoinTitle": "Tham gia bằng mã mời",
+  "householdJoinSub": "Bạn sẽ là thành viên (Member)",
+  "householdJoinHint": "VD: VUON-4821",
+  "householdJoinAction": "Vào",
+  "householdSetupFooter": "Mỗi người chỉ ở trong một gia đình. App không có kết bạn công khai.",
+  "householdNameLabel": "Tên gia đình",
+  "householdNameDefault": "Nhà mình",
+  "householdCreateAction": "Tạo gia đình",
+  "householdErrorGeneric": "Chưa thực hiện được. Thử lại nhé.",
+  "householdErrorInvalidCode": "Mã mời không đúng",
+  "householdErrorExpired": "Mã mời đã hết hạn",
+  "householdErrorAlreadyIn": "Bạn đã ở trong một gia đình",
+  "householdErrorTooMany": "Nhập sai quá nhiều lần, thử lại sau 1 giờ",
+  "householdErrorCodeFormat": "Mã có dạng VUON-1234",
+  "householdJoined": "Đã tham gia gia đình",
+  "householdEyebrow": "Gia đình · {count} người",
+  "@householdEyebrow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "householdInvite": "+ Mời",
+  "householdRoleOwner": "Owner",
+  "householdRoleMember": "Member",
+  "householdYou": "{name} (bạn)",
+  "@householdYou": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdTasksWeek": "{count} việc tuần này",
+  "@householdTasksWeek": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "householdAway": "đang vắng nhà",
+  "householdSharedProjects": "Project chia sẻ",
+  "householdNoShared": "Chưa chia sẻ project nào",
+  "householdShareMore": "+ Chia sẻ thêm",
+  "householdShareTitle": "Chia sẻ project với gia đình",
+  "householdShare": "Chia sẻ",
+  "householdUnshare": "Ngừng chia sẻ",
+  "householdShareOwnerOnly": "Chỉ Owner mới chia sẻ được project",
+  "householdShareNoProjects": "Bạn chưa có project nào để chia sẻ",
+  "householdActivity": "Hoạt động",
+  "householdActivityEmpty": "Chưa có hoạt động nào",
+  "householdActTaskDone": "{name} đã hoàn thành một việc",
+  "@householdActTaskDone": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActCheckin": "{name} đã check-in ảnh",
+  "@householdActCheckin": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActMilestone": "{name} đạt mốc mới",
+  "@householdActMilestone": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActJoined": "{name} đã tham gia gia đình",
+  "@householdActJoined": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActLeft": "{name} đã rời gia đình",
+  "@householdActLeft": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActShared": "{name} chia sẻ project “{project}”",
+  "@householdActShared": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActProject": "{text} · {project}",
+  "@householdActProject": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      },
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "householdSomeone": "Một thành viên",
+  "householdRemoveMember": "Xóa khỏi gia đình",
+  "householdRemoveTitle": "Xóa {name} khỏi gia đình?",
+  "@householdRemoveTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdRemoveBody": "Project họ chia sẻ sẽ trở lại riêng tư.",
+  "householdLoadError": "Không tải được gia đình",
+  "householdNoneTitle": "Bạn chưa có gia đình",
+  "householdNoneSub": "Tạo gia đình mới hoặc nhập mã mời để cùng chăm cây.",
+  "householdInviteTitle": "Mời người nhà",
+  "householdInviteCodeLabel": "Mã mời của {name}",
+  "@householdInviteCodeLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdInviteExpires": "Hết hạn sau {days} ngày",
+  "@householdInviteExpires": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "householdInviteCopy": "Sao chép mã",
+  "householdInviteCopied": "Đã sao chép mã",
+  "householdInviteShareLink": "Gửi link mời",
+  "householdInviteShareText": "{inviter} mời bạn cùng chăm cây trong “{name}” trên Vườn Nhà. Mã: {code}. Mở: {link}",
+  "@householdInviteShareText": {
+    "placeholders": {
+      "inviter": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      },
+      "link": {
+        "type": "String"
+      }
+    }
+  },
+  "householdInviteOr": "hoặc mời trực tiếp",
+  "householdInviteTargetLabel": "Số điện thoại hoặc email",
+  "householdInviteTargetHint": "09xx xxx xxx",
+  "householdInviteRole": "Vai trò",
+  "householdInviteRoleMemberDesc": "Làm việc được giao, xem project được chia sẻ",
+  "householdInviteRoleOwnerDesc": "Quản lý thành viên, project và giao việc",
+  "householdInviteSend": "Gửi lời mời",
+  "householdInviteEmailSent": "Đã gửi email mời tới {target}",
+  "@householdInviteEmailSent": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "householdInviteEmailFailed": "Chưa gửi được email. Hãy dùng nút gửi link.",
+  "householdInviteTargetInvalid": "Nhập email hợp lệ hoặc số điện thoại",
+  "householdInviteOwnerOnly": "Chỉ Owner mới mời được người nhà",
+  "householdInviteLoading": "Đang tạo mã mời...",
+  "householdAssignTitle": "Giao việc",
+  "householdAssignHow": "Cách giao",
+  "householdModeOnce": "Chỉ lần này",
+  "householdModeSeries": "Cả chuỗi lặp",
+  "householdModeRotation": "Xoay vòng",
+  "householdAssignOrder": "Thứ tự xoay vòng",
+  "householdAssignTo": "Giao cho",
+  "householdAssignAwayUntil": "Vắng nhà đến {date}",
+  "@householdAssignAwayUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "householdAssignHintRotation": "Xoay vòng: {names} → lặp lại.",
+  "@householdAssignHintRotation": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "householdAssignHintSeries": "Mọi lần “{task}” tiếp theo sẽ giao cho {name}.",
+  "@householdAssignHintSeries": {
+    "placeholders": {
+      "task": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdAssignHintOnce": "Chỉ lần “{task}” tới giao cho {name}.",
+  "@householdAssignHintOnce": {
+    "placeholders": {
+      "task": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdAssignDone": "Đã giao việc",
+  "householdAssignOwnerOnly": "Chỉ Owner mới giao được việc",
+  "householdAssignNeedHousehold": "Hãy tạo hoặc tham gia gia đình để giao việc",
+  "householdAssignNoTask": "Không tìm thấy việc này",
+  "householdAssignRotationMin": "Chọn ít nhất 2 người để xoay vòng",
+  "householdAssignPickOne": "Chọn một người",
+  "householdWindowMorning": "Sáng sớm",
+  "householdWindowAfternoon": "Chiều mát",
+  "householdWindowAllDay": "Cả ngày",
+  "householdEveryDays": "{n} ngày/lần",
+  "@householdEveryDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "householdLeaveRow": "Rời gia đình “{name}”",
+  "@householdLeaveRow": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdLeaveTitle": "Rời gia đình?",
+  "householdLeaveBody": "Bạn sẽ không còn thấy project chia sẻ. Project của bạn trở lại riêng tư.",
+  "householdLeaveOwnerBody": "Quyền Owner sẽ chuyển cho {name}, thành viên lâu nhất.",
+  "@householdLeaveOwnerBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdLeaveLast": "Bạn là người cuối cùng, nên gia đình sẽ bị xóa.",
+  "householdLeaveAction": "Rời gia đình",
+  "householdLeft": "Đã rời gia đình",
+  "householdJoinScreenTitle": "Tham gia gia đình",
+  "householdJoinLinkBody": "Bạn được mời bằng mã {code}",
+  "@householdJoinLinkBody": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "householdJoinConfirm": "Tham gia",
+  "gamTitle": "Thành tích",
+  "gamTotalXp": "Tổng điểm",
+  "gamXpUnit": "{xp} XP",
+  "@gamXpUnit": {
+    "placeholders": {
+      "xp": {
+        "type": "String"
+      }
+    }
+  },
+  "gamLevelLabel": "Level",
+  "gamLevelLine": "Cấp {level} · {name}",
+  "@gamLevelLine": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gamToNext": "Còn {xp} XP để lên Cấp {level} · {name}",
+  "@gamToNext": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      },
+      "level": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gamTopLevel": "Bạn đã đạt cấp cao nhất",
+  "gamStreak": "{days} ngày liên tục",
+  "@gamStreak": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gamStreakNone": "Chưa có chuỗi ngày",
+  "gamOnTime": "Việc đúng hạn",
+  "gamCheckin": "Check-in ảnh",
+  "gamMilestone": "Đạt milestone",
+  "gamToday": "Hôm nay",
+  "gamTodayCap": "{xp}/{cap} XP",
+  "@gamTodayCap": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      },
+      "cap": {
+        "type": "int"
+      }
+    }
+  },
+  "gamAntiCheat": "Mỗi ngày tối đa {cap} XP từ việc thường. Điểm milestone chỉ cộng khi có ảnh check-in xác nhận.",
+  "@gamAntiCheat": {
+    "placeholders": {
+      "cap": {
+        "type": "int"
+      }
+    }
+  },
+  "gamPendingPhoto": "{count} mốc đang chờ ảnh check-in xác nhận, chưa tính XP.",
+  "@gamPendingPhoto": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gamBadges": "Huy hiệu · {earned}/{total}",
+  "@gamBadges": {
+    "placeholders": {
+      "earned": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "gamBadgesEmpty": "Chưa có huy hiệu nào",
+  "gamBadgeLocked": "Chưa đạt",
+  "gamLoadError": "Không tải được thành tích",
+  "gamMilestoneEyebrow": "ĐẠT MỐC MỚI",
+  "gamMilestoneUnknown": "Mốc mới",
+  "gamMilestoneBody": "{project} đã qua một mốc mới. Ảnh check-in hôm nay đã xác nhận.",
+  "@gamMilestoneBody": {
+    "placeholders": {
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "gamMilestoneBodyPending": "{project} ghi nhận mốc này, nhưng chưa có ảnh check-in xác nhận.",
+  "@gamMilestoneBodyPending": {
+    "placeholders": {
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "gamRewardXp": "+{xp} XP",
+  "@gamRewardXp": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "gamRewardPending": "Chờ ảnh",
+  "gamRewardMilestone": "Milestone",
+  "gamRewardBadge": "Huy hiệu",
+  "gamRewardNoBadge": "Chưa có",
+  "gamPendingNote": "Điểm milestone chỉ cộng khi có ảnh check-in xác nhận. Hãy check-in ảnh để nhận XP.",
+  "gamKeepsake": "Ảnh kỷ niệm",
+  "gamKeepsakeCard": "Thẻ kỷ niệm",
+  "gamKeepsakeSub": "Có thể chia sẻ",
+  "gamShare": "Chia sẻ ảnh kỷ niệm",
+  "gamShareText": "{project} vừa đạt mốc “{milestone}” trên Vườn Nhà!",
+  "@gamShareText": {
+    "placeholders": {
+      "project": {
+        "type": "String"
+      },
+      "milestone": {
+        "type": "String"
+      }
+    }
+  },
+  "gamShareError": "Chưa chia sẻ được",
+  "gamViewAchievements": "Xem thành tích",
+  "checkinEntryButton": "Check-in ảnh",
+  "checkinTitle": "Check-in · {plant}",
+  "@checkinTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinShotProgress": "Ảnh {n}/{total} · {shot}",
+  "@checkinShotProgress": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "shot": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinShotWhole": "Toàn cây",
+  "checkinShotLeaf": "Cận lá",
+  "checkinShotUnder": "Mặt dưới lá",
+  "checkinFrameHint": "Đặt cả cây trong khung",
+  "checkinShotsTaken": "Đã chụp {count}/{max} ảnh",
+  "@checkinShotsTaken": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "checkinTakePhoto": "Chụp ảnh",
+  "checkinRetakeShot": "Chụp lại ảnh này",
+  "checkinGallery": "Chọn từ thư viện ảnh",
+  "checkinTips": "Xem mẹo chụp",
+  "checkinClose": "Đóng",
+  "checkinQuickTags": "Tình trạng nhanh",
+  "checkinTagLeafYellow": "Lá vàng",
+  "checkinTagWilt": "Héo",
+  "checkinTagPests": "Có sâu",
+  "checkinTagSpots": "Đốm",
+  "checkinNoteHint": "Ghi chú ngắn (không bắt buộc)",
+  "checkinAnalyze": "Phân tích ảnh",
+  "checkinProcessing": "Đang xử lý ảnh...",
+  "checkinAnalyzingTitle": "AI đang xem ảnh của bạn",
+  "checkinAnalyzingSub": "Thường mất khoảng 15 giây",
+  "checkinStepUpload": "Tải ảnh lên",
+  "checkinStepAnalyze": "Phân tích tình trạng cây",
+  "checkinQuotaTitle": "Hôm nay đã hết lượt phân tích",
+  "checkinQuotaBody": "Bạn đã dùng {used}/{cap} lượt phân tích AI hôm nay. Ảnh đã được lưu trong dòng thời gian, mai bạn thử lại nhé.",
+  "@checkinQuotaBody": {
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "cap": {
+        "type": "int"
+      }
+    }
+  },
+  "checkinQuotaBodyPlain": "Bạn đã dùng hết lượt phân tích AI hôm nay. Ảnh đã được lưu trong dòng thời gian, mai bạn thử lại nhé.",
+  "checkinAiDownTitle": "AI chưa trả lời được",
+  "checkinAiDownBody": "Kế hoạch giữ nguyên và lượt phân tích không bị trừ. Thử lại sau ít phút nhé.",
+  "checkinSkippedTitle": "Cây vừa được phân tích",
+  "checkinSkippedBody": "Trong 24 giờ qua project này đã có kết quả. Chọn thêm tình trạng nếu có dấu hiệu mới.",
+  "checkinSkippedView": "Xem kết quả trước",
+  "checkinFailedTitle": "Chưa gửi được ảnh",
+  "checkinFailedBody": "Kiểm tra kết nối rồi thử lại. Ảnh đã chụp vẫn được giữ.",
+  "checkinBackToCapture": "Quay lại chụp",
+  "checkinRetakeTitle": "Cần chụp lại",
+  "checkinRetakeReasonBlur": "Ảnh bị mờ",
+  "checkinRetakeReasonDark": "Ảnh thiếu sáng",
+  "checkinRetakeReasonFar": "Chưa thấy rõ cây",
+  "checkinRetakeReasonNotPlant": "Ảnh không có cây",
+  "checkinRetakeReasonUnreadable": "Không đọc được ảnh",
+  "checkinRetakeHeadline": "AI chưa đủ thông tin để đánh giá",
+  "checkinRetakeBody": "Để tránh đoán sai, bạn chụp lại giúp mình nhé. Lần chụp này chưa tính vào lượt phân tích trong ngày.",
+  "checkinRetakeTipsTitle": "Mẹo chụp rõ",
+  "checkinRetakeTip1": "Chụp ban ngày, tránh ngược sáng",
+  "checkinRetakeTip2": "Giữ máy cách cây 40–60cm, chạm để lấy nét",
+  "checkinRetakeTip3": "Thêm 1 ảnh cận lá có dấu hiệu lạ",
+  "checkinRetakeCta": "Chụp lại",
+  "checkinResultTitle": "Kết quả check-in",
+  "checkinXpChip": "+{xp} XP",
+  "@checkinXpChip": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "checkinAiLabel": "Gợi ý từ AI",
+  "checkinStageLine": "Giai đoạn: {stage} ({pct}%)",
+  "@checkinStageLine": {
+    "placeholders": {
+      "stage": {
+        "type": "String"
+      },
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "checkinStageEarly": "đầu {name}",
+  "@checkinStageEarly": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinStageMid": "giữa {name}",
+  "@checkinStageMid": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinStageLate": "cuối {name}",
+  "@checkinStageLate": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinHealthLine": "Sức khỏe: {health}",
+  "@checkinHealthLine": {
+    "placeholders": {
+      "health": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinHealthGood": "Tốt",
+  "checkinHealthFair": "Trung bình",
+  "checkinHealthPoor": "Kém",
+  "checkinIssuesTitle": "Dấu hiệu nghi ngờ",
+  "checkinNoIssues": "Chưa thấy dấu hiệu bất thường.",
+  "checkinSafeActions": "Việc nên làm (an toàn, ưu tiên hữu cơ)",
+  "checkinMilestoneNote": "Ảnh xác nhận đạt mốc {name}",
+  "@checkinMilestoneNote": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinChangesTitle": "Đề xuất điều chỉnh plan",
+  "checkinNoChanges": "AI không đề xuất thay đổi nào cho plan.",
+  "checkinKindAdd": "THÊM VIỆC",
+  "checkinKindFreq": "ĐỔI TẦN SUẤT",
+  "checkinKindShift": "DỜI MỐC",
+  "checkinKindRemove": "BỎ VIỆC",
+  "checkinChangeFreq": "{task}: {from} → {to}",
+  "@checkinChangeFreq": {
+    "placeholders": {
+      "task": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinChangeFreqTo": "{task}: {to}",
+  "@checkinChangeFreqTo": {
+    "placeholders": {
+      "task": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinChangeShift": "{milestone}: dời đến {date}",
+  "@checkinChangeShift": {
+    "placeholders": {
+      "milestone": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinChangeApprove": "Áp dụng",
+  "checkinChangeSkip": "Bỏ qua",
+  "checkinLowConfTitle": "AI chưa chắc chắn lắm",
+  "checkinLowConfBody": "Bạn có thể mang ảnh hoặc mẫu lá đến cửa hàng nông nghiệp gần nhà để hỏi thêm. Thuốc và liều dùng nên theo đúng hướng dẫn trên nhãn sản phẩm.",
+  "checkinLater": "Để sau",
+  "checkinApply": "Áp dụng {count} thay đổi",
+  "@checkinApply": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "checkinSkipAll": "Bỏ qua tất cả",
+  "checkinDone": "Xong",
+  "checkinApplyError": "Chưa áp dụng được. Thử lại nhé.",
+  "checkinApplied": "Đã áp dụng {count} thay đổi",
+  "@checkinApplied": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "checkinAlreadyAnswered": "Bạn đã trả lời các đề xuất này rồi.",
+  "checkinResultLoadError": "Không tải được kết quả check-in."
 }

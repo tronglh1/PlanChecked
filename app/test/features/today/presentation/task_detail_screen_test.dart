@@ -24,10 +24,7 @@ void main() {
 
     await t.tap(find.byKey(const Key('task-assign')));
     await t.pumpAndSettle();
-    expect(
-      find.text('Giao việc cho thành viên sẽ có ở bản sau.'),
-      findsOneWidget,
-    );
+    expect(find.text('assign-stub'), findsOneWidget);
   });
 
   testWidgets('fertilizer tasks show the safety warning (PLN-09)', (t) async {

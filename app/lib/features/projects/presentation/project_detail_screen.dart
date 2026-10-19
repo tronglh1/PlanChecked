@@ -8,6 +8,8 @@ import '../../../l10n/app_localizations.dart';
 import '../../plan/domain/template_renderer.dart';
 import '../../plan/presentation/plan_labels.dart';
 import '../../plan/presentation/plan_providers.dart';
+import '../../checkin/domain/checkin_models.dart';
+import '../../checkin/presentation/checkin_providers.dart';
 import '../domain/project.dart';
 import '../domain/project_progress.dart';
 import 'project_list_screen.dart' show plantGroupLabel;
@@ -190,6 +192,16 @@ class _ProjectDetailScreenState extends ConsumerState<ProjectDetailScreen> {
             _Tab.members => _Members(detail: detail),
             _Tab.calendar => const SizedBox.shrink(),
           },
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+          child: GlowButton(
+            key: const Key('checkin-entry'),
+            label: l10n.checkinEntryButton,
+            icon: Icons.photo_camera_rounded,
+            onPressed: () =>
+                context.push('/projects/${widget.projectId}/checkin'),
+          ),
         ),
       ],
     );
@@ -529,18 +541,31 @@ class _PlanTab extends ConsumerWidget {
   }
 }
 
-/// Photo timeline placeholder (check-in lands in a later milestone).
-class _Photos extends StatelessWidget {
+/// Photo timeline: real thumbnails (signed URLs) from the project's check-ins;
+/// placeholders while loading or when the URLs cannot be fetched.
+class _Photos extends ConsumerWidget {
   const _Photos({required this.detail, this.compact = false});
 
   final ProjectDetail detail;
   final bool compact;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final t = Theme.of(context).textTheme;
-    final n = detail.photoPaths.length;
+    final projectId = detail.project.id;
+    final timeline = _timelineOrNull(ref, projectId);
+    final n =
+        timeline?.where((i) => i.path != null).length ??
+        detail.photoPaths.length;
+    final limit = compact ? 4 : 30;
+    final tiles = <Widget>[
+      if (timeline != null)
+        for (final item in timeline.where((i) => i.path != null).take(limit))
+          _PhotoTile(item: item, projectId: projectId)
+      else
+        for (final _ in detail.photoPaths.take(limit)) const _PhotoTile(),
+    ];
     return Column(
       key: const Key('photos-section'),
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -569,26 +594,57 @@ class _Photos extends StatelessWidget {
         else
           SizedBox(
             height: 84,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                for (final _ in detail.photoPaths.take(compact ? 4 : 30))
-                  Container(
-                    width: 84,
-                    margin: const EdgeInsets.only(right: AppSpacing.sm),
-                    decoration: BoxDecoration(
-                      color: AppColors.greenSoft,
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                    child: const Icon(
-                      Icons.image_outlined,
-                      color: AppColors.green,
-                    ),
-                  ),
-              ],
-            ),
+            child: ListView(scrollDirection: Axis.horizontal, children: tiles),
           ),
       ],
+    );
+  }
+
+  /// The loaded timeline, or null while loading / on any error (including a
+  /// missing Supabase configuration in tests).
+  List<CheckinTimelineItem>? _timelineOrNull(WidgetRef ref, String id) {
+    try {
+      return ref.watch(checkinTimelineProvider(id)).value;
+    } catch (_) {
+      return null;
+    }
+  }
+}
+
+class _PhotoTile extends StatelessWidget {
+  const _PhotoTile({this.item, this.projectId});
+
+  final CheckinTimelineItem? item;
+  final String? projectId;
+
+  @override
+  Widget build(BuildContext context) {
+    final url = item?.url;
+    const placeholder = Icon(Icons.image_outlined, color: AppColors.green);
+    final tile = Container(
+      key: item == null ? null : Key('photo-${item!.id}'),
+      width: 84,
+      margin: const EdgeInsets.only(right: AppSpacing.sm),
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: AppColors.greenSoft,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: url == null
+          ? placeholder
+          : Image.network(
+              url,
+              fit: BoxFit.cover,
+              errorBuilder: (_, _, _) => placeholder,
+            ),
+    );
+    final it = item;
+    if (it == null || (it.status != 'analyzed' && it.status != 'approved')) {
+      return tile;
+    }
+    return GestureDetector(
+      onTap: () => context.push('/projects/$projectId/checkin/${it.id}'),
+      child: tile,
     );
   }
 }

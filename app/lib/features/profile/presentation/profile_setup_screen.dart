@@ -133,6 +133,13 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
         experience: _experience,
       );
       await ref.read(profileProvider.notifier).save(profile);
+      try {
+        await ref
+            .read(profileRepositoryProvider)
+            .recordConsents(kConsentVersion);
+      } catch (_) {
+        // Best effort: never block onboarding on the consent log.
+      }
       await ref.read(localeProvider.notifier).set(_lang);
       if (mounted) context.go('/today');
     } catch (_) {

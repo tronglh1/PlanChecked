@@ -43,9 +43,8 @@ class _ProjectDetailScreenState extends ConsumerState<ProjectDetailScreen> {
               alignment: Alignment.centerLeft,
               child: IconButton(
                 icon: const Icon(Icons.chevron_left_rounded),
-                onPressed: () => context.canPop()
-                    ? context.pop()
-                    : context.go('/garden'),
+                onPressed: () =>
+                    context.canPop() ? context.pop() : context.go('/garden'),
               ),
             ),
             Expanded(
@@ -134,9 +133,8 @@ class _ProjectDetailScreenState extends ConsumerState<ProjectDetailScreen> {
                   key: const Key('detail-back'),
                   tooltip: MaterialLocalizations.of(context).backButtonTooltip,
                   icon: const Icon(Icons.chevron_left_rounded),
-                  onPressed: () => context.canPop()
-                      ? context.pop()
-                      : context.go('/garden'),
+                  onPressed: () =>
+                      context.canPop() ? context.pop() : context.go('/garden'),
                 ),
               ),
             ),
@@ -346,12 +344,16 @@ class _StageCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final t = Theme.of(context).textTheme;
     final stage = progress.currentStage;
-    final name = (stage?.name.isNotEmpty ?? false)
-        ? stage!.name
-        : (stage?.code ?? '');
+    final name =
+        stage?.label(Localizations.localeOf(context).languageCode) ?? '';
     final milestone = progress.nextMilestone == null
         ? null
-        : renderer.render('milestone', progress.nextMilestone!, 'name', lang: lang);
+        : renderer.render(
+            'milestone',
+            progress.nextMilestone!,
+            'name',
+            lang: lang,
+          );
     return GlassCard(
       key: const Key('stage-card'),
       child: Column(
@@ -651,6 +653,7 @@ class _Members extends ConsumerWidget {
     );
   }
 
-  String _initial(String? name) =>
-      (name == null || name.isEmpty) ? '?' : name.characters.first.toUpperCase();
+  String _initial(String? name) => (name == null || name.isEmpty)
+      ? '?'
+      : name.characters.first.toUpperCase();
 }

@@ -642,7 +642,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String planFreqFixedDay(int day) {
-    return 'Ngày $day';
+    return 'Ngày $day hằng tháng';
   }
 
   @override
@@ -684,7 +684,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get planTaskInterval => 'Cách nhau (ngày)';
 
   @override
-  String get planTaskFixedDay => 'Ngày thứ (của project)';
+  String get planTaskFixedDay => 'Ngày trong tháng (1-31)';
 
   @override
   String get planTaskReminder => 'Nhắc lúc';
@@ -767,7 +767,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get projectDetailTabOverview => 'Tổng quan';
 
   @override
-  String get projectDetailTabPlan => 'Plan';
+  String get projectDetailTabPlan => 'Kế hoạch';
 
   @override
   String get projectDetailTabCalendar => 'Lịch';
@@ -1065,7 +1065,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String taskFreqFixed(int n) {
-    return 'Ngày $n';
+    return 'Ngày $n hằng tháng';
   }
 
   @override

@@ -38,14 +38,15 @@ class TaskScheduler {
 
   /// Occurrences of [task] with `from <= date <= to` (inclusive).
   ///
-  /// - Active days are limited to [stage] (`dayFrom..dayTo`); with no stage
-  ///   they run from project day 1 without upper bound.
+  /// Mirrors SQL `task_due_on` exactly. With `first = stage.dayFrom +
+  /// task.dayOffset` (project day 1 + offset without stage):
+  /// - Active days are `first..stage.dayTo` (no upper bound without stage).
   /// - `daily`: every active day.
-  /// - `every_n_days`: first on the stage's first day, then every
-  ///   `interval_days` (null/<1 is treated as 1).
-  /// - `once`: the stage's first day (project day 1 without stage).
-  /// - `fixed_date`: `fixedDate` if set, else project day `intervalDays`
-  ///   (must lie inside the stage when there is one).
+  /// - `every_n_days`: on `first`, then every `interval_days` (null/<1 is
+  ///   treated as 1).
+  /// - `once`: on `first`.
+  /// - `fixed_date`: active days whose calendar day-of-month equals
+  ///   `intervalDays` (null -> 1).
   static List<TaskOccurrence> expand({
     required Task task,
     Stage? stage,
@@ -59,7 +60,7 @@ class TaskScheduler {
     final t = dateOnly(to);
     if (t.isBefore(f)) return const [];
 
-    final stageLo = stage?.dayFrom ?? 1;
+    final stageLo = (stage?.dayFrom ?? 1) + task.dayOffset;
     final stageHi = stage?.dayTo; // null = unbounded
     final lo = [
       dayNumber(start, f),
@@ -85,13 +86,9 @@ class TaskScheduler {
       case Frequency.once:
         if (stageLo >= lo && stageLo <= hi) days.add(stageLo);
       case Frequency.fixedDate:
-        final fixed = task.fixedDate;
-        if (fixed != null) {
-          final d = dayNumber(start, fixed);
-          if (d >= lo && d <= hi) days.add(d);
-        } else {
-          final d = task.intervalDays;
-          if (d != null && d >= lo && d <= hi) days.add(d);
+        final dom = task.intervalDays ?? 1;
+        for (var d = lo; d <= hi; d++) {
+          if (dateOfDay(start, d).day == dom) days.add(d);
         }
     }
     return [

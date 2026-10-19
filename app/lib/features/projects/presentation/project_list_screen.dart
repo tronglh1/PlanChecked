@@ -113,7 +113,8 @@ class _ProjectListScreenState extends ConsumerState<ProjectListScreen> {
                       for (final s in shown)
                         _ProjectCard(
                           summary: s,
-                          onTap: () => context.push('/projects/${s.project.id}'),
+                          onTap: () =>
+                              context.push('/projects/${s.project.id}'),
                         ),
                     ],
                   );
@@ -171,17 +172,13 @@ class _ProjectCard extends ConsumerWidget {
         ? l10n.projectsPlanPending
         : day < 1
         ? l10n.projectsStageBeforeStart
-        : (stage?.name.isNotEmpty ?? false)
-        ? stage!.name
-        : (stage?.code ?? '');
+        : (stage?.label(Localizations.localeOf(context).languageCode) ?? '');
     final photoAt = summary.latestPhotoAt;
     final photoLine = photoAt == null
         ? l10n.projectsNoPhoto
         : () {
             final d = daysBetween(dateOnly(photoAt), today);
-            return d <= 0
-                ? l10n.projectsPhotoToday
-                : l10n.projectsPhotoAgo(d);
+            return d <= 0 ? l10n.projectsPhotoToday : l10n.projectsPhotoAgo(d);
           }();
 
     return Padding(
@@ -238,11 +235,7 @@ class _ProjectCard extends ConsumerWidget {
                   const SizedBox(height: AppSpacing.xs),
                   Row(
                     children: [
-                      const Icon(
-                        Icons.circle,
-                        size: 8,
-                        color: AppColors.green,
-                      ),
+                      const Icon(Icons.circle, size: 8, color: AppColors.green),
                       const SizedBox(width: 6),
                       Expanded(
                         child: Text(

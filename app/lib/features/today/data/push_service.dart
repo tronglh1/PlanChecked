@@ -158,5 +158,5 @@ class PushService {
 String pushPlatformName() => switch (defaultTargetPlatform) {
   TargetPlatform.android => 'android',
   TargetPlatform.iOS => 'ios',
-  _ => kIsWeb ? 'web' : defaultTargetPlatform.name,
+  _ => 'web', // push_tokens.platform CHECK: android | ios | web
 };

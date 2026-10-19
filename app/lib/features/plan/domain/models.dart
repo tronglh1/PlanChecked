@@ -75,6 +75,7 @@ class Stage {
     required this.idx,
     required this.code,
     required this.name,
+    this.nameEn,
     required this.dayFrom,
     required this.dayTo,
     this.milestoneCode,
@@ -85,9 +86,24 @@ class Stage {
   final int idx;
   final String code;
   final String name;
+
+  /// `stages.name_en`; null when the plan has none.
+  final String? nameEn;
   final int dayFrom;
   final int dayTo;
   final String? milestoneCode;
+
+  /// Name for [lang] (`vi` | `en`), falling back to the other language, then
+  /// to the readable [code].
+  String label(String lang) {
+    final en = (nameEn ?? '').trim();
+    final vi = name.trim();
+    final first = lang == 'en' ? en : vi;
+    final second = lang == 'en' ? vi : en;
+    if (first.isNotEmpty) return first;
+    if (second.isNotEmpty) return second;
+    return code;
+  }
 
   int get lengthDays => dayTo - dayFrom + 1;
 
@@ -99,6 +115,7 @@ class Stage {
     idx: (j['idx'] as num).toInt(),
     code: j['code'] as String,
     name: (j['name'] as String?) ?? '',
+    nameEn: j['name_en'] as String?,
     dayFrom: (j['day_from'] as num).toInt(),
     dayTo: (j['day_to'] as num).toInt(),
     milestoneCode: j['milestone_code'] as String?,
@@ -110,6 +127,7 @@ class Stage {
     'idx': idx,
     'code': code,
     'name': name,
+    'name_en': nameEn,
     'day_from': dayFrom,
     'day_to': dayTo,
     'milestone_code': milestoneCode,
@@ -125,7 +143,7 @@ class Task {
     required this.window,
     required this.frequency,
     this.intervalDays,
-    this.fixedDate,
+    this.dayOffset = 0,
     this.reminderTime,
     this.assigneeId,
     this.assignmentMode = AssignmentMode.once,
@@ -144,13 +162,13 @@ class Task {
   final TaskWindow window;
   final Frequency frequency;
 
-  /// every_n_days: N. fixed_date without [fixedDate]: the 1-based project day
-  /// number (the "Ngày 20" label). Unused otherwise.
+  /// every_n_days: N. fixed_date: the day of the month (1-31), same as SQL
+  /// `task_due_on`. Unused otherwise.
   final int? intervalDays;
 
-  /// fixed_date: explicit calendar date (date-only). Takes precedence over
-  /// [intervalDays]. Not a column in spec §4.2; optional extension.
-  final DateTime? fixedDate;
+  /// Days after the stage's first day that the task starts (`tasks.day_offset`,
+  /// written by `create_draft_plan`). Mirrors SQL `task_due_on`.
+  final int dayOffset;
 
   /// "HH:mm" (24h), e.g. "16:30".
   final String? reminderTime;
@@ -173,9 +191,7 @@ class Task {
     window: TaskWindow.fromDb(j['window']),
     frequency: Frequency.fromDb(j['frequency']),
     intervalDays: (j['interval_days'] as num?)?.toInt(),
-    fixedDate: j['fixed_date'] == null
-        ? null
-        : parseIsoDate(j['fixed_date'] as String),
+    dayOffset: (j['day_offset'] as num?)?.toInt() ?? 0,
     reminderTime: (j['reminder_time'] as String?)?.substring(
       0,
       (j['reminder_time'] as String).length < 5
@@ -204,7 +220,7 @@ class Task {
     'window': window.db,
     'frequency': frequency.db,
     'interval_days': intervalDays,
-    if (fixedDate != null) 'fixed_date': formatIsoDate(fixedDate!),
+    'day_offset': dayOffset,
     'reminder_time': reminderTime,
     'assignee_id': assigneeId,
     'assignment_mode': assignmentMode.db,

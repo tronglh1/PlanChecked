@@ -59,7 +59,11 @@ class SupabaseAuthRepository implements AuthRepository {
 
   @override
   Future<void> deleteMyAccount() async {
-    await _client.rpc('delete_my_account');
+    // The Edge Function removes Storage objects first, then calls the RPC.
+    final res = await _client.functions.invoke('delete-account');
+    if (res.status < 200 || res.status >= 300) {
+      throw StateError('delete-account failed: ${res.status}');
+    }
     try {
       await _client.auth.signOut(scope: SignOutScope.local);
     } catch (_) {

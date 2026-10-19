@@ -253,7 +253,7 @@
   "planFreqDaily": "Hằng ngày",
   "planFreqEveryN": "{n} ngày/lần",
   "@planFreqEveryN": {"placeholders": {"n": {"type": "int"}}},
-  "planFreqFixedDay": "Ngày {day}",
+  "planFreqFixedDay": "Ngày {day} hằng tháng",
   "@planFreqFixedDay": {"placeholders": {"day": {"type": "int"}}},
   "planFreqFixedDate": "Ngày {date}",
   "@planFreqFixedDate": {"placeholders": {"date": {"type": "String"}}},
@@ -268,7 +268,7 @@
   "planTaskWindow": "Khung giờ",
   "planTaskFrequency": "Tần suất",
   "planTaskInterval": "Cách nhau (ngày)",
-  "planTaskFixedDay": "Ngày thứ (của project)",
+  "planTaskFixedDay": "Ngày trong tháng (1-31)",
   "planTaskReminder": "Nhắc lúc",
   "planTaskNoReminder": "Không nhắc",
   "planTaskStage": "Giai đoạn",
@@ -297,7 +297,7 @@
   "planAddManual": "+ Thêm việc thủ công",
   "planTimeline": "Các giai đoạn",
   "projectDetailTabOverview": "Tổng quan",
-  "projectDetailTabPlan": "Plan",
+  "projectDetailTabPlan": "Kế hoạch",
   "projectDetailTabCalendar": "Lịch",
   "projectDetailTabPhotos": "Ảnh",
   "projectDetailTabMembers": "Thành viên",
@@ -470,7 +470,7 @@
       }
     }
   },
-  "taskFreqFixed": "Ngày {n}",
+  "taskFreqFixed": "Ngày {n} hằng tháng",
   "@taskFreqFixed": {
     "placeholders": {
       "n": {

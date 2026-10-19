@@ -148,6 +148,42 @@ test('household: create, invite by code, accept; member sees shared project', as
   assert.equal(prof.length, 2);
 });
 
+test('Member can create projects in own household; outsiders cannot; profile save is update-only', async () => {
+  const hid = (await q('select household_id h from public.household_members where user_id=$1', [U.bob]))[0].h;
+  const ins = (uid, hh) => as(uid, `insert into public.projects(owner_id, household_id, plant_id, name, start_date)
+    values ($1,$2,'basil','Member basil', current_date) returning id`, [uid, hh]);
+  const mine = await ins(U.bob, hid);
+  assert.equal(mine.length, 1, 'Member creates a household project');
+  assert.equal((await as(U.alice, 'select count(*)::int c from public.projects where id=$1', [mine[0].id]))[0].c, 1, 'Owner sees it');
+  // cover_path update (the app does this right after creating) keeps working
+  assert.equal((await as(U.bob, "update public.projects set cover_path='x/y/cover.jpg' where id=$1 returning id", [mine[0].id])).length, 1);
+  await rejects(ins(U.carol, hid), /row-level security/);
+  await rejects(as(U.bob, `insert into public.projects(owner_id, household_id, plant_id, name) values ($1,$2,'basil','x')`, [U.alice, hid]), /row-level security/);
+  // profile save: UPDATE on own row works (what the app does), INSERT is revoked
+  const upd = await as(U.carol, "update public.users set display_name='Carol', province_code='HCM' where id=$1 returning id", [U.carol]);
+  assert.equal(upd.length, 1);
+  assert.equal((await as(U.carol, "update public.users set display_name='x' where id=$1 returning id", [U.bob])).length, 0, 'cannot touch others');
+  await rejects(as(U.carol, "insert into public.users(id, display_name) values ($1,'dup')", [U.carol]), /permission denied/);
+});
+
+test('task_due_on: day_offset and fixed_date (day of month) - mirrored by Dart TaskScheduler tests', async () => {
+  const p = (await as(U.carol, `insert into public.projects(owner_id, plant_id, name, start_date)
+    values ($1,'basil','Sched','2026-10-25') returning id`, [U.carol]))[0].id;
+  const mk = async (freq, n, off) => (await as(U.carol, `insert into public.tasks(project_id, task_code, frequency, interval_days, day_offset)
+    values ($1,'T_WATER',$2,$3,$4) returning id`, [p, freq, n, off]))[0].id;
+  const due = async (id, d) => (await q('select public.task_due_on($1,$2::date) r', [id, d]))[0].r;
+  const once = await mk('once', null, 4);                 // project day 1 + 4 = Oct 29
+  assert.equal(await due(once, '2026-10-29'), true);
+  assert.equal(await due(once, '2026-10-25'), false);
+  const daily = await mk('daily', null, 2);               // from day 3 = Oct 27
+  assert.equal(await due(daily, '2026-10-26'), false);
+  assert.equal(await due(daily, '2026-10-27'), true);
+  const every = await mk('every_n_days', 5, 2);           // Oct 27, Nov 1, Nov 6
+  assert.deepEqual([await due(every, '2026-10-27'), await due(every, '2026-10-30'), await due(every, '2026-11-01')], [true, false, true]);
+  const fixed = await mk('fixed_date', 20, 0);            // the 20th of every month
+  assert.deepEqual([await due(fixed, '2026-10-20'), await due(fixed, '2026-11-20'), await due(fixed, '2026-12-20'), await due(fixed, '2026-11-13')], [false, true, true, false]);
+});
+
 test('Member can Done tasks but cannot edit tasks, assign, share or invite', async () => {
   await rejects(as(U.bob, "update public.tasks set assignee_id = $1", [U.bob]).then((r) => { if (!r.length) throw new Error('no rows'); }), /no rows/);
   await rejects(as(U.bob, "insert into public.tasks(project_id, task_code) values ($1,'T_WATER')", [projectA]), /row-level security/);
@@ -270,5 +306,6 @@ test('streak, leave_household transfers ownership, delete_my_account removes dat
   assert.equal((await q('select count(*)::int c from public.projects where owner_id=$1', [U.alice]))[0].c, 0);
   const m = await q('select role from public.household_members where user_id=$1', [U.bob]);
   assert.equal(m[0].role, 'owner', 'ownership passed to the remaining member');
-  assert.equal((await as(U.bob, 'select count(*)::int c from public.projects'))[0].c, 0);
+  // only Bob's own household project (created in the Member test) remains; Alice's are gone
+  assert.equal((await as(U.bob, 'select count(*)::int c from public.projects'))[0].c, 1);
 });

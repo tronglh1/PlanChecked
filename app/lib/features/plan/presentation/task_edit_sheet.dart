@@ -108,9 +108,10 @@ class _TaskEditorSheetState extends ConsumerState<_TaskEditorSheet> {
     final code = _code;
     if (code == null) return;
     final needsN =
-        _frequency == Frequency.everyNDays ||
-        _frequency == Frequency.fixedDate;
-    final n = needsN ? (_intervalValue ?? 1) : null;
+        _frequency == Frequency.everyNDays || _frequency == Frequency.fixedDate;
+    var n = needsN ? (_intervalValue ?? 1) : null;
+    // fixed_date holds a day of the month.
+    if (_frequency == Frequency.fixedDate && n != null && n > 31) n = 31;
     setState(() {
       _busy = true;
       _error = false;
@@ -140,7 +141,7 @@ class _TaskEditorSheetState extends ConsumerState<_TaskEditorSheet> {
             window: _window,
             frequency: _frequency,
             intervalDays: n,
-            fixedDate: _frequency == Frequency.fixedDate ? t.fixedDate : null,
+            dayOffset: t.dayOffset,
             reminderTime: _reminder,
             assigneeId: t.assigneeId,
             assignmentMode: t.assignmentMode,
@@ -188,11 +189,16 @@ class _TaskEditorSheetState extends ConsumerState<_TaskEditorSheet> {
 
     Widget label(String s) => Padding(
       padding: const EdgeInsets.only(top: AppSpacing.md, bottom: AppSpacing.sm),
-      child: Text(s, style: t.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
+      child: Text(
+        s,
+        style: t.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+      ),
     );
 
     return Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: Container(
         decoration: const BoxDecoration(
           color: AppColors.bgTop,
@@ -230,9 +236,8 @@ class _TaskEditorSheetState extends ConsumerState<_TaskEditorSheet> {
                           child: Text(
                             renderer.taskName(
                               c.code,
-                              lang: Localizations.localeOf(
-                                context,
-                              ).languageCode,
+                              lang: Localizations.localeOf(context)
+                                  .languageCode,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),

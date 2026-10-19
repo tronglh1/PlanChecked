@@ -1253,7 +1253,7 @@ abstract class AppLocalizations {
   /// No description provided for @planFreqFixedDay.
   ///
   /// In vi, this message translates to:
-  /// **'Ngày {day}'**
+  /// **'Ngày {day} hằng tháng'**
   String planFreqFixedDay(int day);
 
   /// No description provided for @planFreqFixedDate.
@@ -1331,7 +1331,7 @@ abstract class AppLocalizations {
   /// No description provided for @planTaskFixedDay.
   ///
   /// In vi, this message translates to:
-  /// **'Ngày thứ (của project)'**
+  /// **'Ngày trong tháng (1-31)'**
   String get planTaskFixedDay;
 
   /// No description provided for @planTaskReminder.
@@ -1481,7 +1481,7 @@ abstract class AppLocalizations {
   /// No description provided for @projectDetailTabPlan.
   ///
   /// In vi, this message translates to:
-  /// **'Plan'**
+  /// **'Kế hoạch'**
   String get projectDetailTabPlan;
 
   /// No description provided for @projectDetailTabCalendar.
@@ -1997,7 +1997,7 @@ abstract class AppLocalizations {
   /// No description provided for @taskFreqFixed.
   ///
   /// In vi, this message translates to:
-  /// **'Ngày {n}'**
+  /// **'Ngày {n} hằng tháng'**
   String taskFreqFixed(int n);
 
   /// No description provided for @taskReminderByWindow.

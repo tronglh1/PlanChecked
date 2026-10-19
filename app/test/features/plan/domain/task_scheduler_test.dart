@@ -31,7 +31,7 @@ Task task(
   String? stageId,
   int? interval,
   TaskWindow window = TaskWindow.morning,
-  DateTime? fixedDate,
+  int dayOffset = 0,
   String status = 'active',
   String? reminder,
   String code = 'T_WATER',
@@ -43,7 +43,7 @@ Task task(
   window: window,
   frequency: f,
   intervalDays: interval,
-  fixedDate: fixedDate,
+  dayOffset: dayOffset,
   status: status,
   reminderTime: reminder,
 );
@@ -199,47 +199,67 @@ void main() {
       );
     });
 
-    test('fixed_date uses explicit date, else project day number', () {
-      final explicit = task(Frequency.fixedDate, fixedDate: d(2026, 11, 20));
+    test('fixed_date is the day of the month (SQL task_due_on)', () {
+      // start = Oct 25 (day 1). interval_days 20 -> the 20th of each month.
+      final byDom = task(Frequency.fixedDate, interval: 20);
       expect(
         dates(
           TaskScheduler.expand(
-            task: explicit,
+            task: byDom,
             projectStart: start,
-            from: d(2026, 11, 1),
-            to: d(2026, 11, 30),
+            from: d(2026, 10, 25),
+            to: d(2027, 1, 31),
           ),
         ),
-        [d(2026, 11, 20)],
+        [d(2026, 11, 20), d(2026, 12, 20), d(2027, 1, 20)],
       );
-      final byDay = task(Frequency.fixedDate, interval: 20); // day 20 = Nov 13
+      // No interval -> day 1 of the month (coalesce(interval_days, 1)).
       expect(
         dates(
           TaskScheduler.expand(
-            task: byDay,
+            task: task(Frequency.fixedDate),
             projectStart: start,
-            from: d(2026, 11, 1),
-            to: d(2026, 11, 30),
+            from: d(2026, 10, 25),
+            to: d(2026, 12, 31),
           ),
         ),
-        [d(2026, 11, 13)],
+        [d(2026, 11, 1), d(2026, 12, 1)],
       );
-      // No date and no day -> nothing.
+      // Never before the first active day (the 20th of October is day -4).
       expect(
         TaskScheduler.expand(
-          task: task(Frequency.fixedDate),
+          task: task(Frequency.fixedDate, interval: 20),
           projectStart: start,
           from: d(2026, 10, 1),
-          to: d(2026, 12, 31),
+          to: d(2026, 10, 31),
         ),
         isEmpty,
       );
     });
 
-    test('fixed_date day outside its stage yields nothing', () {
+    test('fixed_date inside a stage honours stage bounds and day_offset', () {
+      // seedling: days 1..14 = Oct 25..Nov 7. Day-of-month 1 -> Nov 1 (day 8).
+      expect(
+        dates(
+          TaskScheduler.expand(
+            task: task(Frequency.fixedDate, stageId: 's1', interval: 1),
+            stage: seedling,
+            projectStart: start,
+            from: d(2026, 10, 1),
+            to: d(2026, 12, 31),
+          ),
+        ),
+        [d(2026, 11, 1)],
+      );
+      // offset 8 -> first = day 9 (Nov 2), so Nov 1 is no longer active.
       expect(
         TaskScheduler.expand(
-          task: task(Frequency.fixedDate, stageId: 's1', interval: 20),
+          task: task(
+            Frequency.fixedDate,
+            stageId: 's1',
+            interval: 1,
+            dayOffset: 8,
+          ),
           stage: seedling,
           projectStart: start,
           from: d(2026, 10, 1),
@@ -469,6 +489,74 @@ void main() {
         d(2026, 11, 9),
         d(2026, 11, 14),
       ]);
+    });
+  });
+
+  // Cases mirror SQL public.task_due_on (supabase/migrations/..._functions.sql):
+  //   v_first := stage.day_from + day_offset;  not due before v_first or after day_to
+  //   once = v_first; every_n_days = (day - v_first) % n == 0; daily = true.
+  group('day_offset (mirrors SQL task_due_on)', () {
+    // vegetative stage = days 15..40, start = Oct 25 -> day 15 = Nov 8.
+    List<DateTime> run(Task tk, {Stage? stage = veg}) => dates(
+      TaskScheduler.expand(
+        task: tk,
+        stage: stage,
+        projectStart: start,
+        from: d(2026, 10, 25),
+        to: d(2026, 12, 31),
+      ),
+    );
+
+    test('once lands on stage.day_from + offset', () {
+      expect(run(task(Frequency.once, stageId: 's2', dayOffset: 3)), [
+        d(2026, 11, 11), // day 18
+      ]);
+    });
+
+    test('once without stage lands on project day 1 + offset', () {
+      expect(run(task(Frequency.once, dayOffset: 4), stage: null), [
+        d(2026, 10, 29),
+      ]);
+    });
+
+    test('daily starts at the offset and ends with the stage', () {
+      final r = run(task(Frequency.daily, stageId: 's2', dayOffset: 20));
+      expect(r.first, d(2026, 11, 28)); // day 35
+      expect(r.last, d(2026, 12, 3)); // day 40
+      expect(r.length, 6);
+    });
+
+    test('every_n_days counts from the offset first day', () {
+      final r = run(
+        task(Frequency.everyNDays, stageId: 's2', interval: 5, dayOffset: 2),
+      );
+      expect(r.take(3).toList(), [
+        d(2026, 11, 10), // day 17
+        d(2026, 11, 15),
+        d(2026, 11, 20),
+      ]);
+    });
+
+    test('offset past the stage end yields nothing', () {
+      expect(run(task(Frequency.daily, stageId: 's2', dayOffset: 30)), isEmpty);
+    });
+
+    test('window start inside the range still anchors on first day', () {
+      final r = dates(
+        TaskScheduler.expand(
+          task: task(
+            Frequency.everyNDays,
+            stageId: 's2',
+            interval: 5,
+            dayOffset: 2,
+          ),
+          stage: veg,
+          projectStart: start,
+          from: d(2026, 11, 12),
+          to: d(2026, 11, 25),
+        ),
+      );
+      expect(r, [d(2026, 11, 15), d(2026, 11, 20), d(2026, 11, 25)]);
     });
   });
 }

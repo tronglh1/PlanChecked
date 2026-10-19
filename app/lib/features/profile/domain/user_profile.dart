@@ -16,6 +16,10 @@ enum Experience {
 }
 
 const String kDefaultTimezone = 'Asia/Ho_Chi_Minh';
+
+/// Version tag of the terms / privacy / ND13 texts recorded in `consents`.
+const String kConsentVersion = '2026-10';
+
 const int kMaxDisplayNameLength = 50;
 
 /// Row of the public `users` table (only the columns the app edits).

@@ -76,6 +76,12 @@ class FakeProfileRepository implements ProfileRepository {
   @override
   Future<void> save(UserProfile p) async => profile = p;
 
+  final List<String> consentVersions = [];
+
+  @override
+  Future<void> recordConsents(String version) async =>
+      consentVersions.add(version);
+
   @override
   Future<void> updateLang(String lang) async => langUpdates.add(lang);
 

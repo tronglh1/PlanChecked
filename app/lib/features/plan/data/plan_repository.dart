@@ -113,12 +113,8 @@ class SupabasePlanRepository implements PlanRepository {
         if (r['stage_id'] == null || stageIds.contains(r['stage_id']))
           Task.fromJson(Map<String, dynamic>.from(r)),
     ];
-    final src = pick['sources'];
-    return PlanBundle(
-      plan: plan,
-      tasks: tasks,
-      sources: src is List ? [for (final s in src) '$s'] : const [],
-    );
+    // `plans` has no `sources` column yet; sources stay empty.
+    return PlanBundle(plan: plan, tasks: tasks, sources: const []);
   }
 
   @override

@@ -87,7 +87,7 @@ class _Body extends ConsumerWidget {
               Text(
                 stage == null
                     ? project.name
-                    : '${project.name} · ${stage.name}',
+                    : '${project.name} · ${stage.label(Localizations.localeOf(context).languageCode)}',
                 style: t.bodySmall?.copyWith(color: AppColors.textSecondary),
               ),
               const SizedBox(height: 2),
@@ -271,10 +271,7 @@ String _frequency(AppLocalizations l, Task t) => switch (t.frequency) {
   Frequency.once => l.taskFreqOnce,
   Frequency.daily => l.taskFreqDaily,
   Frequency.everyNDays => l.taskFreqEveryN(t.intervalDays ?? 1),
-  Frequency.fixedDate =>
-    t.fixedDate != null
-        ? shortDate(t.fixedDate!)
-        : l.taskFreqFixed(t.intervalDays ?? 1),
+  Frequency.fixedDate => l.taskFreqFixed(t.intervalDays ?? 1),
 };
 
 class _Tile extends StatelessWidget {

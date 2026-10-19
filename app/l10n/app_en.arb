@@ -253,7 +253,7 @@
   "planFreqDaily": "Daily",
   "planFreqEveryN": "Every {n} days",
   "@planFreqEveryN": {"placeholders": {"n": {"type": "int"}}},
-  "planFreqFixedDay": "Day {day}",
+  "planFreqFixedDay": "Day {day} of the month",
   "@planFreqFixedDay": {"placeholders": {"day": {"type": "int"}}},
   "planFreqFixedDate": "On {date}",
   "@planFreqFixedDate": {"placeholders": {"date": {"type": "String"}}},
@@ -268,7 +268,7 @@
   "planTaskWindow": "Time of day",
   "planTaskFrequency": "Frequency",
   "planTaskInterval": "Every (days)",
-  "planTaskFixedDay": "Project day",
+  "planTaskFixedDay": "Day of month (1-31)",
   "planTaskReminder": "Remind at",
   "planTaskNoReminder": "No reminder",
   "planTaskStage": "Stage",
@@ -470,7 +470,7 @@
       }
     }
   },
-  "taskFreqFixed": "Day {n}",
+  "taskFreqFixed": "Day {n} of the month",
   "@taskFreqFixed": {
     "placeholders": {
       "n": {

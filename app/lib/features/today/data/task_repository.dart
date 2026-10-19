@@ -118,7 +118,7 @@ class SupabaseTaskRepository implements TaskRepository {
     if (ids.isEmpty) return const {};
     try {
       final rows = await _client
-          .from('users')
+          .from('member_profiles')
           .select('id, display_name')
           .inFilter('id', ids.toList());
       return {

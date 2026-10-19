@@ -21,12 +21,6 @@ String frequencyLabel(AppLocalizations l10n, Task t) {
     case Frequency.everyNDays:
       return l10n.planFreqEveryN(t.intervalDays ?? 1);
     case Frequency.fixedDate:
-      if (t.fixedDate != null) {
-        final d = t.fixedDate!;
-        return l10n.planFreqFixedDate(
-          '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}',
-        );
-      }
       return l10n.planFreqFixedDay(t.intervalDays ?? 1);
   }
 }

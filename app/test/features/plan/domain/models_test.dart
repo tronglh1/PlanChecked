@@ -73,17 +73,44 @@ void main() {
       expect(t.xp, 10);
     });
 
-    test('fixed_date parses as date-only', () {
-      final t = Task.fromJson({
+    test('day_offset defaults to 0 and round-trips', () {
+      final base = {
         'id': 't',
         'project_id': 'p',
         'task_code': 'T_X',
         'window': 'morning',
         'frequency': 'fixed_date',
-        'fixed_date': '2026-11-20',
+        'interval_days': 20,
+      };
+      expect(Task.fromJson(base).dayOffset, 0);
+      final t = Task.fromJson({...base, 'day_offset': 6});
+      expect(t.dayOffset, 6);
+      expect(t.intervalDays, 20);
+      expect(t.toJson()['day_offset'], 6);
+    });
+
+    test('Stage.label picks name_en for en, falls back to vi then code', () {
+      final s = Stage.fromJson({
+        'id': 's',
+        'plan_id': 'p',
+        'idx': 0,
+        'code': 'seedling',
+        'name': 'Cây con',
+        'name_en': 'Seedling',
+        'day_from': 1,
+        'day_to': 5,
       });
-      expect(t.fixedDate, DateTime.utc(2026, 11, 20));
-      expect(t.toJson()['fixed_date'], '2026-11-20');
+      expect(s.label('en'), 'Seedling');
+      expect(s.label('vi'), 'Cây con');
+      final bare = Stage.fromJson({
+        'id': 's',
+        'plan_id': 'p',
+        'idx': 0,
+        'code': 'seedling',
+        'day_from': 1,
+        'day_to': 5,
+      });
+      expect(bare.label('en'), 'seedling');
     });
 
     test('Plan with stages sorts stages by idx and parses confidence', () {

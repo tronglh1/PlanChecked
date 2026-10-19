@@ -659,7 +659,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String planFreqFixedDay(int day) {
-    return 'Day $day';
+    return 'Day $day of the month';
   }
 
   @override
@@ -701,7 +701,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get planTaskInterval => 'Every (days)';
 
   @override
-  String get planTaskFixedDay => 'Project day';
+  String get planTaskFixedDay => 'Day of month (1-31)';
 
   @override
   String get planTaskReminder => 'Remind at';
@@ -1100,7 +1100,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String taskFreqFixed(int n) {
-    return 'Day $n';
+    return 'Day $n of the month';
   }
 
   @override

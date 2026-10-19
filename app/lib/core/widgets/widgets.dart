@@ -2,6 +2,7 @@ export 'empty_state.dart';
 export 'glass_card.dart';
 export 'glass_config.dart';
 export 'glass_scaffold.dart';
+export 'glass_text_field.dart';
 export 'glow_button.dart';
 export 'glow_checkbox.dart';
 export 'progress.dart';

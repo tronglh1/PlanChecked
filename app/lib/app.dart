@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'core/widgets/glass_config.dart';
+import 'features/settings/presentation/locale_provider.dart';
 import 'l10n/app_localizations.dart';
 
 /// Global switch for BackdropFilter blur (disable on low-end devices).
@@ -29,7 +30,7 @@ class VuonNhaApp extends ConsumerWidget {
       onGenerateTitle: (c) => AppLocalizations.of(c).appName,
       theme: AppTheme.light(),
       routerConfig: router,
-      locale: const Locale('vi'),
+      locale: ref.watch(localeProvider),
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: const [
         AppLocalizations.delegate,

@@ -17,10 +17,133 @@
   "commonError": "Đã có lỗi xảy ra",
   "emptyTitle": "Chưa có gì ở đây",
   "loginTitle": "Đăng nhập",
-  "loginPlaceholder": "Màn hình đăng nhập sẽ sớm có mặt.",
-  "onboardingTitle": "Chào mừng đến Vườn Nhà",
-  "onboardingPlaceholder": "Hướng dẫn làm quen sẽ sớm có mặt.",
   "configErrorTitle": "Thiếu cấu hình",
   "configErrorMessage": "Chưa có SUPABASE_URL / SUPABASE_ANON_KEY. Chạy app với --dart-define-from-file=env/dev.json.",
-  "placeholderComingSoon": "Sắp ra mắt"
+  "placeholderComingSoon": "Sắp ra mắt",
+  "loginTagline": "Kế hoạch chăm cây do AI lập riêng cho bạn, việc mỗi ngày rõ ràng, cả nhà cùng chăm.",
+  "loginGoogle": "Tiếp tục với Google",
+  "loginOr": "hoặc",
+  "loginEmailLabel": "Email",
+  "loginEmailHint": "ban@email.com",
+  "loginSendCode": "Nhận mã đăng nhập",
+  "loginEmailInvalid": "Email chưa hợp lệ",
+  "loginOtpTitle": "Nhập mã xác nhận",
+  "loginOtpSent": "Chúng tôi đã gửi mã 6 số tới {email}",
+  "@loginOtpSent": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "loginOtpLabel": "Mã 6 số",
+  "loginOtpVerify": "Xác nhận",
+  "loginOtpInvalid": "Mã gồm 6 chữ số",
+  "loginOtpWrong": "Mã không đúng hoặc đã hết hạn",
+  "loginResend": "Gửi lại mã",
+  "loginChangeEmail": "Đổi email",
+  "loginError": "Không đăng nhập được. Vui lòng thử lại.",
+  "loginTermsPrefix": "Tiếp tục nghĩa là bạn đồng ý với ",
+  "loginTerms": "Điều khoản",
+  "loginTermsAnd": " và ",
+  "loginPrivacy": "Chính sách dữ liệu",
+  "loginTermsSuffix": " (theo Nghị định 13/2023/NĐ-CP).",
+  "profileStep": "Bước 1/2",
+  "profileTitle": "Giới thiệu một chút về bạn",
+  "profileSub": "Vị trí giúp AI tính khí hậu và mùa vụ. App chỉ lưu ở mức tỉnh/thành.",
+  "profileChangeAvatar": "Đổi ảnh đại diện",
+  "profileNameLabel": "Tên hiển thị",
+  "profileLocationLabel": "Bạn trồng cây ở đâu?",
+  "profileLocationHint": "Chọn tỉnh/thành",
+  "profileProvinceSearch": "Tìm tỉnh/thành",
+  "regionHelperSouth": "Khí hậu nhiệt đới, mùa mưa tháng 5–11",
+  "regionHelperNorth": "Bốn mùa rõ rệt, mùa đông lạnh",
+  "regionHelperCentral": "Nắng nóng, mưa nhiều vào cuối năm",
+  "profileExperience": "Kinh nghiệm trồng cây",
+  "expNew": "Mới bắt đầu",
+  "expMid": "Trung bình",
+  "expPro": "Thành thạo",
+  "profileLanguage": "Ngôn ngữ",
+  "langVi": "Tiếng Việt",
+  "langEn": "English",
+  "errorNameEmpty": "Hãy nhập tên hiển thị",
+  "errorNameTooLong": "Tên tối đa 50 ký tự",
+  "errorProvince": "Hãy chọn tỉnh/thành",
+  "profileSaveError": "Không lưu được hồ sơ. Vui lòng thử lại.",
+  "settingsEdit": "Sửa",
+  "settingsNotifications": "THÔNG BÁO",
+  "notifTask": "Nhắc việc chăm cây",
+  "notifCheckin": "Nhắc chụp check-in",
+  "notifAssignment": "Được giao việc",
+  "notifAchievement": "Thành tích & huy hiệu",
+  "notifBundle": "Gộp thông báo thành 1 lần/ngày",
+  "settingsOther": "KHÁC",
+  "settingsLanguage": "Ngôn ngữ",
+  "settingsLeaveHousehold": "Rời gia đình",
+  "settingsSignOut": "Đăng xuất",
+  "settingsDeleteAccount": "Xóa tài khoản và toàn bộ dữ liệu",
+  "deleteConfirm1Title": "Xóa tài khoản?",
+  "deleteConfirm1Body": "Toàn bộ dự án, check-in, ảnh và thành tích của bạn sẽ bị xóa.",
+  "deleteConfirm2Title": "Bạn chắc chắn chứ?",
+  "deleteConfirm2Body": "Hành động này không thể hoàn tác.",
+  "deleteConfirmAction": "Xóa vĩnh viễn",
+  "deleteError": "Không xóa được tài khoản. Vui lòng thử lại.",
+  "searchEyebrow": "Trồng cây mới · Bước 1/3",
+  "searchTitle": "Bạn muốn trồng cây gì?",
+  "searchFieldLabel": "Tên cây",
+  "filterAll": "Tất cả",
+  "filterVeg": "Rau & quả",
+  "filterOrnamental": "Cây cảnh trong nhà",
+  "searchCount": "{count} kết quả cho “{query}”",
+  "@searchCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "searchCountAll": "{count} loại cây",
+  "@searchCountAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "diffEasy": "Dễ",
+  "diffMedium": "Trung bình",
+  "diffHard": "Khó",
+  "harvestDays": "Thu hoạch ~{days} ngày",
+  "@harvestDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "searchNotFoundTitle": "Không thấy cây bạn cần?",
+  "searchDidYouMean": "Bạn gõ “{query}”. Có phải bạn muốn nói…?",
+  "@searchDidYouMean": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "searchYes": "Đúng rồi",
+  "searchNo": "Không phải",
+  "searchFreeText": "Dùng “{query}”",
+  "@searchFreeText": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "searchFreeTextHint": "Chưa có trong danh sách? AI sẽ lập kế hoạch cho cây này ở bước sau.",
+  "searchLoadError": "Không tải được danh sách cây",
+  "contextTitle": "Thông tin & bối cảnh trồng"
 }

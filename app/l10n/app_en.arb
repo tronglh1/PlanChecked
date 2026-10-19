@@ -17,10 +17,133 @@
   "commonError": "Something went wrong",
   "emptyTitle": "Nothing here yet",
   "loginTitle": "Sign in",
-  "loginPlaceholder": "The sign-in screen is coming soon.",
-  "onboardingTitle": "Welcome to Vườn Nhà",
-  "onboardingPlaceholder": "Onboarding is coming soon.",
   "configErrorTitle": "Missing configuration",
   "configErrorMessage": "SUPABASE_URL / SUPABASE_ANON_KEY are not set. Run the app with --dart-define-from-file=env/dev.json.",
-  "placeholderComingSoon": "Coming soon"
+  "placeholderComingSoon": "Coming soon",
+  "loginTagline": "An AI care plan made just for you: clear daily tasks, the whole family helps.",
+  "loginGoogle": "Continue with Google",
+  "loginOr": "or",
+  "loginEmailLabel": "Email",
+  "loginEmailHint": "you@email.com",
+  "loginSendCode": "Get sign-in code",
+  "loginEmailInvalid": "Enter a valid email",
+  "loginOtpTitle": "Enter the code",
+  "loginOtpSent": "We sent a 6-digit code to {email}",
+  "@loginOtpSent": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "loginOtpLabel": "6-digit code",
+  "loginOtpVerify": "Verify",
+  "loginOtpInvalid": "The code has 6 digits",
+  "loginOtpWrong": "The code is wrong or has expired",
+  "loginResend": "Resend code",
+  "loginChangeEmail": "Change email",
+  "loginError": "Could not sign in. Please try again.",
+  "loginTermsPrefix": "By continuing you agree to the ",
+  "loginTerms": "Terms",
+  "loginTermsAnd": " and ",
+  "loginPrivacy": "Data Policy",
+  "loginTermsSuffix": " (per Decree 13/2023/ND-CP).",
+  "profileStep": "Step 1/2",
+  "profileTitle": "Tell us a little about you",
+  "profileSub": "Location helps the AI work out climate and season. The app only stores the province/city.",
+  "profileChangeAvatar": "Change avatar",
+  "profileNameLabel": "Display name",
+  "profileLocationLabel": "Where do you grow plants?",
+  "profileLocationHint": "Choose province/city",
+  "profileProvinceSearch": "Search province/city",
+  "regionHelperSouth": "Tropical climate, rainy season May–November",
+  "regionHelperNorth": "Four distinct seasons, cold winters",
+  "regionHelperCentral": "Hot and sunny, heavy rain late in the year",
+  "profileExperience": "Gardening experience",
+  "expNew": "Beginner",
+  "expMid": "Intermediate",
+  "expPro": "Experienced",
+  "profileLanguage": "Language",
+  "langVi": "Tiếng Việt",
+  "langEn": "English",
+  "errorNameEmpty": "Enter a display name",
+  "errorNameTooLong": "Name can be at most 50 characters",
+  "errorProvince": "Choose a province/city",
+  "profileSaveError": "Could not save your profile. Please try again.",
+  "settingsEdit": "Edit",
+  "settingsNotifications": "NOTIFICATIONS",
+  "notifTask": "Care task reminders",
+  "notifCheckin": "Check-in photo reminders",
+  "notifAssignment": "Task assigned to me",
+  "notifAchievement": "Achievements & badges",
+  "notifBundle": "Bundle notifications once a day",
+  "settingsOther": "OTHER",
+  "settingsLanguage": "Language",
+  "settingsLeaveHousehold": "Leave household",
+  "settingsSignOut": "Sign out",
+  "settingsDeleteAccount": "Delete account and all data",
+  "deleteConfirm1Title": "Delete account?",
+  "deleteConfirm1Body": "All your projects, check-ins, photos and achievements will be deleted.",
+  "deleteConfirm2Title": "Are you absolutely sure?",
+  "deleteConfirm2Body": "This cannot be undone.",
+  "deleteConfirmAction": "Delete permanently",
+  "deleteError": "Could not delete the account. Please try again.",
+  "searchEyebrow": "New plant · Step 1/3",
+  "searchTitle": "What do you want to grow?",
+  "searchFieldLabel": "Plant name",
+  "filterAll": "All",
+  "filterVeg": "Vegetables & fruit",
+  "filterOrnamental": "Indoor ornamentals",
+  "searchCount": "{count} results for “{query}”",
+  "@searchCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "searchCountAll": "{count} plants",
+  "@searchCountAll": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "diffEasy": "Easy",
+  "diffMedium": "Medium",
+  "diffHard": "Hard",
+  "harvestDays": "Harvest ~{days} days",
+  "@harvestDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "searchNotFoundTitle": "Can’t find your plant?",
+  "searchDidYouMean": "You typed “{query}”. Did you mean…?",
+  "@searchDidYouMean": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "searchYes": "Yes, that’s it",
+  "searchNo": "No",
+  "searchFreeText": "Use “{query}”",
+  "@searchFreeText": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "searchFreeTextHint": "Not in the list? The AI will plan this plant in the next step.",
+  "searchLoadError": "Could not load the plant list",
+  "contextTitle": "Growing details & context"
 }

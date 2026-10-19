@@ -50,3 +50,4 @@ app.*.map.json
 # Local environment (secrets)
 /env/dev.json
 /env/ci.json
+/env/prod.json

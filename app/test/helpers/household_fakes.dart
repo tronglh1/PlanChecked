@@ -147,8 +147,8 @@ class FakeHouseholdRepository implements HouseholdRepository {
   }) async {
     invites.add((channel: channel, target: target, role: role));
     return InviteResult(
-      code: 'VUON-4821',
-      link: 'https://vuonnha.app/i/VUON-4821',
+      code: 'VUON-K7M2QX',
+      link: 'https://vuonnha.app/i/VUON-K7M2QX',
       expiresAt: DateTime.now().add(const Duration(days: 7)),
       role: role,
       emailSent: channel == 'email' && emailSent,
@@ -207,9 +207,17 @@ class FakeHouseholdRepository implements HouseholdRepository {
 }
 
 class FakeGamificationRepository implements GamificationRepository {
-  FakeGamificationRepository({this.data, this.milestone});
+  FakeGamificationRepository({
+    this.data,
+    this.milestone,
+    this.reached = const {},
+  });
   AchievementsData? data;
   MilestoneInfo? milestone;
+  Set<String> reached;
+
+  @override
+  Future<Set<String>> reachedMilestones(String projectId) async => reached;
 
   @override
   Future<AchievementsData> fetchAchievements() async => data!;

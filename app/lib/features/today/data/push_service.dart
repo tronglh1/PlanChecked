@@ -82,6 +82,9 @@ abstract class PushTokenRepository {
     required String token,
     required String platform,
   });
+
+  /// Removes this device's token row (own row only, enforced by RLS).
+  Future<void> delete(String token);
 }
 
 class SupabasePushTokenRepository implements PushTokenRepository {
@@ -101,6 +104,31 @@ class SupabasePushTokenRepository implements PushTokenRepository {
       'token': token,
       'platform': platform,
     }, onConflict: 'token');
+  }
+
+  @override
+  Future<void> delete(String token) async {
+    await _client.from('push_tokens').delete().eq('token', token);
+  }
+}
+
+/// Sign-out clean-up: drop this device's `push_tokens` row so the next
+/// account on the device does not hit the old row (RLS) and the previous user
+/// stops receiving pushes here. Must run while the session is still valid.
+/// Never throws; returns whether a row was removed.
+Future<bool> removeDeviceToken({
+  required PushMessaging messaging,
+  required PushTokenRepository tokens,
+}) async {
+  try {
+    if (!await messaging.init()) return false;
+    final token = await messaging.getToken();
+    if (token == null) return false;
+    await tokens.delete(token);
+    return true;
+  } catch (e) {
+    debugPrint('Removing push token failed: $e');
+    return false;
   }
 }
 

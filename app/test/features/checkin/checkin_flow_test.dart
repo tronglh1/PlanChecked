@@ -64,6 +64,34 @@ void main() {
       expect(repo.applied.single.ids, hasLength(2));
     });
 
+    testWidgets('a new milestone opens the celebration screen after apply', (
+      t,
+    ) async {
+      final repo = FakeCheckinRepository(result: fakeResult());
+      await pumpCheckinApp(
+        t,
+        initial: '/projects/new1/checkin/c1',
+        checkins: repo,
+      );
+      await tapKey(t, 'apply');
+      expect(repo.applied, hasLength(1));
+      expect(find.text('MILESTONE-TRUE_LEAVES'), findsOneWidget);
+    });
+
+    testWidgets('no new milestone: back to the project', (t) async {
+      final repo = FakeCheckinRepository(
+        result: fakeResult(newMilestone: false),
+      );
+      await pumpCheckinApp(
+        t,
+        initial: '/projects/new1/checkin/c1',
+        checkins: repo,
+      );
+      await tapKey(t, 'apply');
+      expect(find.textContaining('MILESTONE-'), findsNothing);
+      expect(find.text('Kết quả check-in'), findsNothing);
+    });
+
     testWidgets('skipping every change rejects them all', (t) async {
       final repo = FakeCheckinRepository(result: fakeResult());
       await pumpCheckinApp(

@@ -127,13 +127,13 @@ test('household: create, invite by code, accept; member sees shared project', as
   await rejects(as(U.alice, "select * from public.create_household('Again')"), /already_in_household/);
   await rejects(as(U.bob, "select * from public.create_invite('code')"), /not_household_owner/);
   const inv = (await as(U.alice, "select * from public.create_invite('code', null, 'member')"))[0];
-  assert.match(inv.code, /^VUON-\d{4}$/);
+  assert.match(inv.code, /^VUON-[A-HJ-KM-NP-Z2-9]{6}$/, 'VUON- + 6 unambiguous chars');
   inviteCode = inv.code;
   // project becomes shared (owner role may share)
   await as(U.alice, 'update public.projects set household_id = $1 where id = $2', [h.id, projectA]);
   assert.equal((await as(U.bob, 'select count(*)::int c from public.projects'))[0].c, 0, 'not visible before joining');
 
-  assert.deepEqual((await as(U.bob, "select public.accept_invite('VUON-0000') r"))[0].r.error, 'invite_invalid');
+  assert.deepEqual((await as(U.bob, "select public.accept_invite('VUON-ZZZZZZ') r"))[0].r.error, 'invite_invalid');
   const ok = (await as(U.bob, 'select public.accept_invite($1) r', [inviteCode.toLowerCase()]))[0].r;
   assert.equal(ok.ok, true);
   assert.equal((await as(U.carol, 'select public.accept_invite($1) r', [inviteCode]))[0].r.error, 'invite_invalid', 'single use');
@@ -296,6 +296,93 @@ test('storage: checkin photos readable by project members only', async () => {
   await rejects(as(U.carol, "insert into storage.objects(bucket_id, name, owner_id) values ('checkins',$1,$2)", [`${U.carol}/${projectA}/22222222-2222-4222-8222-222222222222.jpg`, U.carol]), /row-level security/);
   await rejects(as(U.alice, "insert into storage.objects(bucket_id, name, owner_id) values ('checkins',$1,$2)", [`${U.alice}/${projectA}/x.png`, U.alice]), /row-level security/);
   assert.equal((await q("select public from storage.buckets where id='checkins'"))[0].public, false);
+});
+
+test('invite codes: unique, unambiguous alphabet; failed attempts are rate limited per user', async () => {
+  const codes = new Set();
+  for (let i = 0; i < 15; i++) {
+    const inv = (await as(U.alice, "select * from public.create_invite('code', null, 'member')"))[0];
+    assert.match(inv.code, /^VUON-[A-HJ-KM-NP-Z2-9]{6}$/);
+    assert.doesNotMatch(inv.code.slice(5), /[ILO01]/);
+    codes.add(inv.code);
+  }
+  assert.equal(codes.size, 15);
+  // 20 invites per household per day (15 + the one from the household test = 16; 4 more are fine, the 21st is not)
+  for (let i = 0; i < 4; i++) await as(U.alice, "select * from public.create_invite('code')");
+  await rejects(as(U.alice, "select * from public.create_invite('code')"), /too_many_invites/);
+
+  const dave = '00000000-0000-4000-8000-00000000000d';
+  await createUser(db, dave, 'dave@example.com');
+  for (let i = 0; i < 10; i++) {
+    const r = (await as(dave, "select public.accept_invite($1) r", [`VUON-AAAAA${i}`.replace('0', 'B')]))[0].r;
+    assert.equal(r.error, 'invite_invalid');
+  }
+  assert.equal((await as(dave, "select public.accept_invite('VUON-ZZZZZZ') r"))[0].r.error, 'too_many_attempts');
+  // even a valid code is refused while locked
+  const valid = (await q("select code from public.invites where status = 'pending' limit 1"))[0].code;
+  assert.equal((await as(dave, 'select public.accept_invite($1) r', [valid]))[0].r.error, 'too_many_attempts');
+});
+
+test('push triggers: assignment, badge and household activity call send-push through pg_net', async () => {
+  // PGlite has no pg_net: stub net.http_post and record the calls.
+  await db.exec(`
+    create schema if not exists net;
+    create table if not exists public.test_net_calls (id serial primary key, url text, body jsonb, headers jsonb);
+    create or replace function net.http_post(url text, body jsonb, headers jsonb) returns bigint
+    language sql as $$ insert into public.test_net_calls(url, body, headers) values (url, body, headers) returning id $$;
+  `);
+  const calls = async (table) => q('select * from public.test_net_calls where body->>\'table\' = $1 order by id', [table]);
+  const clear = () => db.exec('truncate public.test_net_calls');
+
+  // not configured: inert, no error
+  await clear();
+  await q('select id from public.tasks limit 1');
+  await q("insert into public.household_activity(household_id, actor_id, kind) select household_id, user_id, 'checkin' from public.household_members where user_id = $1", [U.alice]);
+  assert.equal((await q('select count(*)::int c from public.test_net_calls'))[0].c, 0);
+
+  await q("insert into public.private_config(key, value) values ('push_function_url','https://x.test/functions/v1/send-push'),('push_webhook_secret','s3cret')");
+  await rejects(as(U.alice, 'select * from public.private_config'), /permission denied/);
+
+  // 1. assignee change by the owner -> push for the new assignee
+  await clear();
+  const t = (await as(U.alice, `select t.id from public.tasks t where t.task_code='T_WATER' limit 1`))[0].id;
+  await as(U.alice, 'update public.tasks set assignee_id = null where id = $1', [t]);
+  assert.equal((await calls('tasks')).length, 0, 'clearing the assignee sends nothing');
+  await as(U.alice, 'update public.tasks set assignee_id = $1 where id = $2', [U.bob, t]);
+  let c = await calls('tasks');
+  assert.equal(c.length, 1);
+  assert.equal(c[0].url, 'https://x.test/functions/v1/send-push');
+  assert.equal(c[0].headers['x-webhook-secret'], 's3cret');
+  assert.equal(c[0].body.type, 'UPDATE');
+  assert.equal(c[0].body.record.assignee_id, U.bob);
+  assert.equal(c[0].body.actor_id, U.alice);
+  // unrelated task update and self-assignment: nothing
+  await clear();
+  await as(U.alice, "update public.tasks set xp = 10 where id = $1", [t]);
+  await as(U.alice, 'update public.tasks set assignee_id = $1 where id = $2', [U.alice, t]);
+  assert.equal((await calls('tasks')).length, 0);
+
+  // 2. badge
+  await clear();
+  await q("insert into public.user_badges(user_id, badge_code) select $1, code from public.badges_catalog order by code limit 1 on conflict do nothing", [U.carol]);
+  c = await calls('user_badges');
+  assert.equal(c.length, 1);
+  assert.equal(c[0].body.record.user_id, U.carol);
+
+  // 3. household activity carries the actor so the sender can skip them
+  await clear();
+  const h = (await q('select household_id from public.household_members where user_id = $1', [U.alice]))[0].household_id;
+  await q("select public.log_activity($1, $2, 'task_done', null, '{}')", [h, U.bob]);
+  c = await calls('household_activity');
+  assert.equal(c.length, 1);
+  assert.equal(c[0].body.actor_id, U.bob);
+  assert.equal(c[0].body.record.household_id, h);
+
+  // a failing transport never breaks the write
+  await db.exec('drop function net.http_post(text, jsonb, jsonb)');
+  await q("select public.log_activity($1, $2, 'task_done', null, '{}')", [h, U.bob]);
+  await db.exec('drop schema net cascade; drop table public.test_net_calls');
+  await q('delete from public.private_config');
 });
 
 test('streak, leave_household transfers ownership, delete_my_account removes data', async () => {

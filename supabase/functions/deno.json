@@ -4,6 +4,6 @@
   },
   "tasks": {
     "test": "deno test _shared/",
-    "check": "deno check ai-plan/index.ts ai-checkin/index.ts invite/index.ts delete-account/index.ts"
+    "check": "deno check ai-plan/index.ts ai-checkin/index.ts invite/index.ts delete-account/index.ts send-push/index.ts"
   }
 }

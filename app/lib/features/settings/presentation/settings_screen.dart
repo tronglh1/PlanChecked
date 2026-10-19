@@ -13,6 +13,7 @@ import '../../profile/presentation/profile_providers.dart';
 import '../domain/notification_settings.dart';
 import 'locale_provider.dart';
 import 'settings_providers.dart';
+import 'sign_out.dart';
 
 /// Screen 21 (tab 5).
 class SettingsScreen extends ConsumerWidget {
@@ -264,7 +265,7 @@ class SettingsScreen extends ConsumerWidget {
           key: const Key('sign-out'),
           label: l10n.settingsSignOut,
           variant: GlowButtonVariant.secondary,
-          onPressed: () => ref.read(authRepositoryProvider).signOut(),
+          onPressed: () => ref.read(signOutProvider)(),
         ),
         const SizedBox(height: AppSpacing.md),
         OutlinedButton(

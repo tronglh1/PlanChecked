@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../gamification/gamification_routes.dart' show GamificationPaths;
 import '../../plan/domain/plan_bundle.dart';
 import '../../plan/domain/template_renderer.dart';
 import '../../plan/presentation/plan_labels.dart';
@@ -76,6 +77,15 @@ class _CheckinResultScreenState extends ConsumerState<CheckinResultScreen> {
       );
     }
     if (!mounted) return;
+    // GAM-03: a milestone confirmed by this check-in opens the celebration
+    // screen (replacing this one, so closing it returns to the project).
+    final code = r.milestoneSeen?.code;
+    if (r.milestoneIsNew && !r.applied && code != null) {
+      context.pushReplacement(
+        GamificationPaths.milestone(widget.projectId, code),
+      );
+      return;
+    }
     _leave();
   }
 

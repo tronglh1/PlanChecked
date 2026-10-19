@@ -5,9 +5,9 @@ Everything lives in `supabase/`. Contract: `docs/spec-mvp.md` §4–§6. This pa
 ```
 supabase/
   config.toml
-  migrations/   20261019000100_schema · 0200_functions · 0300_rls · 0400_storage_realtime_reference
+  migrations/   20261019000100_schema · 0200_functions · 0300_rls · 0400_storage_realtime_reference · 0500_qa1_fixes · 0600_qa2_fixes
   seed/         build.mjs (+ data/*.mjs) -> 01_codes.sql, 02_text_templates.sql, 03_plants.sql   (generated, committed)
-  functions/    ai-plan, ai-checkin, invite, delete-account, _shared/ (+ *_test.ts)
+  functions/    ai-plan, ai-checkin, invite, delete-account, send-push, _shared/ (+ *_test.ts)
   tests/        prelude.sql (test-only stubs), lib.mjs, db.test.mjs  (PGlite)
 ```
 
@@ -32,16 +32,17 @@ supabase/
    `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` are injected automatically.
 4. **Deploy functions**:
    ```bash
-   supabase functions deploy ai-plan ai-checkin invite delete-account --no-verify-jwt
+   supabase functions deploy ai-plan ai-checkin invite delete-account send-push --no-verify-jwt
    ```
-   `--no-verify-jwt` (also set in `config.toml`) is intentional: each function verifies the user token itself via `auth.getUser()`, which works with asymmetric JWT signing keys.
+   `--no-verify-jwt` (also set in `config.toml`) is intentional: each function verifies the user token itself via `auth.getUser()`, which works with asymmetric JWT signing keys. `send-push` is not called by users at all: it checks the `x-webhook-secret` header (see §6).
 5. **Auth providers** (Dashboard -> Authentication):
    - **URL configuration**: Site URL `https://vuonnha.app` (placeholder: your domain), Redirect URLs must include **`io.supabase.vuonnha://login-callback/`** (what the Flutter app uses; `com.planchecked.vuonnha://login-callback` is also whitelisted in `config.toml`).
    - **Google**: create an OAuth *Web* client (its id/secret go into Supabase, `GOOGLE_OAUTH_CLIENT_ID` / `GOOGLE_OAUTH_SECRET` for local) **plus an Android OAuth client per signing key**: package `com.planchecked.vuonnha` with the **SHA-1 of the debug keystore, the release/upload keystore, and (if Play App Signing) the Play app-signing key** (Play Console -> App integrity). In Supabase add the Web client id and set "Skip nonce check" for native sign-in. The app signs in with the Web client id as `serverClientId`.
    - **Email OTP** ("Nhận mã đăng nhập"): Authentication -> Providers -> Email enabled, "Confirm email" optional; set the email template to show `{{ .Token }}` (6 digits). Supabase's built-in mailer is rate limited to a few mails/hour and only for team members: **configure custom SMTP** (Authentication -> SMTP Settings; e.g. Resend, SES, Brevo) with a verified sender domain before any real user tests.
 6. **Realtime**: nothing to do; the migration adds `tasks`, `task_logs`, `task_occurrences`, `household_activity` to the `supabase_realtime` publication.
 7. **Storage**: buckets `checkins` and `avatars` are created by the migration (private, 2 MB limit, jpeg/png/webp). Files are only reachable by signed URL.
-8. **Reminder**: set Anthropic spend limits on the key; the per-user daily caps are in `app_config`.
+8. **Push notifications** (assignment, achievement, household activity): follow §6.
+9. **Reminder**: set Anthropic spend limits on the key; the per-user daily caps are in `app_config`.
 
 Local dev: `supabase start` (Docker), `supabase db reset` (applies migrations + `[db.seed]`), `supabase functions serve --env-file supabase/.env`.
 
@@ -62,11 +63,13 @@ After an agronomist reviews seed content: `update plants set data_status='verifi
 # SQL: every migration + seed + RLS/XP/quota/invite assertions in PGlite (in-memory Postgres)
 cd supabase/tests && npm i && npm test
 # Edge Function logic (validation, context, API client with mocked fetch, escalation)
-cd supabase/functions && deno test _shared/ && deno check ai-plan/index.ts ai-checkin/index.ts invite/index.ts delete-account/index.ts
+cd supabase/functions && deno test _shared/ && deno check ai-plan/index.ts ai-checkin/index.ts invite/index.ts delete-account/index.ts send-push/index.ts
 # regenerate seed SQL after editing supabase/seed/data/*.mjs
 node supabase/seed/build.mjs
 ```
-`supabase/tests/prelude.sql` stubs `auth`, `storage`, roles and default grants for PGlite only; never push it. Not covered: the live Anthropic call, Supabase Auth/Storage/Realtime themselves, the `pg_cron`-less check-in reminders.
+`supabase/tests/prelude.sql` stubs `auth`, `storage`, roles and default grants for PGlite only; never push it. Not covered: the live Anthropic and FCM calls (FCM is covered with a mocked `fetch`), `pg_net` itself (the SQL tests stub `net.http_post`), Supabase Auth/Storage/Realtime themselves.
+
+`deno` is not required on the machine: `mkdir /tmp/deno-scratch && cd /tmp/deno-scratch && npm init -y && npm i deno`, then run `/tmp/deno-scratch/node_modules/.bin/deno` from `supabase/functions` (tested with deno 2.9.6). Do not commit `supabase/tests/package-lock.json`.
 
 ## 3. API surface used by the app
 
@@ -103,7 +106,7 @@ Realtime (postgres_changes): `tasks`, `task_logs`, `task_occurrences`, `househol
 | `get_ai_quota` | -> `{plan:{used,cap}, checkin:{used,cap}}` for UI |
 | `create_household` | `p_name` -> household row. Errors `already_in_household` |
 | `create_invite` | `p_channel, p_target?, p_role` -> invite row (Owner only). Prefer the `invite` Edge Function |
-| `accept_invite` | `p_code` -> `{ok:true, household_id, role}` or `{ok:false, error}` where error is `invite_invalid`, `invite_expired`, `already_in_household`, `too_many_attempts`. Code is case-insensitive, single use, 7 days; 10 failures/hour then locked |
+| `accept_invite` | `p_code` -> `{ok:true, household_id, role}` or `{ok:false, error}` where error is `invite_invalid`, `invite_expired`, `already_in_household`, `too_many_attempts`. Code is case-insensitive, single use, 7 days; 10 failures/hour per user then locked (`too_many_attempts`) |
 | `revoke_invite` | `p_invite uuid` |
 | `leave_household` | -> void. If the Owner leaves, ownership passes to the longest-standing member; the last member leaving deletes the household. The leaver's shared projects become private |
 | `remove_member` | `p_user uuid` (Owner only) |
@@ -144,9 +147,9 @@ Responses 200 (`status`):
 Errors: 429 `ai_quota_exceeded` (body has `quota`), 400 `no_valid_shots | image_not_found | image_too_large | image_not_jpeg`, 502 `{status:"error", code:"AI_UNAVAILABLE"}` (quota refunded, no delta, plan unchanged), 403 `not_checkin_author`, 404.
 The user ticks `changes[]`; the app calls `apply_checkin_changes(checkin_id, accepted_ids)`. `changes[].payload.op` is `add | remove | change_freq | shift`. Retakes do not use quota and earn no XP. Check-in XP (+30) and milestone XP (+100) are awarded by DB triggers once the function marks the check-in `analyzed`; the app only displays `xp`. `low_confidence:true` (band `low`) -> suggest a local agricultural store (CHK-08). Hint/reason texts: `text_templates` kind `hint`.
 
-**`invite`** request `{ "channel": "link|code|email|phone", "target"?: "a@b.com", "role"?: "member|owner" }` (caller must be household Owner) -> `{ "invite": {id, code:"VUON-1234", expires_at, role, channel}, "link": "https://vuonnha.app/i/VUON-1234", "email_sent": false, "email_error"?: "email_not_configured|provider_NNN", "sms_error"?: "sms_not_supported" }`. Email is only sent when `RESEND_API_KEY` + `INVITE_FROM_EMAIL` are set; otherwise share `code`/`link` through the OS share sheet. Phone is never sent by the server. The receiving user calls `accept_invite(code)`; the app must handle `link` deep links (`/i/<code>`).
+**`invite`** request `{ "channel": "link|code|email|phone", "target"?: "a@b.com", "role"?: "member|owner" }` (caller must be household Owner) -> `{ "invite": {id, code:"VUON-K7M2QX", expires_at, role, channel}, "link": "https://vuonnha.app/i/VUON-K7M2QX", "email_sent": false, "email_error"?: "email_not_configured|provider_NNN", "sms_error"?: "sms_not_supported" }`. Email is only sent when `RESEND_API_KEY` + `INVITE_FROM_EMAIL` are set; otherwise share `code`/`link` through the OS share sheet. Phone is never sent by the server. The receiving user calls `accept_invite(code)`; the app must handle `link` deep links (`/i/<code>`).
 
-**`delete-account`** request `{}` -> `{ "deleted": true, "files_removed": n }`. Removes the user's files in `checkins`/`avatars`, then calls `delete_my_account()`.
+**`delete-account`** request `{}` -> `{ "deleted": true, "files_removed": n }`. Removes the user's files in `checkins`/`avatars` (every path the database references plus a **recursive** listing of `{uid}/`, so per-project folders and orphaned uploads go too), then calls `delete_my_account()`.
 
 ### Storage
 - `checkins` (private): `{user_id or household_id}/{project_id}/{uuid}.jpg` (only `.jpg`). Read: any member of the project (owner or shared household). Insert: caller must have access to the project and the first folder must be their user id or the project's household id. Delete: uploader. Project covers use the same bucket (`{user_id}/{project_id}/cover.jpg`).
@@ -181,15 +184,57 @@ Everything in spec §4.2 exists with the same names, except as listed.
 - Levels (`levels` table): 1 Người mới 0, 2 Người ươm mầm 250, 3 Người yêu cây 700, 4 Người chăm chỉ 1250, 5 Thợ vườn 1500, 6 Nhà vườn 3000 (only 1, 4, 5, 6 names and 1250/1500 come from the sources; the rest is proposed – gap 51).
 - Badges: 16 rows in `badges_catalog` with machine-readable `criteria` (the 8 named in the mockup plus 8 proposed). Milestone badges need a photo-confirmed milestone. Streak = consecutive local days with at least one done task (gap 55).
 - Daily AI caps: plan 5, check-in 10 (gap 42). Confidence bands high >= 0.75, medium >= 0.5 else low (gap 31); Sonnet escalation below 0.6 or for plants not in the DB.
-- Household: Owner can invite, assign, edit shared plans/tasks, share projects; Member can view, Done/Skip/Snooze, check in, and leave. Members cannot invite (gap 57) or manage other people's projects; they may create their own projects inside their household, which are then shared (gap 62 resolved this way in QA round 1). Profile saves use `update` (INSERT on `users` is revoked; the trigger creates the row). Account deletion goes through the `delete-account` Edge Function (Storage cleanup first), never the RPC directly. Owner role can be granted in an invite (gap 58). Owner leaving passes ownership to the longest-standing member (gap 59); removing a member is Owner-only (gap 60). Invite code `VUON-` + 4 digits, single use, 7 days.
+- Household: Owner can invite, assign, edit shared plans/tasks, share projects; Member can view, Done/Skip/Snooze, check in, and leave. Members cannot invite (gap 57) or manage other people's projects; they may create their own projects inside their household, which are then shared (gap 62 resolved this way in QA round 1). Profile saves use `update` (INSERT on `users` is revoked; the trigger creates the row). Account deletion goes through the `delete-account` Edge Function (Storage cleanup first), never the RPC directly. Owner role can be granted in an invite (gap 58). Owner leaving passes ownership to the longest-standing member (gap 59); removing a member is Owner-only (gap 60). Invite code `VUON-` + 6 characters from `ABCDEFGHJKMNPQRSTUVWXYZ23456789` (no I, L, O, 0, 1; ~8.9e8 combinations; migration 0600, QA round 2), single use, 7 days. Rate limits are unchanged: 10 failed `accept_invite` attempts per user per hour, 20 invites per household per day. Legacy 4-digit codes that are still pending keep working; the app accepts both formats.
 - Check-in AI failure (gap 38): HTTP 502 `AI_UNAVAILABLE`, nothing applied, quota refunded.
 - Seed content (plants, 34 task codes, 20 problem codes, 536 texts VN/EN) is authored, **not expert-reviewed**: rows are `data_status='ai_unverified'` and toxic flags should be checked before launch. No doses anywhere; organic first; labels referenced for any product.
 
-**Not built (out of scope / needs product input)**: FCM sending and `pg_cron` reminders (no `push_tokens` consumer yet), email/SMS beyond the optional Resend email, leaderboard, away-member rotation skipping (`away_until` exists), IoT ingest, photo-retention policy (gap 49).
+**Not built (out of scope / needs product input)**: `pg_cron` reminders (check-in reminders are local notifications by decision, see §5), email/SMS beyond the optional Resend email, leaderboard, away-member rotation skipping (`away_until` exists), IoT ingest, photo-retention policy (gap 49).
 
 ## 5. Push tokens and Today sync (client contract, M4)
 
-- **`push_tokens`** already exists in the schema migration (`id, user_id, token, platform in ('android','ios','web'), updated_at, unique(token)`) with an own-row RLS policy (`push_tokens_all`); no new migration is needed. The app upserts `{user_id, token, platform}` with `onConflict: 'token'` after sign-in, only when Firebase is configured (`google-services.json` present; otherwise `Firebase.initializeApp()` fails, is logged and push is skipped). Caveat: if the same device token is later used by a different account, the upsert is blocked by RLS (the row belongs to the old user); the server-side sender should delete a token on `UNREGISTERED` and sign-out should remove the row (not done in M4).
+- **`push_tokens`** already exists in the schema migration (`id, user_id, token, platform in ('android','ios','web'), updated_at, unique(token)`) with an own-row RLS policy (`push_tokens_all`); no new migration is needed. The app upserts `{user_id, token, platform}` with `onConflict: 'token'` after sign-in, only when Firebase is configured (`google-services.json` present; otherwise `Firebase.initializeApp()` fails, is logged and push is skipped). Caveat: if the same device token is later used by a different account, the upsert is blocked by RLS (the row belongs to the old user); `send-push` deletes a token FCM reports as `UNREGISTERED` and sign-out removes the device's row (both done in QA round 2, see §6).
 - **Today / offline**: Done/Skip/Snooze are inserted into `task_logs` as `{task_id, occurrence_date, action, skip_reason?, snooze_until?, client_id, acted_at}` (no `user_id`/`project_id`). `23505` is treated as already synced. After each fetch the app calls `materialize_occurrences(p_project)` per active project (best effort). Realtime: `tasks`, `task_logs`.
-- **Reminders** are local notifications (inexact alarms, no `SCHEDULE_EXACT_ALARM`), planned for the next 7 days, one per (day, window); check-in reminders at 09:00 on the due date. Quiet hours are not applied yet because the profile model does not load `users.quiet_start/quiet_end`.
+- **Reminders** (task and check-in) are local notifications (inexact alarms, no `SCHEDULE_EXACT_ALARM`), planned for the next 7 days, one per (day, window); check-in reminders at 09:00 on the due date. **Decision (QA round 2): check-in reminders stay local**: they work offline and need no server job, so the spec's `pg_cron` idea is dropped (spec §6.7 updated). Android channel names/descriptions are localized (ARB `notifChannel*`). Quiet hours are not applied to local reminders yet because the profile model does not load `users.quiet_start/quiet_end`; server pushes do apply them (§6).
 - **Local drift schema v3**: `outbox` gained `client_id`, `next_attempt_at`; `cached_tasks` gained `project_id`, `kind` (`task|project|log|checkin|member|template|meta`).
+
+## 6. Server push (FCM): assignment, achievement, household activity
+
+Local reminders cover task and check-in reminders. Everything another person or the server causes is sent by the Edge Function **`send-push`** through FCM HTTP v1.
+
+**Flow.** SQL triggers (migration `0600`) call `public.push_dispatch(...)`, which posts a Database-Webhook shaped JSON body (`{type, table, schema, record, old_record, actor_id}`) to the function with `pg_net`; the function checks the secret, decides who gets what and talks to FCM. A failing push never rolls back the user's write (`push_dispatch` swallows errors).
+
+| Event | Trigger | Recipients | Pref type |
+|---|---|---|---|
+| Task assignee changed to another user | `tasks` AFTER INSERT / UPDATE OF `assignee_id` (not for self-assignment or clearing) | the new assignee | `assignment` |
+| Badge earned | `user_badges` AFTER INSERT | the badge owner | `achievement` |
+| Household activity (`task_done`, `checkin`, `milestone`, `member_joined`, `member_left`, `project_shared`) | `household_activity` AFTER INSERT | all household members except the actor | `household_activity` (no UI toggle; default on) |
+
+Per recipient the function checks, in order: `notification_prefs.enabled` for the type (no row = on), **quiet hours** (per-type `notification_prefs.quiet_start/quiet_end`, else `users.quiet_start/quiet_end`, evaluated in `users.timezone`; windows may wrap midnight; pushes inside the window are **dropped, not queued**, the in-app feed still shows them), then every `push_tokens` row of the user. Texts follow `users.lang` (vi/en). A token that FCM answers with `UNREGISTERED` is deleted from `push_tokens`; other errors are only counted. The app also deletes its own token row on sign-out.
+
+**One-time setup** (after `supabase db push` and the normal function deploy):
+
+1. Firebase console -> Project settings -> Service accounts -> **Generate new private key** (role *Firebase Cloud Messaging API Admin* or *Firebase Admin SDK*). Enable the *Firebase Cloud Messaging API (V1)* in Google Cloud for that project.
+2. Secrets:
+   ```bash
+   supabase secrets set FCM_SERVICE_ACCOUNT="$(cat service-account.json)"   # the whole JSON
+   supabase secrets set PUSH_WEBHOOK_SECRET="$(openssl rand -hex 32)"
+   supabase functions deploy send-push --no-verify-jwt
+   ```
+3. Enable the `pg_net` extension (Dashboard -> Database -> Extensions; migration 0600 tries `create extension pg_net` itself).
+4. Tell the database where the function lives (SQL editor; the table has RLS on and no policy, so apps cannot read it):
+   ```sql
+   insert into public.private_config(key, value) values
+     ('push_function_url',   'https://<project-ref>.supabase.co/functions/v1/send-push'),
+     ('push_webhook_secret', '<same value as PUSH_WEBHOOK_SECRET>')
+   on conflict (key) do update set value = excluded.value, updated_at = now();
+   ```
+   Until both rows exist the triggers do nothing. To switch pushes off, delete the rows.
+5. Android: `app/android/app/google-services.json` from the same Firebase project must be in the build, otherwise the app never registers a token (see §5).
+
+**Alternative: Dashboard Database Webhooks** instead of the SQL triggers. Create three webhooks (tables `tasks` UPDATE/INSERT, `user_badges` INSERT, `household_activity` INSERT) of type *HTTP Request* to the same URL with header `x-webhook-secret`. The function accepts that payload too (it has no `actor_id`, so self-assignments would also push; drop the triggers in that case: `drop trigger tasks_push_assignment on public.tasks;` etc.).
+
+**Smoke test.** `curl -X POST "$URL" -H "x-webhook-secret: $SECRET" -H 'content-type: application/json' -d '{"table":"user_badges","type":"INSERT","record":{"user_id":"<uuid>","badge_code":"FIRST_SEED"}}'` answers `{"kind":"achievement","recipients":1,"sent":1,...}`. 401 = wrong secret, 500 `server_misconfigured` = a secret is missing or `FCM_SERVICE_ACCOUNT` is not valid JSON.
+
+**Auth to Google.** The function signs an RS256 JWT with the service account key (WebCrypto, no libraries), exchanges it at `oauth2.googleapis.com/token` for an access token (scope `firebase.messaging`) and caches the token in the warm instance until one minute before expiry. A 401 from FCM refreshes the token once.
+
+Not built: rotation assignments (changes of `rotation_order`) do not push; digest/bundled server pushes; per-device language.

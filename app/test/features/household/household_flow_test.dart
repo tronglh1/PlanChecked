@@ -14,29 +14,45 @@ void main() {
   group('deep link + code parsing', () {
     test('join links', () {
       expect(
-        joinCodeFromUri(Uri.parse('vuonnha://join?code=VUON-4821')),
-        'VUON-4821',
+        joinCodeFromUri(Uri.parse('vuonnha://join?code=VUON-K7M2QX')),
+        'VUON-K7M2QX',
       );
       expect(
-        joinCodeFromUri(Uri.parse('https://vuonnha.app/join?code=vuon-4821')),
-        'VUON-4821',
+        joinCodeFromUri(Uri.parse('https://vuonnha.app/join?code=vuon-k7m2qx')),
+        'VUON-K7M2QX',
       );
       expect(
-        joinCodeFromUri(Uri.parse('https://vuonnha.app/i/VUON-0007')),
-        'VUON-0007',
+        joinCodeFromUri(Uri.parse('https://vuonnha.app/i/VUON-AB2CD3')),
+        'VUON-AB2CD3',
       );
       expect(
         joinCodeFromUri(Uri.parse('io.supabase.vuonnha://login-callback/')),
         isNull,
       );
       expect(joinCodeFromUri(Uri.parse('vuonnha://join?code=abc')), isNull);
+      // Legacy 4-digit codes still parse for their 7 days; ambiguous chars do not.
+      expect(
+        joinCodeFromUri(Uri.parse('vuonnha://join?code=VUON-4821')),
+        'VUON-4821',
+      );
+      expect(
+        joinCodeFromUri(Uri.parse('vuonnha://join?code=VUON-K7M2Q0')),
+        isNull,
+      );
     });
 
     test('normalize and validate', () {
-      expect(normalizeInviteCode(' vuon-4821 '), 'VUON-4821');
+      expect(normalizeInviteCode(' vuon-k7m2qx '), 'VUON-K7M2QX');
+      expect(normalizeInviteCode('k7m2qx'), 'VUON-K7M2QX');
       expect(normalizeInviteCode('4821'), 'VUON-4821');
       expect(isValidInviteCode('vuon-12'), isFalse);
-      expect(isValidInviteCode('VUON-1234'), isTrue);
+      expect(isValidInviteCode('VUON-K7M2QX'), isTrue);
+      expect(isValidInviteCode('VUON-K7M2Q'), isFalse, reason: 'too short');
+      expect(isValidInviteCode('VUON-K7M2QXX'), isFalse, reason: 'too long');
+      for (final bad in ['I', 'L', 'O', '0', '1']) {
+        expect(isValidInviteCode('VUON-K7M2Q$bad'), isFalse, reason: bad);
+      }
+      expect(isValidInviteCode('VUON-1234'), isTrue, reason: 'legacy');
     });
   });
 
@@ -116,10 +132,13 @@ void main() {
     testWidgets('join by code normalizes input and goes to Today', (t) async {
       final repo = FakeHouseholdRepository();
       await pumpRouted(t, location: '/onboarding/household', household: repo);
-      await t.enterText(find.byKey(const Key('join-code-field')), 'vuon-4821');
+      await t.enterText(
+        find.byKey(const Key('join-code-field')),
+        'vuon-k7m2qx',
+      );
       await t.tap(find.byKey(const Key('join-submit')));
       await t.pumpAndSettle();
-      expect(repo.accepted, ['VUON-4821']);
+      expect(repo.accepted, ['VUON-K7M2QX']);
       expect(find.text('STUB-TODAY'), findsOneWidget);
     });
 
@@ -132,13 +151,16 @@ void main() {
       await t.enterText(find.byKey(const Key('join-code-field')), 'xyz');
       await t.tap(find.byKey(const Key('join-submit')));
       await t.pumpAndSettle();
-      expect(find.text('Mã có dạng VUON-1234'), findsOneWidget);
+      expect(find.text('Mã có dạng VUON-K7M2QX'), findsOneWidget);
       expect(repo.accepted, isEmpty);
 
-      await t.enterText(find.byKey(const Key('join-code-field')), 'VUON-1111');
+      await t.enterText(
+        find.byKey(const Key('join-code-field')),
+        'VUON-K7M2QX',
+      );
       await t.tap(find.byKey(const Key('join-submit')));
       await t.pumpAndSettle();
-      expect(repo.accepted, ['VUON-1111']);
+      expect(repo.accepted, ['VUON-K7M2QX']);
       expect(find.text('Mã mời đã hết hạn'), findsOneWidget);
     });
 
@@ -158,11 +180,74 @@ void main() {
 
     testWidgets('deep link screen pre-fills the code', (t) async {
       final repo = FakeHouseholdRepository();
-      await pumpRouted(t, location: '/join?code=VUON-4821', household: repo);
-      expect(find.text('Bạn được mời bằng mã VUON-4821'), findsOneWidget);
+      await pumpRouted(t, location: '/join?code=VUON-K7M2QX', household: repo);
+      expect(find.text('Bạn được mời bằng mã VUON-K7M2QX'), findsOneWidget);
       await t.tap(find.byKey(const Key('join-submit')));
       await t.pumpAndSettle();
-      expect(repo.accepted, ['VUON-4821']);
+      expect(repo.accepted, ['VUON-K7M2QX']);
+    });
+  });
+
+  group('join screen (B3)', () {
+    testWidgets('already in a household: explanation instead of the form', (
+      t,
+    ) async {
+      final repo = FakeHouseholdRepository(household: sampleHousehold());
+      await pumpRouted(t, location: '/join?code=VUON-K7M2QX', household: repo);
+      expect(find.byKey(const Key('join-already-member')), findsOneWidget);
+      expect(find.text('Bạn đã ở trong một gia đình'), findsOneWidget);
+      expect(find.textContaining('VUON-K7M2QX'), findsOneWidget);
+      expect(find.byKey(const Key('join-submit')), findsNothing);
+      expect(repo.accepted, isEmpty);
+    });
+
+    testWidgets('showing the code consumes the saved pending code', (t) async {
+      final prefs = MemoryLocalPrefs();
+      await prefs.set(kPendingJoinCodeKey, 'VUON-K7M2QX');
+      await pumpRouted(t, location: '/join?code=VUON-K7M2QX', prefs: prefs);
+      // shown, then forgotten so the post-sign-in redirect fires only once
+      expect(find.text('Bạn được mời bằng mã VUON-K7M2QX'), findsOneWidget);
+      expect(await prefs.get(kPendingJoinCodeKey), '');
+    });
+  });
+
+  group('pending join code storage', () {
+    test('is persisted and restored in a new session', () async {
+      final prefs = MemoryLocalPrefs();
+      final a = ProviderContainer(
+        overrides: [localPrefsProvider.overrideWithValue(prefs)],
+      );
+      addTearDown(a.dispose);
+      a.read(pendingJoinCodeProvider);
+      a.read(pendingJoinCodeProvider.notifier).set('VUON-K7M2QX');
+      await Future<void>.delayed(Duration.zero);
+      expect(await prefs.get(kPendingJoinCodeKey), 'VUON-K7M2QX');
+
+      // app restarted: a fresh container reads the same store
+      final b = ProviderContainer(
+        overrides: [localPrefsProvider.overrideWithValue(prefs)],
+      );
+      addTearDown(b.dispose);
+      expect(b.read(pendingJoinCodeProvider), isNull);
+      await Future<void>.delayed(Duration.zero);
+      expect(b.read(pendingJoinCodeProvider), 'VUON-K7M2QX');
+
+      b.read(pendingJoinCodeProvider.notifier).set(null);
+      await Future<void>.delayed(Duration.zero);
+      expect(b.read(pendingJoinCodeProvider), isNull);
+      expect(await prefs.get(kPendingJoinCodeKey), '');
+    });
+
+    test('garbage in the store is ignored', () async {
+      final prefs = MemoryLocalPrefs();
+      await prefs.set(kPendingJoinCodeKey, 'hello');
+      final c = ProviderContainer(
+        overrides: [localPrefsProvider.overrideWithValue(prefs)],
+      );
+      addTearDown(c.dispose);
+      c.read(pendingJoinCodeProvider);
+      await Future<void>.delayed(Duration.zero);
+      expect(c.read(pendingJoinCodeProvider), isNull);
     });
   });
 

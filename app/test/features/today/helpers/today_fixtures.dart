@@ -112,6 +112,12 @@ ReminderTexts testTexts() => ReminderTexts(
   dailyTitle: (n) => 'Daily:$n',
   checkinTitle: () => 'Checkin',
   checkinBody: (p) => 'Chup $p',
+  channels: const ReminderChannels(
+    taskName: 'Task channel',
+    taskDescription: 'Task channel description',
+    checkinName: 'Check-in channel',
+    checkinDescription: 'Check-in channel description',
+  ),
 );
 
 OutboxEntry entry(
@@ -203,13 +209,20 @@ class FakeNotificationGateway implements NotificationGateway {
     return true;
   }
 
+  /// Channel texts passed with the last [replaceAll].
+  ReminderChannels? lastChannels;
+
   @override
   Future<bool> isPermissionGranted() async => granted;
 
   @override
-  Future<void> replaceAll(List<PlannedNotification> items) async {
+  Future<void> replaceAll(
+    List<PlannedNotification> items, {
+    ReminderChannels? channels,
+  }) async {
     replaceCalls++;
     scheduled = items;
+    lastChannels = channels;
   }
 
   @override

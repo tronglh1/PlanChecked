@@ -6,6 +6,9 @@ import 'package:vuon_nha/features/projects/data/project_repository.dart';
 import 'package:vuon_nha/features/projects/domain/project.dart';
 import 'package:vuon_nha/features/projects/domain/project_progress.dart';
 
+import 'package:vuon_nha/features/gamification/presentation/gamification_providers.dart';
+
+import '../../helpers/household_fakes.dart' show FakeGamificationRepository;
 import '../../helpers/projects_fakes.dart';
 
 ProjectSummary summaryOf(
@@ -141,6 +144,32 @@ void main() {
       await t.pumpAndSettle();
       expect(find.text('Lan'), findsOneWidget);
       expect(find.text('1 việc'), findsOneWidget);
+    });
+
+    testWidgets('reached milestones are tappable and open the celebration', (
+      t,
+    ) async {
+      await pumpRouterApp(
+        t,
+        initial: '/projects/new1',
+        plans: FakePlanRepository(
+          bundle: fakeBundle(status: PlanStatus.approved),
+        ),
+        today: DateTime.utc(2026, 10, 15),
+        extra: [
+          gamificationRepositoryProvider.overrideWithValue(
+            FakeGamificationRepository(reached: {'SPROUT'}),
+          ),
+        ],
+      );
+      await t.tap(find.byKey(const Key('tab-plan')));
+      await t.pumpAndSettle();
+      // Only the reached milestone is a tap target.
+      expect(find.byKey(const Key('milestone-SPROUT')), findsOneWidget);
+      expect(find.byKey(const Key('milestone-TRUE_LEAVES')), findsNothing);
+      await t.tap(find.byKey(const Key('milestone-SPROUT')));
+      await t.pumpAndSettle();
+      expect(find.text('MILESTONE-SPROUT'), findsOneWidget);
     });
 
     testWidgets('draft plan offers to review it', (t) async {

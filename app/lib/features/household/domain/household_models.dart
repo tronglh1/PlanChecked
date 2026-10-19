@@ -222,32 +222,36 @@ class HouseholdFailure implements Exception {
   String toString() => 'HouseholdFailure($code)';
 }
 
+/// Current invite codes: `VUON-` + 6 characters of an unambiguous alphabet
+/// (A-Z without I, L, O, plus 2-9). Legacy `VUON-1234` codes stay valid for
+/// the 7 days they live.
+const String _codeBody = r'(?:[A-HJ-KM-NP-Z2-9]{6}|\d{4})';
+final RegExp _codeRe = RegExp('^VUON-$_codeBody\$');
+
 /// Parses invite deep links. Accepts:
-/// - `vuonnha://join?code=VUON-1234`
-/// - `https://vuonnha.app/join?code=VUON-1234`
-/// - `https://vuonnha.app/i/VUON-1234` (the `link` the `invite` function returns)
+/// - `vuonnha://join?code=VUON-K7M2QX`
+/// - `https://vuonnha.app/join?code=VUON-K7M2QX`
+/// - `https://vuonnha.app/i/VUON-K7M2QX` (the `link` the `invite` function returns)
 /// Returns the upper-cased code, or null when the URI is something else
 /// (e.g. the Supabase auth callback).
 String? joinCodeFromUri(Uri uri) {
-  final re = RegExp(r'^VUON-\d{4}$', caseSensitive: false);
-  final q = uri.queryParameters['code'];
+  final q = uri.queryParameters['code']?.trim().toUpperCase();
   final isJoin = uri.host == 'join' || uri.path == '/join';
-  if (isJoin && q != null && re.hasMatch(q.trim())) {
-    return q.trim().toUpperCase();
-  }
+  if (isJoin && q != null && _codeRe.hasMatch(q)) return q;
   final segs = uri.pathSegments;
-  if (segs.length == 2 && segs.first == 'i' && re.hasMatch(segs[1])) {
-    return segs[1].toUpperCase();
+  if (segs.length == 2 && segs.first == 'i') {
+    final c = segs[1].trim().toUpperCase();
+    if (_codeRe.hasMatch(c)) return c;
   }
   return null;
 }
 
-/// Normalises user input of a code ("vuon-4821", " 4821 ").
+/// Normalises user input of a code ("vuon-k7m2qx", " K7M2QX ", legacy "4821").
 String normalizeInviteCode(String raw) {
   final t = raw.trim().toUpperCase();
-  if (RegExp(r'^\d{4}$').hasMatch(t)) return 'VUON-$t';
+  if (RegExp(r'^(?:[A-HJ-KM-NP-Z2-9]{6}|\d{4})$').hasMatch(t)) return 'VUON-$t';
   return t;
 }
 
 bool isValidInviteCode(String raw) =>
-    RegExp(r'^VUON-\d{4}$').hasMatch(normalizeInviteCode(raw));
+    _codeRe.hasMatch(normalizeInviteCode(raw));

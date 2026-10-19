@@ -158,14 +158,14 @@ class _Body extends StatelessWidget {
             Expanded(
               child: _Tile(
                 label: l10n.gamOnTime,
-                value: '+${nf.format(data.xp.taskDone)} XP',
+                value: l10n.gamXpGain(nf.format(data.xp.taskDone)),
               ),
             ),
             const SizedBox(width: AppSpacing.sm),
             Expanded(
               child: _Tile(
                 label: l10n.gamCheckin,
-                value: '+${nf.format(data.xp.checkin)} XP',
+                value: l10n.gamXpGain(nf.format(data.xp.checkin)),
               ),
             ),
           ],
@@ -176,7 +176,7 @@ class _Body extends StatelessWidget {
             Expanded(
               child: _Tile(
                 label: l10n.gamMilestone,
-                value: '+${nf.format(data.xp.milestone)} XP',
+                value: l10n.gamXpGain(nf.format(data.xp.milestone)),
               ),
             ),
             const SizedBox(width: AppSpacing.sm),

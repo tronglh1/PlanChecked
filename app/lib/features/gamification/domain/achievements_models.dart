@@ -106,18 +106,14 @@ class AchievementsData {
 
   List<LevelDef> get _table => levels.isEmpty
       ? Levels.defaults
-      : [for (final l in levels) LevelDef(l.level, l.xpMin, l.nameVi)];
+      : [
+          for (final l in levels)
+            LevelDef(l.level, l.xpMin, l.nameVi, l.nameEn),
+        ];
 
   LevelProgress get progress => Levels.progress(xpTotal, table: _table);
 
-  String levelName(LevelDef def, String lang) {
-    if (lang == 'en') {
-      for (final l in levels) {
-        if (l.level == def.level) return l.nameEn;
-      }
-    }
-    return def.nameVi;
-  }
+  String levelName(LevelDef def, String lang) => def.name(lang);
 
   int get earnedCount => badges.where((b) => b.earned).length;
 

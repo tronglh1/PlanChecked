@@ -3,6 +3,7 @@
 // which hands over / removes the household, deletes all rows and finally the auth user.
 import { authenticate } from '../_shared/auth.ts';
 import { errorResponse, HttpError, json, preflight } from '../_shared/http.ts';
+import { collectUserFiles } from '../_shared/storage_cleanup.ts';
 
 Deno.serve(async (req) => {
   const pre = preflight(req);
@@ -13,28 +14,22 @@ Deno.serve(async (req) => {
 
     const { data: paths, error: pErr } = await ctx.admin.rpc('account_storage_paths', { p_user: ctx.userId });
     if (pErr) throw new HttpError(500, 'storage_listing_failed', pErr.message);
-    const byBucket = new Map<string, Set<string>>();
-    for (const r of (paths ?? []) as { bucket: string; path: string }[]) {
-      if (!byBucket.has(r.bucket)) byBucket.set(r.bucket, new Set());
-      byBucket.get(r.bucket)!.add(r.path);
-    }
-    // anything else under the user's own folder (e.g. replaced avatars)
-    for (const bucket of ['avatars', 'checkins']) {
-      const { data: files } = await ctx.admin.storage.from(bucket).list(ctx.userId, { limit: 1000 });
-      for (const f of files ?? []) {
-        if (f.id) {
-          if (!byBucket.has(bucket)) byBucket.set(bucket, new Set());
-          byBucket.get(bucket)!.add(`${ctx.userId}/${f.name}`);
-        }
-      }
+    // Paths the database references + everything under `{uid}/` in both buckets, recursively (per-project
+    // folders, orphaned uploads whose `checkins` insert failed, replaced avatars).
+    let byBucket: Map<string, Set<string>>;
+    try {
+      byBucket = await collectUserFiles(ctx.admin.storage, ctx.userId, (paths ?? []) as { bucket: string; path: string }[]);
+    } catch (e) {
+      throw new HttpError(500, 'storage_listing_failed', (e as Error).message);
     }
     let removed = 0;
     for (const [bucket, set] of byBucket) {
       const all = [...set];
       for (let i = 0; i < all.length; i += 100) {
-        const { error } = await ctx.admin.storage.from(bucket).remove(all.slice(i, i + 100));
+        const chunk = all.slice(i, i + 100);
+        const { error } = await ctx.admin.storage.from(bucket).remove(chunk);
         if (error) throw new HttpError(500, 'storage_delete_failed', error.message);
-        removed += Math.min(100, all.length - i);
+        removed += chunk.length;
       }
     }
 

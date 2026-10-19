@@ -13,6 +13,9 @@ abstract class GamificationRepository {
     String code, {
     String lang = 'vi',
   });
+
+  /// Codes of the milestones already reached in [projectId].
+  Future<Set<String>> reachedMilestones(String projectId);
 }
 
 class SupabaseGamificationRepository implements GamificationRepository {
@@ -114,6 +117,15 @@ class SupabaseGamificationRepository implements GamificationRepository {
       xp: xp,
       pendingPhotoMilestones: pending,
     );
+  }
+
+  @override
+  Future<Set<String>> reachedMilestones(String projectId) async {
+    final rows = await _client
+        .from('milestones_reached')
+        .select('milestone_code')
+        .eq('project_id', projectId);
+    return {for (final r in rows) r['milestone_code'] as String};
   }
 
   @override

@@ -750,7 +750,7 @@
   "householdCreateSub": "You are the household Owner",
   "householdJoinTitle": "Join with an invite code",
   "householdJoinSub": "You will be a Member",
-  "householdJoinHint": "e.g. VUON-4821",
+  "householdJoinHint": "e.g. VUON-K7M2QX",
   "householdJoinAction": "Join",
   "householdSetupFooter": "Each person can be in one household only. There are no public friend lists.",
   "householdNameLabel": "Household name",
@@ -761,7 +761,7 @@
   "householdErrorExpired": "This invite has expired",
   "householdErrorAlreadyIn": "You are already in a household",
   "householdErrorTooMany": "Too many wrong attempts, try again in an hour",
-  "householdErrorCodeFormat": "Codes look like VUON-1234",
+  "householdErrorCodeFormat": "Codes look like VUON-K7M2QX",
   "householdJoined": "You joined the household",
   "householdEyebrow": "Household · {count} people",
   "@householdEyebrow": {
@@ -1388,5 +1388,27 @@
     }
   },
   "checkinAlreadyAnswered": "You've already answered these suggestions.",
-  "checkinResultLoadError": "Couldn't load the check-in result."
+  "checkinResultLoadError": "Couldn't load the check-in result.",
+  "notifChannelTaskName": "Plant care reminders",
+  "notifChannelTaskDescription": "Reminders for plant care tasks by time of day",
+  "notifChannelCheckinName": "Check-in reminders",
+  "notifChannelCheckinDescription": "Reminders to take a check-in photo of your plants",
+  "householdJoinAlreadyTitle": "You're already in a household",
+  "householdJoinAlreadyBody": "You can only be in one household at a time, so the code {code} can't be used. To join another one, leave your current household in Settings first.",
+  "@householdJoinAlreadyBody": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "householdJoinAlreadyAction": "Go to Household",
+  "gamXpGain": "+{xp} XP",
+  "@gamXpGain": {
+    "placeholders": {
+      "xp": {
+        "type": "String"
+      }
+    }
+  }
 }

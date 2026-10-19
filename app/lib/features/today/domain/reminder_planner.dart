@@ -56,6 +56,22 @@ int? parseHm(String? s) {
 
 /// Localized strings used in notifications (kept out of the planner so it
 /// stays pure and testable).
+/// Localized Android notification channel names/descriptions (shown in the
+/// system notification settings).
+class ReminderChannels {
+  const ReminderChannels({
+    required this.taskName,
+    required this.taskDescription,
+    required this.checkinName,
+    required this.checkinDescription,
+  });
+
+  final String taskName;
+  final String taskDescription;
+  final String checkinName;
+  final String checkinDescription;
+}
+
 class ReminderTexts {
   const ReminderTexts({
     required this.windowTitle,
@@ -63,7 +79,10 @@ class ReminderTexts {
     required this.dailyTitle,
     required this.checkinTitle,
     required this.checkinBody,
+    required this.channels,
   });
+
+  final ReminderChannels channels;
 
   final String Function(TaskWindow window) windowTitle;
 

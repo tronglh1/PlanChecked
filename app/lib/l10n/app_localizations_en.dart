@@ -1193,7 +1193,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get householdJoinSub => 'You will be a Member';
 
   @override
-  String get householdJoinHint => 'e.g. VUON-4821';
+  String get householdJoinHint => 'e.g. VUON-K7M2QX';
 
   @override
   String get householdJoinAction => 'Join';
@@ -1228,7 +1228,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Too many wrong attempts, try again in an hour';
 
   @override
-  String get householdErrorCodeFormat => 'Codes look like VUON-1234';
+  String get householdErrorCodeFormat => 'Codes look like VUON-K7M2QX';
 
   @override
   String get householdJoined => 'You joined the household';
@@ -1967,4 +1967,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get checkinResultLoadError => 'Couldn\'t load the check-in result.';
+
+  @override
+  String get notifChannelTaskName => 'Plant care reminders';
+
+  @override
+  String get notifChannelTaskDescription =>
+      'Reminders for plant care tasks by time of day';
+
+  @override
+  String get notifChannelCheckinName => 'Check-in reminders';
+
+  @override
+  String get notifChannelCheckinDescription =>
+      'Reminders to take a check-in photo of your plants';
+
+  @override
+  String get householdJoinAlreadyTitle => 'You\'re already in a household';
+
+  @override
+  String householdJoinAlreadyBody(String code) {
+    return 'You can only be in one household at a time, so the code $code can\'t be used. To join another one, leave your current household in Settings first.';
+  }
+
+  @override
+  String get householdJoinAlreadyAction => 'Go to Household';
+
+  @override
+  String gamXpGain(String xp) {
+    return '+$xp XP';
+  }
 }

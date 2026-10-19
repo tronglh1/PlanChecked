@@ -316,6 +316,12 @@ String windowLabel(AppLocalizations l, TaskWindow w) => switch (w) {
 
 /// Localized notification strings for the planner.
 ReminderTexts reminderTextsFor(AppLocalizations l) => ReminderTexts(
+  channels: ReminderChannels(
+    taskName: l.notifChannelTaskName,
+    taskDescription: l.notifChannelTaskDescription,
+    checkinName: l.notifChannelCheckinName,
+    checkinDescription: l.notifChannelCheckinDescription,
+  ),
   windowTitle: (w) => l.todayNotifTitle(windowLabel(l, w)),
   taskBody: (names) {
     const shown = 3;

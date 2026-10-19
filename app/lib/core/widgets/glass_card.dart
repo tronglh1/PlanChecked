@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/tokens.dart';
 import 'glass_config.dart';
+import 'top_highlight.dart';
 
 /// Frosted glass surface. [blur] null = follow [GlassConfig]; false = solid
 /// translucent fill without BackdropFilter (low-end devices).
@@ -48,6 +49,13 @@ class GlassCard extends StatelessWidget {
       ),
       child: content,
     );
+    final surface = Stack(
+      fit: StackFit.passthrough,
+      children: [
+        decorated,
+        TopHighlight(radius: radius),
+      ],
+    );
     final clipped = ClipRRect(
       borderRadius: borderRadius,
       child: useBlur
@@ -56,9 +64,9 @@ class GlassCard extends StatelessWidget {
                 sigmaX: AppBlur.sigma,
                 sigmaY: AppBlur.sigma,
               ),
-              child: decorated,
+              child: surface,
             )
-          : decorated,
+          : surface,
     );
     return Container(
       margin: margin,

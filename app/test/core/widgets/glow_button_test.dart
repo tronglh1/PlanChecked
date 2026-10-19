@@ -8,16 +8,12 @@ Widget _host(Widget child) => MaterialApp(
 
 void main() {
   testWidgets('renders the label', (t) async {
-    await t.pumpWidget(
-      _host(GlowButton(label: 'Tiếp tục', onPressed: () {})),
-    );
+    await t.pumpWidget(_host(GlowButton(label: 'Tiếp tục', onPressed: () {})));
     expect(find.text('Tiếp tục'), findsOneWidget);
   });
 
   testWidgets('primary variant uses white label text', (t) async {
-    await t.pumpWidget(
-      _host(GlowButton(label: 'Tiếp tục', onPressed: () {})),
-    );
+    await t.pumpWidget(_host(GlowButton(label: 'Tiếp tục', onPressed: () {})));
     final text = t.widget<Text>(find.text('Tiếp tục'));
     expect(text.style?.color, Colors.white);
   });
@@ -33,9 +29,7 @@ void main() {
   });
 
   testWidgets('disabled button is dimmed and does not fire', (t) async {
-    await t.pumpWidget(
-      _host(const GlowButton(label: 'Lưu', onPressed: null)),
-    );
+    await t.pumpWidget(_host(const GlowButton(label: 'Lưu', onPressed: null)));
     final opacity = t.widget<Opacity>(
       find.descendant(
         of: find.byType(GlowButton),

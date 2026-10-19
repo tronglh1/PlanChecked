@@ -9,10 +9,10 @@ class AppTheme {
   static ThemeData light() {
     final scheme =
         ColorScheme.fromSeed(
-          seedColor: AppColors.orangeMid,
+          seedColor: AppColors.orangeSolid,
           brightness: Brightness.light,
         ).copyWith(
-          primary: AppColors.orangeMid,
+          primary: AppColors.orangeSolid,
           onPrimary: AppColors.textOnPrimary,
           secondary: AppColors.green,
           surface: Colors.white,

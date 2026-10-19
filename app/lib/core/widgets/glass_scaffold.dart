@@ -1,9 +1,11 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../theme/tokens.dart';
 
-/// Scaffold with the cream->mint gradient and soft blurred color blobs.
-/// Blobs are painted as radial gradients (no ImageFilter) so they stay cheap.
+/// Scaffold with the mockup canvas: 170deg cream->mint linear gradient under
+/// three radial blobs (spec §1.2). Blobs are painted, no ImageFilter.
 class GlassScaffold extends StatelessWidget {
   const GlassScaffold({
     super.key,
@@ -26,7 +28,7 @@ class GlassScaffold extends StatelessWidget {
       decoration: const BoxDecoration(gradient: AppGradients.background),
       child: Stack(
         children: [
-          const Positioned.fill(child: _Blobs()),
+          const Positioned.fill(child: CanvasBlobs()),
           Scaffold(
             backgroundColor: Colors.transparent,
             extendBody: true,
@@ -43,60 +45,58 @@ class GlassScaffold extends StatelessWidget {
   }
 }
 
-class _Blobs extends StatelessWidget {
-  const _Blobs();
+/// One CSS `radial-gradient(circle at x% y%, color 0, transparent r%)`.
+/// [x]/[y] are fractions of the box; [stop] is the fraction of the
+/// farthest-corner distance where the color has faded out.
+class BlobSpec {
+  const BlobSpec(this.x, this.y, this.stop, this.color);
+  final double x;
+  final double y;
+  final double stop;
+  final Color color;
+}
+
+/// Mockup blob positions: (8%,4%) peach 40%, (96%,30%) coral 42%,
+/// (18%,92%) mint 46%.
+const List<BlobSpec> canvasBlobs = [
+  BlobSpec(0.08, 0.04, 0.40, AppColors.blobPeach),
+  BlobSpec(0.96, 0.30, 0.42, AppColors.blobCoral),
+  BlobSpec(0.18, 0.92, 0.46, AppColors.blobMint),
+];
+
+class CanvasBlobs extends StatelessWidget {
+  const CanvasBlobs({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const IgnorePointer(
-      child: Stack(
-        children: [
-          _Blob(
-            alignment: Alignment(-1.1, -0.9),
-            size: 320,
-            color: AppColors.blobYellow,
-          ),
-          _Blob(
-            alignment: Alignment(1.2, -0.2),
-            size: 300,
-            color: AppColors.blobPeach,
-          ),
-          _Blob(
-            alignment: Alignment(-0.8, 1.0),
-            size: 360,
-            color: AppColors.blobMint,
-          ),
-        ],
-      ),
+      child: CustomPaint(painter: _BlobPainter(canvasBlobs)),
     );
   }
 }
 
-class _Blob extends StatelessWidget {
-  const _Blob({
-    required this.alignment,
-    required this.size,
-    required this.color,
-  });
-
-  final Alignment alignment;
-  final double size;
-  final Color color;
+class _BlobPainter extends CustomPainter {
+  const _BlobPainter(this.blobs);
+  final List<BlobSpec> blobs;
 
   @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: alignment,
-      child: Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: RadialGradient(
-            colors: [color.withValues(alpha: 0.85), color.withValues(alpha: 0)],
-          ),
-        ),
-      ),
-    );
+  void paint(Canvas canvas, Size size) {
+    final rect = Offset.zero & size;
+    for (final b in blobs) {
+      final c = Offset(b.x * size.width, b.y * size.height);
+      final farthest = math.sqrt(
+        math.pow(math.max(c.dx, size.width - c.dx), 2) +
+            math.pow(math.max(c.dy, size.height - c.dy), 2),
+      );
+      final r = farthest * b.stop;
+      final paint = Paint()
+        ..shader = RadialGradient(
+          colors: [b.color, b.color.withValues(alpha: 0)],
+        ).createShader(Rect.fromCircle(center: c, radius: r));
+      canvas.drawRect(rect, paint);
+    }
   }
+
+  @override
+  bool shouldRepaint(_BlobPainter old) => old.blobs != blobs;
 }

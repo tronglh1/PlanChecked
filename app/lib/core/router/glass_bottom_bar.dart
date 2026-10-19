@@ -133,7 +133,9 @@ class _Item extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
                   color: color,
-                  fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                  fontWeight: selected
+                      ? AppFontWeights.tabActive
+                      : AppFontWeights.tabInactive,
                 ),
               ),
             ],

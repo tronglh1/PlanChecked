@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/tokens.dart';
+import 'top_highlight.dart';
 
 enum GlowButtonVariant { primary, secondary }
 
@@ -42,7 +43,7 @@ class GlowButton extends StatelessWidget {
             label,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.titleMedium
-                ?.copyWith(color: fg, fontWeight: FontWeight.w700),
+                ?.copyWith(color: fg, fontWeight: AppFontWeights.cta),
           ),
         ),
       ],
@@ -56,22 +57,32 @@ class GlowButton extends StatelessWidget {
           color: _primary ? null : AppColors.glassFillSolid,
           boxShadow: _primary ? AppShadows.glow : AppShadows.soft,
         ),
-        child: Material(
-          type: MaterialType.transparency,
-          child: InkWell(
-            borderRadius: radius,
-            onTap: onPressed,
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: 52),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.xl,
-                  vertical: AppSpacing.md,
+        child: Stack(
+          fit: StackFit.passthrough,
+          children: [
+            Material(
+              type: MaterialType.transparency,
+              child: InkWell(
+                borderRadius: radius,
+                onTap: onPressed,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(minHeight: 52),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.xl,
+                      vertical: AppSpacing.md,
+                    ),
+                    child: child,
+                  ),
                 ),
-                child: child,
               ),
             ),
-          ),
+            if (_primary)
+              const TopHighlight(
+                radius: AppRadius.button,
+                color: AppColors.ctaHighlight,
+              ),
+          ],
         ),
       ),
     );

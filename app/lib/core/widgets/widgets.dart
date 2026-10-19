@@ -7,3 +7,4 @@ export 'glow_checkbox.dart';
 export 'progress.dart';
 export 'section_header.dart';
 export 'tag_chip.dart';
+export 'top_highlight.dart';

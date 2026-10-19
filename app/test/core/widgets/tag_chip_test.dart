@@ -42,9 +42,9 @@ void main() {
     await t.tap(find.text('Rau & quả'));
     await t.pump();
 
-    // Selected: green text, bold weight.
-    expect(label().style?.color, AppColors.green);
-    expect(label().style?.fontWeight, FontWeight.w700);
+    // Selected: orange text (spec §1.2), semi-bold.
+    expect(label().style?.color, AppColors.orangeText);
+    expect(label().style?.fontWeight, FontWeight.w600);
 
     await t.tap(find.text('Rau & quả'));
     await t.pump();

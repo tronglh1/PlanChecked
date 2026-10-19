@@ -26,8 +26,7 @@ class PlanBundle {
       ? 0
       : stages.map((s) => s.dayTo).reduce((a, b) => a > b ? a : b);
 
-  List<Task> tasksOf(Stage s) =>
-      tasks.where((t) => t.stageId == s.id).toList();
+  List<Task> tasksOf(Stage s) => tasks.where((t) => t.stageId == s.id).toList();
 
   PlanBundle copyWith({Plan? plan, List<Task>? tasks}) => PlanBundle(
     plan: plan ?? this.plan,

@@ -24,7 +24,9 @@ class GeneratingScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final t = Theme.of(context).textTheme;
-    final provider = generationControllerProvider(GenerationArgs(projectId, plantGroup));
+    final provider = generationControllerProvider(
+      GenerationArgs(projectId, plantGroup),
+    );
     final state = ref.watch(provider);
     final name = ref.watch(projectDetailProvider(projectId)).value;
 

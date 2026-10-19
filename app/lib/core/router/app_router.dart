@@ -11,6 +11,7 @@ import '../../features/household/presentation/household_providers.dart';
 import '../../features/plants/presentation/plant_search_screen.dart';
 import '../../features/profile/presentation/profile_providers.dart';
 import '../../features/profile/presentation/profile_setup_screen.dart';
+import '../../features/checkin/checkin_routes.dart';
 import '../../features/plan/plan_routes.dart';
 import '../../features/projects/presentation/project_context_screen.dart';
 import '../../features/projects/presentation/project_list_screen.dart';
@@ -113,6 +114,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
       ...projectsRoutes,
       ...planRoutes,
+      ...checkinRoutes,
       ...todayRoutes,
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => _Shell(shell: shell),

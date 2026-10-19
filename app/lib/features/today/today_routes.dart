@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/widgets/widgets.dart';
-import '../../l10n/app_localizations.dart';
 import 'presentation/task_detail_screen.dart';
 
 class TodayRoutes {
@@ -21,34 +18,4 @@ final List<RouteBase> todayRoutes = [
     builder: (_, state) =>
         TaskDetailScreen(taskId: state.pathParameters['id']!),
   ),
-  // Placeholder until the check-in milestone replaces it.
-  GoRoute(
-    path: '/projects/:id/checkin',
-    builder: (context, _) => _Placeholder(
-      title: AppLocalizations.of(context).todayCheckinDueTitle,
-      message: AppLocalizations.of(context).taskCheckinPlaceholder,
-    ),
-  ),
 ];
-
-class _Placeholder extends StatelessWidget {
-  const _Placeholder({required this.title, required this.message});
-
-  final String title;
-  final String message;
-
-  @override
-  Widget build(BuildContext context) {
-    return GlassScaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: Text(title),
-        leading: BackButton(
-          onPressed: () =>
-              context.canPop() ? context.pop() : context.go('/today'),
-        ),
-      ),
-      body: EmptyState(icon: Icons.construction_rounded, title: message),
-    );
-  }
-}

@@ -268,10 +268,8 @@ class _InfoChip extends StatelessWidget {
           Flexible(
             child: Text(
               label,
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                color: ink,
-                fontWeight: FontWeight.w600,
-              ),
+              style: Theme.of(context).textTheme.labelMedium
+                  ?.copyWith(color: ink, fontWeight: FontWeight.w600),
             ),
           ),
         ],
@@ -372,7 +370,12 @@ class _StageTile extends StatelessWidget {
     final t = Theme.of(context).textTheme;
     final milestone = stage.milestoneCode == null
         ? null
-        : renderer.render('milestone', stage.milestoneCode!, 'name', lang: lang);
+        : renderer.render(
+            'milestone',
+            stage.milestoneCode!,
+            'name',
+            lang: lang,
+          );
     final sub = [
       l10n.planStageDays(stage.dayFrom, stage.dayTo),
       ?(milestone == null ? null : l10n.planStageMilestone(milestone)),

@@ -193,7 +193,11 @@ class _PlanCalendarScreenState extends ConsumerState<PlanCalendarScreen> {
           ],
         ),
         const SizedBox(height: AppSpacing.md),
-        _StageBanner(stage: stage, stages: bundle.stages, day: TaskScheduler.dayNumber(start, selected)),
+        _StageBanner(
+          stage: stage,
+          stages: bundle.stages,
+          day: TaskScheduler.dayNumber(start, selected),
+        ),
         const SizedBox(height: AppSpacing.md),
         Text(
           l10n.planDayLabel(dowLabel(l10n, selected), shortDate(selected)),
@@ -385,10 +389,8 @@ class _StageBanner extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-          color: AppColors.greenDeep,
-          fontWeight: FontWeight.w600,
-        ),
+        style: Theme.of(context).textTheme.bodySmall
+            ?.copyWith(color: AppColors.greenDeep, fontWeight: FontWeight.w600),
       ),
     );
   }

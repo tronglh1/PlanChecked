@@ -34,8 +34,7 @@ class ProjectProgress {
   int get stageCount => stages.length;
 
   /// 0..1 over the whole plan.
-  double get fraction =>
-      totalDays <= 0 ? 0 : (day / totalDays).clamp(0.0, 1.0);
+  double get fraction => totalDays <= 0 ? 0 : (day / totalDays).clamp(0.0, 1.0);
 
   int get daysLeftInStage {
     final s = currentStage;

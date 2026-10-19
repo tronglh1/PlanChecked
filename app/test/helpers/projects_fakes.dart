@@ -152,7 +152,6 @@ class FakeProjectRepository implements ProjectRepository {
     String projectId, {
     int limit = 50,
   }) async => history;
-
 }
 
 class FakePlanRepository implements PlanRepository {
@@ -313,7 +312,10 @@ Future<GoRouter> pumpRouterApp(
   final router = GoRouter(
     initialLocation: initial,
     routes: [
-      GoRoute(path: '/garden', builder: (_, _) => const Scaffold(body: ProjectListScreen())),
+      GoRoute(
+        path: '/garden',
+        builder: (_, _) => const Scaffold(body: ProjectListScreen()),
+      ),
       GoRoute(
         path: '/projects/new/search',
         builder: (_, _) => const Scaffold(body: Text('SEARCH')),

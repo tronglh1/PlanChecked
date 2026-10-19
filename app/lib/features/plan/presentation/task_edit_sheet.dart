@@ -108,8 +108,7 @@ class _TaskEditorSheetState extends ConsumerState<_TaskEditorSheet> {
     final code = _code;
     if (code == null) return;
     final needsN =
-        _frequency == Frequency.everyNDays ||
-        _frequency == Frequency.fixedDate;
+        _frequency == Frequency.everyNDays || _frequency == Frequency.fixedDate;
     final n = needsN ? (_intervalValue ?? 1) : null;
     setState(() {
       _busy = true;
@@ -188,11 +187,16 @@ class _TaskEditorSheetState extends ConsumerState<_TaskEditorSheet> {
 
     Widget label(String s) => Padding(
       padding: const EdgeInsets.only(top: AppSpacing.md, bottom: AppSpacing.sm),
-      child: Text(s, style: t.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
+      child: Text(
+        s,
+        style: t.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+      ),
     );
 
     return Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: Container(
         decoration: const BoxDecoration(
           color: AppColors.bgTop,
@@ -230,9 +234,8 @@ class _TaskEditorSheetState extends ConsumerState<_TaskEditorSheet> {
                           child: Text(
                             renderer.taskName(
                               c.code,
-                              lang: Localizations.localeOf(
-                                context,
-                              ).languageCode,
+                              lang: Localizations.localeOf(context)
+                                  .languageCode,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),

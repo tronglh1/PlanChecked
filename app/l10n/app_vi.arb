@@ -1164,5 +1164,229 @@
     }
   },
   "gamShareError": "Chưa chia sẻ được",
-  "gamViewAchievements": "Xem thành tích"
+  "gamViewAchievements": "Xem thành tích",
+  "checkinEntryButton": "Check-in ảnh",
+  "checkinTitle": "Check-in · {plant}",
+  "@checkinTitle": {
+    "placeholders": {
+      "plant": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinShotProgress": "Ảnh {n}/{total} · {shot}",
+  "@checkinShotProgress": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "shot": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinShotWhole": "Toàn cây",
+  "checkinShotLeaf": "Cận lá",
+  "checkinShotUnder": "Mặt dưới lá",
+  "checkinFrameHint": "Đặt cả cây trong khung",
+  "checkinShotsTaken": "Đã chụp {count}/{max} ảnh",
+  "@checkinShotsTaken": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "checkinTakePhoto": "Chụp ảnh",
+  "checkinRetakeShot": "Chụp lại ảnh này",
+  "checkinGallery": "Chọn từ thư viện ảnh",
+  "checkinTips": "Xem mẹo chụp",
+  "checkinClose": "Đóng",
+  "checkinQuickTags": "Tình trạng nhanh",
+  "checkinTagLeafYellow": "Lá vàng",
+  "checkinTagWilt": "Héo",
+  "checkinTagPests": "Có sâu",
+  "checkinTagSpots": "Đốm",
+  "checkinNoteHint": "Ghi chú ngắn (không bắt buộc)",
+  "checkinAnalyze": "Phân tích ảnh",
+  "checkinProcessing": "Đang xử lý ảnh...",
+  "checkinAnalyzingTitle": "AI đang xem ảnh của bạn",
+  "checkinAnalyzingSub": "Thường mất khoảng 15 giây",
+  "checkinStepUpload": "Tải ảnh lên",
+  "checkinStepAnalyze": "Phân tích tình trạng cây",
+  "checkinQuotaTitle": "Hôm nay đã hết lượt phân tích",
+  "checkinQuotaBody": "Bạn đã dùng {used}/{cap} lượt phân tích AI hôm nay. Ảnh đã được lưu trong dòng thời gian, mai bạn thử lại nhé.",
+  "@checkinQuotaBody": {
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "cap": {
+        "type": "int"
+      }
+    }
+  },
+  "checkinQuotaBodyPlain": "Bạn đã dùng hết lượt phân tích AI hôm nay. Ảnh đã được lưu trong dòng thời gian, mai bạn thử lại nhé.",
+  "checkinAiDownTitle": "AI chưa trả lời được",
+  "checkinAiDownBody": "Kế hoạch giữ nguyên và lượt phân tích không bị trừ. Thử lại sau ít phút nhé.",
+  "checkinSkippedTitle": "Cây vừa được phân tích",
+  "checkinSkippedBody": "Trong 24 giờ qua project này đã có kết quả. Chọn thêm tình trạng nếu có dấu hiệu mới.",
+  "checkinSkippedView": "Xem kết quả trước",
+  "checkinFailedTitle": "Chưa gửi được ảnh",
+  "checkinFailedBody": "Kiểm tra kết nối rồi thử lại. Ảnh đã chụp vẫn được giữ.",
+  "checkinBackToCapture": "Quay lại chụp",
+  "checkinRetakeTitle": "Cần chụp lại",
+  "checkinRetakeReasonBlur": "Ảnh bị mờ",
+  "checkinRetakeReasonDark": "Ảnh thiếu sáng",
+  "checkinRetakeReasonFar": "Chưa thấy rõ cây",
+  "checkinRetakeReasonNotPlant": "Ảnh không có cây",
+  "checkinRetakeReasonUnreadable": "Không đọc được ảnh",
+  "checkinRetakeHeadline": "AI chưa đủ thông tin để đánh giá",
+  "checkinRetakeBody": "Để tránh đoán sai, bạn chụp lại giúp mình nhé. Lần chụp này chưa tính vào lượt phân tích trong ngày.",
+  "checkinRetakeTipsTitle": "Mẹo chụp rõ",
+  "checkinRetakeTip1": "Chụp ban ngày, tránh ngược sáng",
+  "checkinRetakeTip2": "Giữ máy cách cây 40–60cm, chạm để lấy nét",
+  "checkinRetakeTip3": "Thêm 1 ảnh cận lá có dấu hiệu lạ",
+  "checkinRetakeCta": "Chụp lại",
+  "checkinResultTitle": "Kết quả check-in",
+  "checkinXpChip": "+{xp} XP",
+  "@checkinXpChip": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "checkinAiLabel": "Gợi ý từ AI",
+  "checkinStageLine": "Giai đoạn: {stage} ({pct}%)",
+  "@checkinStageLine": {
+    "placeholders": {
+      "stage": {
+        "type": "String"
+      },
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "checkinStageEarly": "đầu {name}",
+  "@checkinStageEarly": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinStageMid": "giữa {name}",
+  "@checkinStageMid": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinStageLate": "cuối {name}",
+  "@checkinStageLate": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinHealthLine": "Sức khỏe: {health}",
+  "@checkinHealthLine": {
+    "placeholders": {
+      "health": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinHealthGood": "Tốt",
+  "checkinHealthFair": "Trung bình",
+  "checkinHealthPoor": "Kém",
+  "checkinIssuesTitle": "Dấu hiệu nghi ngờ",
+  "checkinNoIssues": "Chưa thấy dấu hiệu bất thường.",
+  "checkinSafeActions": "Việc nên làm (an toàn, ưu tiên hữu cơ)",
+  "checkinMilestoneNote": "Ảnh xác nhận đạt mốc {name}",
+  "@checkinMilestoneNote": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinChangesTitle": "Đề xuất điều chỉnh plan",
+  "checkinNoChanges": "AI không đề xuất thay đổi nào cho plan.",
+  "checkinKindAdd": "THÊM VIỆC",
+  "checkinKindFreq": "ĐỔI TẦN SUẤT",
+  "checkinKindShift": "DỜI MỐC",
+  "checkinKindRemove": "BỎ VIỆC",
+  "checkinChangeFreq": "{task}: {from} → {to}",
+  "@checkinChangeFreq": {
+    "placeholders": {
+      "task": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinChangeFreqTo": "{task}: {to}",
+  "@checkinChangeFreqTo": {
+    "placeholders": {
+      "task": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinChangeShift": "{milestone}: dời đến {date}",
+  "@checkinChangeShift": {
+    "placeholders": {
+      "milestone": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "checkinChangeApprove": "Áp dụng",
+  "checkinChangeSkip": "Bỏ qua",
+  "checkinLowConfTitle": "AI chưa chắc chắn lắm",
+  "checkinLowConfBody": "Bạn có thể mang ảnh hoặc mẫu lá đến cửa hàng nông nghiệp gần nhà để hỏi thêm. Thuốc và liều dùng nên theo đúng hướng dẫn trên nhãn sản phẩm.",
+  "checkinLater": "Để sau",
+  "checkinApply": "Áp dụng {count} thay đổi",
+  "@checkinApply": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "checkinSkipAll": "Bỏ qua tất cả",
+  "checkinDone": "Xong",
+  "checkinApplyError": "Chưa áp dụng được. Thử lại nhé.",
+  "checkinApplied": "Đã áp dụng {count} thay đổi",
+  "@checkinApplied": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "checkinAlreadyAnswered": "Bạn đã trả lời các đề xuất này rồi.",
+  "checkinResultLoadError": "Không tải được kết quả check-in."
 }

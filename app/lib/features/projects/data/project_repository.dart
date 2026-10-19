@@ -19,8 +19,10 @@ abstract class ProjectRepository {
   Future<ProjectDetail> getProject(String id);
 
   /// Done / skip / snooze log of the project's tasks, newest first (TSK-06).
-  Future<List<TaskHistoryEntry>> taskHistory(String projectId, {int limit = 50});
-
+  Future<List<TaskHistoryEntry>> taskHistory(
+    String projectId, {
+    int limit = 50,
+  });
 }
 
 /// Raw rows needed to build the project list; separated from Supabase so the
@@ -232,8 +234,7 @@ class SupabaseProjectRepository implements ProjectRepository {
         .eq('project_id', id)
         .order('created_at', ascending: false);
     final photos = <String>[
-      for (final c in checkins)
-        ?firstShotPath(c['shots']),
+      for (final c in checkins) ?firstShotPath(c['shots']),
     ];
     final members = <String, String>{};
     try {

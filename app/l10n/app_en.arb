@@ -145,5 +145,428 @@
   },
   "searchFreeTextHint": "Not in the list? The AI will plan this plant in the next step.",
   "searchLoadError": "Could not load the plant list",
-  "contextTitle": "Growing details & context"
+  "contextTitle": "Growing details & context",
+  "householdSetupStep": "Step 2/2",
+  "householdSetupSkip": "Skip",
+  "householdSetupTitle": "Grow plants together?",
+  "householdSetupSub": "Create a household to assign watering and feeding to each person and see who did what. You can do this later.",
+  "householdCreateTitle": "Create a new household",
+  "householdCreateSub": "You are the household Owner",
+  "householdJoinTitle": "Join with an invite code",
+  "householdJoinSub": "You will be a Member",
+  "householdJoinHint": "e.g. VUON-4821",
+  "householdJoinAction": "Join",
+  "householdSetupFooter": "Each person can be in one household only. There are no public friend lists.",
+  "householdNameLabel": "Household name",
+  "householdNameDefault": "Our home",
+  "householdCreateAction": "Create household",
+  "householdErrorGeneric": "That did not work. Please try again.",
+  "householdErrorInvalidCode": "Invalid invite code",
+  "householdErrorExpired": "This invite has expired",
+  "householdErrorAlreadyIn": "You are already in a household",
+  "householdErrorTooMany": "Too many wrong attempts, try again in an hour",
+  "householdErrorCodeFormat": "Codes look like VUON-1234",
+  "householdJoined": "You joined the household",
+  "householdEyebrow": "Household · {count} people",
+  "@householdEyebrow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "householdInvite": "+ Invite",
+  "householdRoleOwner": "Owner",
+  "householdRoleMember": "Member",
+  "householdYou": "{name} (you)",
+  "@householdYou": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdTasksWeek": "{count} tasks this week",
+  "@householdTasksWeek": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "householdAway": "away",
+  "householdSharedProjects": "Shared projects",
+  "householdNoShared": "No shared projects yet",
+  "householdShareMore": "+ Share more",
+  "householdShareTitle": "Share a project with the household",
+  "householdShare": "Share",
+  "householdUnshare": "Stop sharing",
+  "householdShareOwnerOnly": "Only the Owner can share projects",
+  "householdShareNoProjects": "You have no projects to share",
+  "householdActivity": "Activity",
+  "householdActivityEmpty": "No activity yet",
+  "householdActTaskDone": "{name} completed a task",
+  "@householdActTaskDone": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActCheckin": "{name} posted a check-in",
+  "@householdActCheckin": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActMilestone": "{name} reached a milestone",
+  "@householdActMilestone": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActJoined": "{name} joined the household",
+  "@householdActJoined": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActLeft": "{name} left the household",
+  "@householdActLeft": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActShared": "{name} shared “{project}”",
+  "@householdActShared": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActProject": "{text} · {project}",
+  "@householdActProject": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      },
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "householdSomeone": "A member",
+  "householdRemoveMember": "Remove from household",
+  "householdRemoveTitle": "Remove {name}?",
+  "@householdRemoveTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdRemoveBody": "Projects they shared become private again.",
+  "householdLoadError": "Could not load the household",
+  "householdNoneTitle": "You are not in a household",
+  "householdNoneSub": "Create one or enter an invite code to grow together.",
+  "householdInviteTitle": "Invite family",
+  "householdInviteCodeLabel": "Invite code for {name}",
+  "@householdInviteCodeLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdInviteExpires": "Expires in {days} days",
+  "@householdInviteExpires": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "householdInviteCopy": "Copy code",
+  "householdInviteCopied": "Code copied",
+  "householdInviteShareLink": "Share invite link",
+  "householdInviteShareText": "{inviter} invites you to grow plants together in “{name}” on Vườn Nhà. Code: {code}. Open: {link}",
+  "@householdInviteShareText": {
+    "placeholders": {
+      "inviter": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      },
+      "link": {
+        "type": "String"
+      }
+    }
+  },
+  "householdInviteOr": "or invite directly",
+  "householdInviteTargetLabel": "Phone or email",
+  "householdInviteTargetHint": "09xx xxx xxx",
+  "householdInviteRole": "Role",
+  "householdInviteRoleMemberDesc": "Does assigned tasks, sees shared projects",
+  "householdInviteRoleOwnerDesc": "Manages members, projects and assignments",
+  "householdInviteSend": "Send invite",
+  "householdInviteEmailSent": "Invite emailed to {target}",
+  "@householdInviteEmailSent": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "householdInviteEmailFailed": "Email could not be sent. Use the share button instead.",
+  "householdInviteTargetInvalid": "Enter a valid email or phone number",
+  "householdInviteOwnerOnly": "Only the Owner can invite people",
+  "householdInviteLoading": "Creating invite...",
+  "householdAssignTitle": "Assign task",
+  "householdAssignHow": "Assign how",
+  "householdModeOnce": "Just once",
+  "householdModeSeries": "Whole series",
+  "householdModeRotation": "Rotate",
+  "householdAssignOrder": "Rotation order",
+  "householdAssignTo": "Assign to",
+  "householdAssignAwayUntil": "Away until {date}",
+  "@householdAssignAwayUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "householdAssignHintRotation": "Rotation: {names} → repeat.",
+  "@householdAssignHintRotation": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "householdAssignHintSeries": "Every upcoming “{task}” goes to {name}.",
+  "@householdAssignHintSeries": {
+    "placeholders": {
+      "task": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdAssignHintOnce": "Only the next “{task}” goes to {name}.",
+  "@householdAssignHintOnce": {
+    "placeholders": {
+      "task": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdAssignDone": "Task assigned",
+  "householdAssignOwnerOnly": "Only the Owner can assign tasks",
+  "householdAssignNeedHousehold": "Create or join a household to assign tasks",
+  "householdAssignNoTask": "Task not found",
+  "householdAssignRotationMin": "Pick at least 2 people to rotate",
+  "householdAssignPickOne": "Pick a person",
+  "householdWindowMorning": "Early morning",
+  "householdWindowAfternoon": "Cool afternoon",
+  "householdWindowAllDay": "All day",
+  "householdEveryDays": "every {n} days",
+  "@householdEveryDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "householdLeaveRow": "Leave household “{name}”",
+  "@householdLeaveRow": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdLeaveTitle": "Leave the household?",
+  "householdLeaveBody": "You will no longer see shared projects. Your own projects become private.",
+  "householdLeaveOwnerBody": "Ownership passes to {name}, the longest-standing member.",
+  "@householdLeaveOwnerBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdLeaveLast": "You are the last member, so the household will be deleted.",
+  "householdLeaveAction": "Leave",
+  "householdLeft": "You left the household",
+  "householdJoinScreenTitle": "Join a household",
+  "householdJoinLinkBody": "You were invited with code {code}",
+  "@householdJoinLinkBody": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "householdJoinConfirm": "Join",
+  "gamTitle": "Achievements",
+  "gamTotalXp": "Total points",
+  "gamXpUnit": "{xp} XP",
+  "@gamXpUnit": {
+    "placeholders": {
+      "xp": {
+        "type": "String"
+      }
+    }
+  },
+  "gamLevelLabel": "Level",
+  "gamLevelLine": "Level {level} · {name}",
+  "@gamLevelLine": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gamToNext": "{xp} XP to Level {level} · {name}",
+  "@gamToNext": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      },
+      "level": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gamTopLevel": "You reached the top level",
+  "gamStreak": "{days}-day streak",
+  "@gamStreak": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gamStreakNone": "No streak yet",
+  "gamOnTime": "On-time tasks",
+  "gamCheckin": "Photo check-ins",
+  "gamMilestone": "Milestones",
+  "gamToday": "Today",
+  "gamTodayCap": "{xp}/{cap} XP",
+  "@gamTodayCap": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      },
+      "cap": {
+        "type": "int"
+      }
+    }
+  },
+  "gamAntiCheat": "Up to {cap} XP per day from regular tasks. Milestone points only count with a photo check-in as proof.",
+  "@gamAntiCheat": {
+    "placeholders": {
+      "cap": {
+        "type": "int"
+      }
+    }
+  },
+  "gamPendingPhoto": "{count} milestone(s) wait for a photo check-in and earn no XP yet.",
+  "@gamPendingPhoto": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gamBadges": "Badges · {earned}/{total}",
+  "@gamBadges": {
+    "placeholders": {
+      "earned": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "gamBadgesEmpty": "No badges yet",
+  "gamBadgeLocked": "Locked",
+  "gamLoadError": "Could not load achievements",
+  "gamMilestoneEyebrow": "NEW MILESTONE",
+  "gamMilestoneUnknown": "New milestone",
+  "gamMilestoneBody": "{project} passed a new milestone. A check-in photo confirmed it.",
+  "@gamMilestoneBody": {
+    "placeholders": {
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "gamMilestoneBodyPending": "{project} logged this milestone, but no check-in photo has confirmed it yet.",
+  "@gamMilestoneBodyPending": {
+    "placeholders": {
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "gamRewardXp": "+{xp} XP",
+  "@gamRewardXp": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "gamRewardPending": "Needs photo",
+  "gamRewardMilestone": "Milestone",
+  "gamRewardBadge": "Badge",
+  "gamRewardNoBadge": "None yet",
+  "gamPendingNote": "Milestone XP is only awarded when a check-in photo confirms it. Post a photo check-in to earn it.",
+  "gamKeepsake": "Keepsake",
+  "gamKeepsakeCard": "Keepsake card",
+  "gamKeepsakeSub": "Ready to share",
+  "gamShare": "Share keepsake",
+  "gamShareText": "{project} just reached “{milestone}” on Vườn Nhà!",
+  "@gamShareText": {
+    "placeholders": {
+      "project": {
+        "type": "String"
+      },
+      "milestone": {
+        "type": "String"
+      }
+    }
+  },
+  "gamShareError": "Could not share",
+  "gamViewAchievements": "View achievements"
 }

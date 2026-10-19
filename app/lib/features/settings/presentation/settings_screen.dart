@@ -6,13 +6,15 @@ import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/presentation/auth_state.dart';
+import '../../household/presentation/household_providers.dart';
+import '../../household/presentation/leave_household.dart';
 import '../../profile/domain/provinces.dart';
 import '../../profile/presentation/profile_providers.dart';
 import '../domain/notification_settings.dart';
 import 'locale_provider.dart';
 import 'settings_providers.dart';
 
-/// Screen 21 (tab 5). Household items are placeholders until M-household.
+/// Screen 21 (tab 5).
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
@@ -87,6 +89,7 @@ class SettingsScreen extends ConsumerWidget {
     final profile = ref.watch(profileProvider).value;
     final notif = ref.watch(notificationSettingsProvider);
     final locale = ref.watch(localeProvider);
+    final household = ref.watch(householdProvider).value;
     final province = provinceByCode(profile?.provinceCode);
     final name = profile?.displayName ?? '';
     final langName = locale.languageCode == 'en' ? l10n.langEn : l10n.langVi;
@@ -229,25 +232,30 @@ class SettingsScreen extends ConsumerWidget {
                 ],
               ),
               const Divider(height: AppSpacing.xl),
-              // Placeholder until the household milestone.
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      l10n.settingsLeaveHousehold,
-                      style: t.bodyMedium?.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
+              if (household != null)
+                InkWell(
+                  key: const Key('leave-household'),
+                  onTap: () => confirmLeaveHousehold(context, ref),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(minHeight: 48),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            l10n.householdLeaveRow(household.name),
+                            style: t.bodyMedium?.copyWith(
+                              color: AppColors.danger,
+                            ),
+                          ),
+                        ),
+                        const Icon(
+                          Icons.chevron_right_rounded,
+                          color: AppColors.textSecondary,
+                        ),
+                      ],
                     ),
                   ),
-                  Text(
-                    l10n.placeholderComingSoon,
-                    style: t.bodySmall?.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                ],
-              ),
+                ),
             ],
           ),
         ),

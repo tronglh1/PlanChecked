@@ -145,5 +145,428 @@
   },
   "searchFreeTextHint": "Chưa có trong danh sách? AI sẽ lập kế hoạch cho cây này ở bước sau.",
   "searchLoadError": "Không tải được danh sách cây",
-  "contextTitle": "Thông tin & bối cảnh trồng"
+  "contextTitle": "Thông tin & bối cảnh trồng",
+  "householdSetupStep": "Bước 2/2",
+  "householdSetupSkip": "Bỏ qua",
+  "householdSetupTitle": "Chăm cây cùng người nhà?",
+  "householdSetupSub": "Tạo gia đình để giao việc tưới, bón cho từng người và xem ai đã làm gì. Bạn có thể làm việc này sau.",
+  "householdCreateTitle": "Tạo gia đình mới",
+  "householdCreateSub": "Bạn là chủ nhà (Owner)",
+  "householdJoinTitle": "Tham gia bằng mã mời",
+  "householdJoinSub": "Bạn sẽ là thành viên (Member)",
+  "householdJoinHint": "VD: VUON-4821",
+  "householdJoinAction": "Vào",
+  "householdSetupFooter": "Mỗi người chỉ ở trong một gia đình. App không có kết bạn công khai.",
+  "householdNameLabel": "Tên gia đình",
+  "householdNameDefault": "Nhà mình",
+  "householdCreateAction": "Tạo gia đình",
+  "householdErrorGeneric": "Chưa thực hiện được. Thử lại nhé.",
+  "householdErrorInvalidCode": "Mã mời không đúng",
+  "householdErrorExpired": "Mã mời đã hết hạn",
+  "householdErrorAlreadyIn": "Bạn đã ở trong một gia đình",
+  "householdErrorTooMany": "Nhập sai quá nhiều lần, thử lại sau 1 giờ",
+  "householdErrorCodeFormat": "Mã có dạng VUON-1234",
+  "householdJoined": "Đã tham gia gia đình",
+  "householdEyebrow": "Gia đình · {count} người",
+  "@householdEyebrow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "householdInvite": "+ Mời",
+  "householdRoleOwner": "Owner",
+  "householdRoleMember": "Member",
+  "householdYou": "{name} (bạn)",
+  "@householdYou": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdTasksWeek": "{count} việc tuần này",
+  "@householdTasksWeek": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "householdAway": "đang vắng nhà",
+  "householdSharedProjects": "Project chia sẻ",
+  "householdNoShared": "Chưa chia sẻ project nào",
+  "householdShareMore": "+ Chia sẻ thêm",
+  "householdShareTitle": "Chia sẻ project với gia đình",
+  "householdShare": "Chia sẻ",
+  "householdUnshare": "Ngừng chia sẻ",
+  "householdShareOwnerOnly": "Chỉ Owner mới chia sẻ được project",
+  "householdShareNoProjects": "Bạn chưa có project nào để chia sẻ",
+  "householdActivity": "Hoạt động",
+  "householdActivityEmpty": "Chưa có hoạt động nào",
+  "householdActTaskDone": "{name} đã hoàn thành một việc",
+  "@householdActTaskDone": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActCheckin": "{name} đã check-in ảnh",
+  "@householdActCheckin": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActMilestone": "{name} đạt mốc mới",
+  "@householdActMilestone": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActJoined": "{name} đã tham gia gia đình",
+  "@householdActJoined": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActLeft": "{name} đã rời gia đình",
+  "@householdActLeft": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActShared": "{name} chia sẻ project “{project}”",
+  "@householdActShared": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "householdActProject": "{text} · {project}",
+  "@householdActProject": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      },
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "householdSomeone": "Một thành viên",
+  "householdRemoveMember": "Xóa khỏi gia đình",
+  "householdRemoveTitle": "Xóa {name} khỏi gia đình?",
+  "@householdRemoveTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdRemoveBody": "Project họ chia sẻ sẽ trở lại riêng tư.",
+  "householdLoadError": "Không tải được gia đình",
+  "householdNoneTitle": "Bạn chưa có gia đình",
+  "householdNoneSub": "Tạo gia đình mới hoặc nhập mã mời để cùng chăm cây.",
+  "householdInviteTitle": "Mời người nhà",
+  "householdInviteCodeLabel": "Mã mời của {name}",
+  "@householdInviteCodeLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdInviteExpires": "Hết hạn sau {days} ngày",
+  "@householdInviteExpires": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "householdInviteCopy": "Sao chép mã",
+  "householdInviteCopied": "Đã sao chép mã",
+  "householdInviteShareLink": "Gửi link mời",
+  "householdInviteShareText": "{inviter} mời bạn cùng chăm cây trong “{name}” trên Vườn Nhà. Mã: {code}. Mở: {link}",
+  "@householdInviteShareText": {
+    "placeholders": {
+      "inviter": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      },
+      "link": {
+        "type": "String"
+      }
+    }
+  },
+  "householdInviteOr": "hoặc mời trực tiếp",
+  "householdInviteTargetLabel": "Số điện thoại hoặc email",
+  "householdInviteTargetHint": "09xx xxx xxx",
+  "householdInviteRole": "Vai trò",
+  "householdInviteRoleMemberDesc": "Làm việc được giao, xem project được chia sẻ",
+  "householdInviteRoleOwnerDesc": "Quản lý thành viên, project và giao việc",
+  "householdInviteSend": "Gửi lời mời",
+  "householdInviteEmailSent": "Đã gửi email mời tới {target}",
+  "@householdInviteEmailSent": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "householdInviteEmailFailed": "Chưa gửi được email. Hãy dùng nút gửi link.",
+  "householdInviteTargetInvalid": "Nhập email hợp lệ hoặc số điện thoại",
+  "householdInviteOwnerOnly": "Chỉ Owner mới mời được người nhà",
+  "householdInviteLoading": "Đang tạo mã mời...",
+  "householdAssignTitle": "Giao việc",
+  "householdAssignHow": "Cách giao",
+  "householdModeOnce": "Chỉ lần này",
+  "householdModeSeries": "Cả chuỗi lặp",
+  "householdModeRotation": "Xoay vòng",
+  "householdAssignOrder": "Thứ tự xoay vòng",
+  "householdAssignTo": "Giao cho",
+  "householdAssignAwayUntil": "Vắng nhà đến {date}",
+  "@householdAssignAwayUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "householdAssignHintRotation": "Xoay vòng: {names} → lặp lại.",
+  "@householdAssignHintRotation": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "householdAssignHintSeries": "Mọi lần “{task}” tiếp theo sẽ giao cho {name}.",
+  "@householdAssignHintSeries": {
+    "placeholders": {
+      "task": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdAssignHintOnce": "Chỉ lần “{task}” tới giao cho {name}.",
+  "@householdAssignHintOnce": {
+    "placeholders": {
+      "task": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdAssignDone": "Đã giao việc",
+  "householdAssignOwnerOnly": "Chỉ Owner mới giao được việc",
+  "householdAssignNeedHousehold": "Hãy tạo hoặc tham gia gia đình để giao việc",
+  "householdAssignNoTask": "Không tìm thấy việc này",
+  "householdAssignRotationMin": "Chọn ít nhất 2 người để xoay vòng",
+  "householdAssignPickOne": "Chọn một người",
+  "householdWindowMorning": "Sáng sớm",
+  "householdWindowAfternoon": "Chiều mát",
+  "householdWindowAllDay": "Cả ngày",
+  "householdEveryDays": "{n} ngày/lần",
+  "@householdEveryDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "householdLeaveRow": "Rời gia đình “{name}”",
+  "@householdLeaveRow": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdLeaveTitle": "Rời gia đình?",
+  "householdLeaveBody": "Bạn sẽ không còn thấy project chia sẻ. Project của bạn trở lại riêng tư.",
+  "householdLeaveOwnerBody": "Quyền Owner sẽ chuyển cho {name}, thành viên lâu nhất.",
+  "@householdLeaveOwnerBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "householdLeaveLast": "Bạn là người cuối cùng, nên gia đình sẽ bị xóa.",
+  "householdLeaveAction": "Rời gia đình",
+  "householdLeft": "Đã rời gia đình",
+  "householdJoinScreenTitle": "Tham gia gia đình",
+  "householdJoinLinkBody": "Bạn được mời bằng mã {code}",
+  "@householdJoinLinkBody": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "householdJoinConfirm": "Tham gia",
+  "gamTitle": "Thành tích",
+  "gamTotalXp": "Tổng điểm",
+  "gamXpUnit": "{xp} XP",
+  "@gamXpUnit": {
+    "placeholders": {
+      "xp": {
+        "type": "String"
+      }
+    }
+  },
+  "gamLevelLabel": "Level",
+  "gamLevelLine": "Cấp {level} · {name}",
+  "@gamLevelLine": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gamToNext": "Còn {xp} XP để lên Cấp {level} · {name}",
+  "@gamToNext": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      },
+      "level": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gamTopLevel": "Bạn đã đạt cấp cao nhất",
+  "gamStreak": "{days} ngày liên tục",
+  "@gamStreak": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "gamStreakNone": "Chưa có chuỗi ngày",
+  "gamOnTime": "Việc đúng hạn",
+  "gamCheckin": "Check-in ảnh",
+  "gamMilestone": "Đạt milestone",
+  "gamToday": "Hôm nay",
+  "gamTodayCap": "{xp}/{cap} XP",
+  "@gamTodayCap": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      },
+      "cap": {
+        "type": "int"
+      }
+    }
+  },
+  "gamAntiCheat": "Mỗi ngày tối đa {cap} XP từ việc thường. Điểm milestone chỉ cộng khi có ảnh check-in xác nhận.",
+  "@gamAntiCheat": {
+    "placeholders": {
+      "cap": {
+        "type": "int"
+      }
+    }
+  },
+  "gamPendingPhoto": "{count} mốc đang chờ ảnh check-in xác nhận, chưa tính XP.",
+  "@gamPendingPhoto": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "gamBadges": "Huy hiệu · {earned}/{total}",
+  "@gamBadges": {
+    "placeholders": {
+      "earned": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "gamBadgesEmpty": "Chưa có huy hiệu nào",
+  "gamBadgeLocked": "Chưa đạt",
+  "gamLoadError": "Không tải được thành tích",
+  "gamMilestoneEyebrow": "ĐẠT MỐC MỚI",
+  "gamMilestoneUnknown": "Mốc mới",
+  "gamMilestoneBody": "{project} đã qua một mốc mới. Ảnh check-in hôm nay đã xác nhận.",
+  "@gamMilestoneBody": {
+    "placeholders": {
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "gamMilestoneBodyPending": "{project} ghi nhận mốc này, nhưng chưa có ảnh check-in xác nhận.",
+  "@gamMilestoneBodyPending": {
+    "placeholders": {
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "gamRewardXp": "+{xp} XP",
+  "@gamRewardXp": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "gamRewardPending": "Chờ ảnh",
+  "gamRewardMilestone": "Milestone",
+  "gamRewardBadge": "Huy hiệu",
+  "gamRewardNoBadge": "Chưa có",
+  "gamPendingNote": "Điểm milestone chỉ cộng khi có ảnh check-in xác nhận. Hãy check-in ảnh để nhận XP.",
+  "gamKeepsake": "Ảnh kỷ niệm",
+  "gamKeepsakeCard": "Thẻ kỷ niệm",
+  "gamKeepsakeSub": "Có thể chia sẻ",
+  "gamShare": "Chia sẻ ảnh kỷ niệm",
+  "gamShareText": "{project} vừa đạt mốc “{milestone}” trên Vườn Nhà!",
+  "@gamShareText": {
+    "placeholders": {
+      "project": {
+        "type": "String"
+      },
+      "milestone": {
+        "type": "String"
+      }
+    }
+  },
+  "gamShareError": "Chưa chia sẻ được",
+  "gamViewAchievements": "Xem thành tích"
 }

@@ -85,7 +85,7 @@ Derived reference for programmers. Generated 2026-10-19.
 | # | Label | Icon | Route | Screen |
 |---|---|---|---|---|
 | 1 | "Hôm nay" | sun | `/today` | 04 |
-| 2 | "Vườn" | leaf | `/projects` | 06 |
+| 2 | "Vườn" | leaf | `/garden` (the app's route; `/projects` redirects to it) | 06 |
 | 3 | "Gia đình" | two people | `/household` | 17 |
 | 4 | "Thành tích" | trophy | `/achievements` | 20 |
 | 5 | "Cài đặt" | gear | `/settings` | 21 |
@@ -101,7 +101,7 @@ Active: `#1E6B43`, 600. Inactive: `#55625A`, 500. Shown only on the five tab scr
 - Check-in: 12 or 04 banner → 13 → 15 (if rejected) → 14 "Áp dụng" → 16 → 12.
 - Household: 17 "Mời" → 18; 05 "Đổi" or 12 "Giao việc" → 19.
 
-**Suggested routes:** `/login`, `/onboarding/profile`, `/onboarding/household`, `/today`, `/task/:taskId`, `/task/:taskId/assign`, `/projects`, `/projects/new/search`, `/projects/new/context?plant=:id`, `/projects/:id/generating`, `/projects/:id/plan`, `/projects/:id/calendar`, `/projects/:id`, `/projects/:id/checkin`, `/projects/:id/checkin/:checkinId`, `/projects/:id/checkin/retake`, `/projects/:id/milestone/:code`, `/household`, `/household/invite`, `/achievements`, `/settings`, `/web`.
+**Suggested routes:** `/login`, `/onboarding/profile`, `/onboarding/household`, `/today`, `/task/:taskId`, `/task/:taskId/assign`, `/garden` (spec: `/projects`, kept as a redirect), `/projects/new/search`, `/projects/new/context?plant=:id`, `/projects/:id/generating`, `/projects/:id/plan`, `/projects/:id/calendar`, `/projects/:id`, `/projects/:id/checkin`, `/projects/:id/checkin/:checkinId`, `/projects/:id/checkin/retake`, `/projects/:id/milestone/:code`, `/household`, `/household/invite`, `/achievements`, `/settings`, `/web` (not in the mobile MVP; no route).
 
 ---
 
@@ -154,7 +154,7 @@ Canvas numbers from `canvas.json`. "→" = navigation. Screens use the file name
 - "Thêm ảnh" (P2).
 - Bottom: "Bỏ qua" (72), "Dời lại" (72), "Xong · +10 XP" (orange, flex). States: none. No skip-reason or snooze picker drawn.
 
-### 06 Danh sách project — "Vườn của tôi" — `/projects` (DanhSachProject.dc.html) — PRJ-01, PRJ-04 (tab 2)
+### 06 Danh sách project — "Vườn của tôi" — `/garden` (spec `/projects`, redirected) (DanhSachProject.dc.html) — PRJ-01, PRJ-04 (tab 2)
 - H1 "Vườn của tôi"; search button (aria "Tìm project").
 - Chips: "Đang trồng · 3" (dark), "Đã xong · 1", "Lưu trữ".
 - Card (glass, 18): cover 88×104 tint with "Ảnh mới nhất"; name (16/600); kind "Rau quả · 4 chậu · ngày 38"; stage line with dot "Sinh trưởng · sắp ra hoa" / "Cây con · cần check-in"; progress 45% / 30% / 70%; footer "3 việc hôm nay" · "Ảnh: 2 ngày trước" → 12.
@@ -256,7 +256,7 @@ Canvas numbers from `canvas.json`. "→" = navigation. Screens use the file name
 
 ### 18 Mời thành viên — `/household/invite` (MoiThanhVien.dc.html) — HSH-01, HSH-02
 - Back → 17; H1 "Mời người nhà".
-- Code card: "Mã mời của Nhà mình" / "VUON-4821" (34) / "Hết hạn sau 7 ngày"; buttons "Sao chép mã", "Gửi link mời".
+- Code card: "Mã mời của Nhà mình" / "VUON-4821" (34; mockup sample, real codes are `VUON-` + 6 characters since QA round 2) / "Hết hạn sau 7 ngày"; buttons "Sao chép mã", "Gửi link mời".
 - Divider "hoặc mời trực tiếp". Input "Số điện thoại hoặc email" (placeholder "09xx xxx xxx").
 - "Vai trò" radios: "Member" (selected) "Làm việc được giao, xem project được chia sẻ"; "Owner" "Quản lý thành viên, project và giao việc".
 - Dark CTA "Gửi lời mời" → 17. States: none.
@@ -547,12 +547,12 @@ Rules:
 | Type | Channel | Toggle (mockup) | Notes |
 |---|---|---|---|
 | Task reminder | local | "Nhắc việc chăm cây" | works offline (plan §2.3) |
-| Check-in reminder | scheduled (`pg_cron`) | "Nhắc chụp check-in" | every 3–7 days |
-| Assignment | FCM | "Được giao việc" | accept/decline is P1 (HSH-05) |
-| Achievement | not stated | "Thành tích & huy hiệu" | milestone, badge |
-| Household activity | FCM | none | §7 |
+| Check-in reminder | local (decided in QA round 2; no `pg_cron`) | "Nhắc chụp check-in" | every 3–7 days; 09:00 on the due date, planned on the device like task reminders, so it works offline and needs no server job |
+| Assignment | FCM (`send-push`) | "Được giao việc" | sent when `tasks.assignee_id` changes to someone else; accept/decline is P1 (HSH-05) |
+| Achievement | FCM (`send-push`) | "Thành tích & huy hiệu" | sent on every `user_badges` insert |
+| Household activity | FCM (`send-push`) | none in the UI (pref type `household_activity`, default on) | sent to the other members on every `household_activity` insert; §7 |
 | Bundle | setting | "Gộp thông báo thành 1 lần/ngày" (off) | TSK-04 |
-| Quiet hours | setting | "Giờ yên lặng 22:00–06:00" (P2) | SET-03 (P1) |
+| Quiet hours | setting | "Giờ yên lặng 22:00–06:00" (P2) | SET-03 (P1). Server pushes inside the window are dropped, not queued (`docs/backend.md` §6) |
 
 ### 6.8 Formats
 

@@ -13,6 +13,8 @@ import '../../features/projects/presentation/project_context_screen.dart';
 import '../../features/projects/presentation/project_list_screen.dart';
 import '../../features/projects/projects_routes.dart';
 import '../../features/settings/presentation/settings_screen.dart';
+import '../../features/today/presentation/today_screen.dart';
+import '../../features/today/today_routes.dart';
 import '../../l10n/app_localizations.dart';
 import '../widgets/glass_scaffold.dart';
 import 'glass_bottom_bar.dart';
@@ -96,10 +98,16 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
       ...projectsRoutes,
       ...planRoutes,
+      ...todayRoutes,
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => _Shell(shell: shell),
         branches: [
-          _branch(AppRoutes.today, Icons.today_rounded, (l) => l.tabToday),
+          _branch(
+            AppRoutes.today,
+            Icons.today_rounded,
+            (l) => l.tabToday,
+            builder: (_) => const TodayScreen(),
+          ),
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -137,16 +145,19 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 StatefulShellBranch _branch(
   String path,
   IconData icon,
-  String Function(AppLocalizations) title,
-) {
+  String Function(AppLocalizations) title, {
+  WidgetBuilder? builder,
+}) {
   return StatefulShellBranch(
     routes: [
       GoRoute(
         path: path,
-        builder: (context, _) => TabPlaceholder(
-          title: title(AppLocalizations.of(context)),
-          icon: icon,
-        ),
+        builder: (context, _) =>
+            builder?.call(context) ??
+            TabPlaceholder(
+              title: title(AppLocalizations.of(context)),
+              icon: icon,
+            ),
       ),
     ],
   );

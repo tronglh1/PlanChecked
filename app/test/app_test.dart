@@ -6,6 +6,9 @@ import 'package:vuon_nha/features/auth/presentation/auth_state.dart';
 import 'package:vuon_nha/features/profile/domain/user_profile.dart';
 import 'package:vuon_nha/features/profile/presentation/profile_providers.dart';
 import 'package:vuon_nha/features/settings/presentation/settings_providers.dart';
+import 'package:vuon_nha/features/today/data/notification_gateway.dart';
+import 'package:vuon_nha/features/today/data/today_local_store.dart';
+import 'package:vuon_nha/features/today/presentation/today_providers.dart';
 
 import 'helpers/fakes.dart';
 
@@ -31,6 +34,10 @@ Future<void> _pump(WidgetTester t, AuthStatus s, {UserProfile? profile}) async {
           FakeNotificationPrefsRepository(),
         ),
         localPrefsProvider.overrideWithValue(MemoryLocalPrefs()),
+        todayLocalStoreProvider.overrideWithValue(MemoryTodayLocalStore()),
+        notificationGatewayProvider.overrideWithValue(
+          NoopNotificationGateway(),
+        ),
       ],
       child: const VuonNhaApp(),
     ),

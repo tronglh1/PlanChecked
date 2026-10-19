@@ -64,8 +64,40 @@ class $OutboxTable extends Outbox with TableInfo<$OutboxTable, OutboxData> {
     requiredDuringInsert: false,
     defaultValue: const Constant(0),
   );
+  static const VerificationMeta _clientIdMeta = const VerificationMeta(
+    'clientId',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, op, payload, createdAt, attempts];
+  late final GeneratedColumn<String> clientId = GeneratedColumn<String>(
+    'client_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _nextAttemptAtMeta = const VerificationMeta(
+    'nextAttemptAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> nextAttemptAt =
+      GeneratedColumn<DateTime>(
+        'next_attempt_at',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    op,
+    payload,
+    createdAt,
+    attempts,
+    clientId,
+    nextAttemptAt,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -108,6 +140,21 @@ class $OutboxTable extends Outbox with TableInfo<$OutboxTable, OutboxData> {
         attempts.isAcceptableOrUnknown(data['attempts']!, _attemptsMeta),
       );
     }
+    if (data.containsKey('client_id')) {
+      context.handle(
+        _clientIdMeta,
+        clientId.isAcceptableOrUnknown(data['client_id']!, _clientIdMeta),
+      );
+    }
+    if (data.containsKey('next_attempt_at')) {
+      context.handle(
+        _nextAttemptAtMeta,
+        nextAttemptAt.isAcceptableOrUnknown(
+          data['next_attempt_at']!,
+          _nextAttemptAtMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -137,6 +184,14 @@ class $OutboxTable extends Outbox with TableInfo<$OutboxTable, OutboxData> {
         DriftSqlType.int,
         data['${effectivePrefix}attempts'],
       )!,
+      clientId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}client_id'],
+      )!,
+      nextAttemptAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}next_attempt_at'],
+      ),
     );
   }
 
@@ -152,12 +207,20 @@ class OutboxData extends DataClass implements Insertable<OutboxData> {
   final String payload;
   final DateTime createdAt;
   final int attempts;
+
+  /// `task_logs.client_id` of the queued action (dedup key). v3.
+  final String clientId;
+
+  /// Backoff: do not retry before this time. v3.
+  final DateTime? nextAttemptAt;
   const OutboxData({
     required this.id,
     required this.op,
     required this.payload,
     required this.createdAt,
     required this.attempts,
+    required this.clientId,
+    this.nextAttemptAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -167,6 +230,10 @@ class OutboxData extends DataClass implements Insertable<OutboxData> {
     map['payload'] = Variable<String>(payload);
     map['created_at'] = Variable<DateTime>(createdAt);
     map['attempts'] = Variable<int>(attempts);
+    map['client_id'] = Variable<String>(clientId);
+    if (!nullToAbsent || nextAttemptAt != null) {
+      map['next_attempt_at'] = Variable<DateTime>(nextAttemptAt);
+    }
     return map;
   }
 
@@ -177,6 +244,10 @@ class OutboxData extends DataClass implements Insertable<OutboxData> {
       payload: Value(payload),
       createdAt: Value(createdAt),
       attempts: Value(attempts),
+      clientId: Value(clientId),
+      nextAttemptAt: nextAttemptAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nextAttemptAt),
     );
   }
 
@@ -191,6 +262,8 @@ class OutboxData extends DataClass implements Insertable<OutboxData> {
       payload: serializer.fromJson<String>(json['payload']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       attempts: serializer.fromJson<int>(json['attempts']),
+      clientId: serializer.fromJson<String>(json['clientId']),
+      nextAttemptAt: serializer.fromJson<DateTime?>(json['nextAttemptAt']),
     );
   }
   @override
@@ -202,6 +275,8 @@ class OutboxData extends DataClass implements Insertable<OutboxData> {
       'payload': serializer.toJson<String>(payload),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'attempts': serializer.toJson<int>(attempts),
+      'clientId': serializer.toJson<String>(clientId),
+      'nextAttemptAt': serializer.toJson<DateTime?>(nextAttemptAt),
     };
   }
 
@@ -211,12 +286,18 @@ class OutboxData extends DataClass implements Insertable<OutboxData> {
     String? payload,
     DateTime? createdAt,
     int? attempts,
+    String? clientId,
+    Value<DateTime?> nextAttemptAt = const Value.absent(),
   }) => OutboxData(
     id: id ?? this.id,
     op: op ?? this.op,
     payload: payload ?? this.payload,
     createdAt: createdAt ?? this.createdAt,
     attempts: attempts ?? this.attempts,
+    clientId: clientId ?? this.clientId,
+    nextAttemptAt: nextAttemptAt.present
+        ? nextAttemptAt.value
+        : this.nextAttemptAt,
   );
   OutboxData copyWithCompanion(OutboxCompanion data) {
     return OutboxData(
@@ -225,6 +306,10 @@ class OutboxData extends DataClass implements Insertable<OutboxData> {
       payload: data.payload.present ? data.payload.value : this.payload,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       attempts: data.attempts.present ? data.attempts.value : this.attempts,
+      clientId: data.clientId.present ? data.clientId.value : this.clientId,
+      nextAttemptAt: data.nextAttemptAt.present
+          ? data.nextAttemptAt.value
+          : this.nextAttemptAt,
     );
   }
 
@@ -235,13 +320,23 @@ class OutboxData extends DataClass implements Insertable<OutboxData> {
           ..write('op: $op, ')
           ..write('payload: $payload, ')
           ..write('createdAt: $createdAt, ')
-          ..write('attempts: $attempts')
+          ..write('attempts: $attempts, ')
+          ..write('clientId: $clientId, ')
+          ..write('nextAttemptAt: $nextAttemptAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, op, payload, createdAt, attempts);
+  int get hashCode => Object.hash(
+    id,
+    op,
+    payload,
+    createdAt,
+    attempts,
+    clientId,
+    nextAttemptAt,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -250,7 +345,9 @@ class OutboxData extends DataClass implements Insertable<OutboxData> {
           other.op == this.op &&
           other.payload == this.payload &&
           other.createdAt == this.createdAt &&
-          other.attempts == this.attempts);
+          other.attempts == this.attempts &&
+          other.clientId == this.clientId &&
+          other.nextAttemptAt == this.nextAttemptAt);
 }
 
 class OutboxCompanion extends UpdateCompanion<OutboxData> {
@@ -259,12 +356,16 @@ class OutboxCompanion extends UpdateCompanion<OutboxData> {
   final Value<String> payload;
   final Value<DateTime> createdAt;
   final Value<int> attempts;
+  final Value<String> clientId;
+  final Value<DateTime?> nextAttemptAt;
   const OutboxCompanion({
     this.id = const Value.absent(),
     this.op = const Value.absent(),
     this.payload = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.attempts = const Value.absent(),
+    this.clientId = const Value.absent(),
+    this.nextAttemptAt = const Value.absent(),
   });
   OutboxCompanion.insert({
     this.id = const Value.absent(),
@@ -272,6 +373,8 @@ class OutboxCompanion extends UpdateCompanion<OutboxData> {
     required String payload,
     required DateTime createdAt,
     this.attempts = const Value.absent(),
+    this.clientId = const Value.absent(),
+    this.nextAttemptAt = const Value.absent(),
   }) : op = Value(op),
        payload = Value(payload),
        createdAt = Value(createdAt);
@@ -281,6 +384,8 @@ class OutboxCompanion extends UpdateCompanion<OutboxData> {
     Expression<String>? payload,
     Expression<DateTime>? createdAt,
     Expression<int>? attempts,
+    Expression<String>? clientId,
+    Expression<DateTime>? nextAttemptAt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -288,6 +393,8 @@ class OutboxCompanion extends UpdateCompanion<OutboxData> {
       if (payload != null) 'payload': payload,
       if (createdAt != null) 'created_at': createdAt,
       if (attempts != null) 'attempts': attempts,
+      if (clientId != null) 'client_id': clientId,
+      if (nextAttemptAt != null) 'next_attempt_at': nextAttemptAt,
     });
   }
 
@@ -297,6 +404,8 @@ class OutboxCompanion extends UpdateCompanion<OutboxData> {
     Value<String>? payload,
     Value<DateTime>? createdAt,
     Value<int>? attempts,
+    Value<String>? clientId,
+    Value<DateTime?>? nextAttemptAt,
   }) {
     return OutboxCompanion(
       id: id ?? this.id,
@@ -304,6 +413,8 @@ class OutboxCompanion extends UpdateCompanion<OutboxData> {
       payload: payload ?? this.payload,
       createdAt: createdAt ?? this.createdAt,
       attempts: attempts ?? this.attempts,
+      clientId: clientId ?? this.clientId,
+      nextAttemptAt: nextAttemptAt ?? this.nextAttemptAt,
     );
   }
 
@@ -325,6 +436,12 @@ class OutboxCompanion extends UpdateCompanion<OutboxData> {
     if (attempts.present) {
       map['attempts'] = Variable<int>(attempts.value);
     }
+    if (clientId.present) {
+      map['client_id'] = Variable<String>(clientId.value);
+    }
+    if (nextAttemptAt.present) {
+      map['next_attempt_at'] = Variable<DateTime>(nextAttemptAt.value);
+    }
     return map;
   }
 
@@ -335,7 +452,9 @@ class OutboxCompanion extends UpdateCompanion<OutboxData> {
           ..write('op: $op, ')
           ..write('payload: $payload, ')
           ..write('createdAt: $createdAt, ')
-          ..write('attempts: $attempts')
+          ..write('attempts: $attempts, ')
+          ..write('clientId: $clientId, ')
+          ..write('nextAttemptAt: $nextAttemptAt')
           ..write(')'))
         .toString();
   }
@@ -378,8 +497,35 @@ class $CachedTasksTable extends CachedTasks
     type: DriftSqlType.dateTime,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _projectIdMeta = const VerificationMeta(
+    'projectId',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, payload, updatedAt];
+  late final GeneratedColumn<String> projectId = GeneratedColumn<String>(
+    'project_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _kindMeta = const VerificationMeta('kind');
+  @override
+  late final GeneratedColumn<String> kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('task'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    payload,
+    updatedAt,
+    projectId,
+    kind,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -413,6 +559,18 @@ class $CachedTasksTable extends CachedTasks
     } else if (isInserting) {
       context.missing(_updatedAtMeta);
     }
+    if (data.containsKey('project_id')) {
+      context.handle(
+        _projectIdMeta,
+        projectId.isAcceptableOrUnknown(data['project_id']!, _projectIdMeta),
+      );
+    }
+    if (data.containsKey('kind')) {
+      context.handle(
+        _kindMeta,
+        kind.isAcceptableOrUnknown(data['kind']!, _kindMeta),
+      );
+    }
     return context;
   }
 
@@ -434,6 +592,14 @@ class $CachedTasksTable extends CachedTasks
         DriftSqlType.dateTime,
         data['${effectivePrefix}updated_at'],
       )!,
+      projectId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}project_id'],
+      ),
+      kind: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kind'],
+      )!,
     );
   }
 
@@ -447,10 +613,18 @@ class CachedTask extends DataClass implements Insertable<CachedTask> {
   final String id;
   final String payload;
   final DateTime updatedAt;
+
+  /// Owning project, for `task` rows. v3.
+  final String? projectId;
+
+  /// Row type, see class doc. v3.
+  final String kind;
   const CachedTask({
     required this.id,
     required this.payload,
     required this.updatedAt,
+    this.projectId,
+    required this.kind,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -458,6 +632,10 @@ class CachedTask extends DataClass implements Insertable<CachedTask> {
     map['id'] = Variable<String>(id);
     map['payload'] = Variable<String>(payload);
     map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || projectId != null) {
+      map['project_id'] = Variable<String>(projectId);
+    }
+    map['kind'] = Variable<String>(kind);
     return map;
   }
 
@@ -466,6 +644,10 @@ class CachedTask extends DataClass implements Insertable<CachedTask> {
       id: Value(id),
       payload: Value(payload),
       updatedAt: Value(updatedAt),
+      projectId: projectId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(projectId),
+      kind: Value(kind),
     );
   }
 
@@ -478,6 +660,8 @@ class CachedTask extends DataClass implements Insertable<CachedTask> {
       id: serializer.fromJson<String>(json['id']),
       payload: serializer.fromJson<String>(json['payload']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      projectId: serializer.fromJson<String?>(json['projectId']),
+      kind: serializer.fromJson<String>(json['kind']),
     );
   }
   @override
@@ -487,20 +671,31 @@ class CachedTask extends DataClass implements Insertable<CachedTask> {
       'id': serializer.toJson<String>(id),
       'payload': serializer.toJson<String>(payload),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'projectId': serializer.toJson<String?>(projectId),
+      'kind': serializer.toJson<String>(kind),
     };
   }
 
-  CachedTask copyWith({String? id, String? payload, DateTime? updatedAt}) =>
-      CachedTask(
-        id: id ?? this.id,
-        payload: payload ?? this.payload,
-        updatedAt: updatedAt ?? this.updatedAt,
-      );
+  CachedTask copyWith({
+    String? id,
+    String? payload,
+    DateTime? updatedAt,
+    Value<String?> projectId = const Value.absent(),
+    String? kind,
+  }) => CachedTask(
+    id: id ?? this.id,
+    payload: payload ?? this.payload,
+    updatedAt: updatedAt ?? this.updatedAt,
+    projectId: projectId.present ? projectId.value : this.projectId,
+    kind: kind ?? this.kind,
+  );
   CachedTask copyWithCompanion(CachedTasksCompanion data) {
     return CachedTask(
       id: data.id.present ? data.id.value : this.id,
       payload: data.payload.present ? data.payload.value : this.payload,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      projectId: data.projectId.present ? data.projectId.value : this.projectId,
+      kind: data.kind.present ? data.kind.value : this.kind,
     );
   }
 
@@ -509,37 +704,47 @@ class CachedTask extends DataClass implements Insertable<CachedTask> {
     return (StringBuffer('CachedTask(')
           ..write('id: $id, ')
           ..write('payload: $payload, ')
-          ..write('updatedAt: $updatedAt')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('projectId: $projectId, ')
+          ..write('kind: $kind')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, payload, updatedAt);
+  int get hashCode => Object.hash(id, payload, updatedAt, projectId, kind);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is CachedTask &&
           other.id == this.id &&
           other.payload == this.payload &&
-          other.updatedAt == this.updatedAt);
+          other.updatedAt == this.updatedAt &&
+          other.projectId == this.projectId &&
+          other.kind == this.kind);
 }
 
 class CachedTasksCompanion extends UpdateCompanion<CachedTask> {
   final Value<String> id;
   final Value<String> payload;
   final Value<DateTime> updatedAt;
+  final Value<String?> projectId;
+  final Value<String> kind;
   final Value<int> rowid;
   const CachedTasksCompanion({
     this.id = const Value.absent(),
     this.payload = const Value.absent(),
     this.updatedAt = const Value.absent(),
+    this.projectId = const Value.absent(),
+    this.kind = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   CachedTasksCompanion.insert({
     required String id,
     required String payload,
     required DateTime updatedAt,
+    this.projectId = const Value.absent(),
+    this.kind = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        payload = Value(payload),
@@ -548,12 +753,16 @@ class CachedTasksCompanion extends UpdateCompanion<CachedTask> {
     Expression<String>? id,
     Expression<String>? payload,
     Expression<DateTime>? updatedAt,
+    Expression<String>? projectId,
+    Expression<String>? kind,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (payload != null) 'payload': payload,
       if (updatedAt != null) 'updated_at': updatedAt,
+      if (projectId != null) 'project_id': projectId,
+      if (kind != null) 'kind': kind,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -562,12 +771,16 @@ class CachedTasksCompanion extends UpdateCompanion<CachedTask> {
     Value<String>? id,
     Value<String>? payload,
     Value<DateTime>? updatedAt,
+    Value<String?>? projectId,
+    Value<String>? kind,
     Value<int>? rowid,
   }) {
     return CachedTasksCompanion(
       id: id ?? this.id,
       payload: payload ?? this.payload,
       updatedAt: updatedAt ?? this.updatedAt,
+      projectId: projectId ?? this.projectId,
+      kind: kind ?? this.kind,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -584,6 +797,12 @@ class CachedTasksCompanion extends UpdateCompanion<CachedTask> {
     if (updatedAt.present) {
       map['updated_at'] = Variable<DateTime>(updatedAt.value);
     }
+    if (projectId.present) {
+      map['project_id'] = Variable<String>(projectId.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(kind.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -596,6 +815,8 @@ class CachedTasksCompanion extends UpdateCompanion<CachedTask> {
           ..write('id: $id, ')
           ..write('payload: $payload, ')
           ..write('updatedAt: $updatedAt, ')
+          ..write('projectId: $projectId, ')
+          ..write('kind: $kind, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -833,6 +1054,8 @@ typedef $$OutboxTableCreateCompanionBuilder = OutboxCompanion Function({
   required String payload,
   required DateTime createdAt,
   Value<int> attempts,
+  Value<String> clientId,
+  Value<DateTime?> nextAttemptAt,
 });
 typedef $$OutboxTableUpdateCompanionBuilder = OutboxCompanion Function({
   Value<int> id,
@@ -840,6 +1063,8 @@ typedef $$OutboxTableUpdateCompanionBuilder = OutboxCompanion Function({
   Value<String> payload,
   Value<DateTime> createdAt,
   Value<int> attempts,
+  Value<String> clientId,
+  Value<DateTime?> nextAttemptAt,
 });
 
 class $$OutboxTableFilterComposer
@@ -873,6 +1098,16 @@ class $$OutboxTableFilterComposer
 
   ColumnFilters<int> get attempts => $composableBuilder(
     column: $table.attempts,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get clientId => $composableBuilder(
+    column: $table.clientId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get nextAttemptAt => $composableBuilder(
+    column: $table.nextAttemptAt,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -910,6 +1145,16 @@ class $$OutboxTableOrderingComposer
     column: $table.attempts,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get clientId => $composableBuilder(
+    column: $table.clientId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get nextAttemptAt => $composableBuilder(
+    column: $table.nextAttemptAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$OutboxTableAnnotationComposer
@@ -935,6 +1180,14 @@ class $$OutboxTableAnnotationComposer
 
   GeneratedColumn<int> get attempts =>
       $composableBuilder(column: $table.attempts, builder: (column) => column);
+
+  GeneratedColumn<String> get clientId =>
+      $composableBuilder(column: $table.clientId, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get nextAttemptAt => $composableBuilder(
+    column: $table.nextAttemptAt,
+    builder: (column) => column,
+  );
 }
 
 class $$OutboxTableTableManager
@@ -970,12 +1223,16 @@ class $$OutboxTableTableManager
                 Value<String> payload = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<int> attempts = const Value.absent(),
+                Value<String> clientId = const Value.absent(),
+                Value<DateTime?> nextAttemptAt = const Value.absent(),
               }) => OutboxCompanion(
                 id: id,
                 op: op,
                 payload: payload,
                 createdAt: createdAt,
                 attempts: attempts,
+                clientId: clientId,
+                nextAttemptAt: nextAttemptAt,
               ),
           createCompanionCallback:
               ({
@@ -984,12 +1241,16 @@ class $$OutboxTableTableManager
                 required String payload,
                 required DateTime createdAt,
                 Value<int> attempts = const Value.absent(),
+                Value<String> clientId = const Value.absent(),
+                Value<DateTime?> nextAttemptAt = const Value.absent(),
               }) => OutboxCompanion.insert(
                 id: id,
                 op: op,
                 payload: payload,
                 createdAt: createdAt,
                 attempts: attempts,
+                clientId: clientId,
+                nextAttemptAt: nextAttemptAt,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -1027,6 +1288,8 @@ typedef $$CachedTasksTableCreateCompanionBuilder =
       required String id,
       required String payload,
       required DateTime updatedAt,
+      Value<String?> projectId,
+      Value<String> kind,
       Value<int> rowid,
     });
 typedef $$CachedTasksTableUpdateCompanionBuilder =
@@ -1034,6 +1297,8 @@ typedef $$CachedTasksTableUpdateCompanionBuilder =
       Value<String> id,
       Value<String> payload,
       Value<DateTime> updatedAt,
+      Value<String?> projectId,
+      Value<String> kind,
       Value<int> rowid,
     });
 
@@ -1058,6 +1323,16 @@ class $$CachedTasksTableFilterComposer
 
   ColumnFilters<DateTime> get updatedAt => $composableBuilder(
     column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get projectId => $composableBuilder(
+    column: $table.projectId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get kind => $composableBuilder(
+    column: $table.kind,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -1085,6 +1360,16 @@ class $$CachedTasksTableOrderingComposer
     column: $table.updatedAt,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get projectId => $composableBuilder(
+    column: $table.projectId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$CachedTasksTableAnnotationComposer
@@ -1104,6 +1389,12 @@ class $$CachedTasksTableAnnotationComposer
 
   GeneratedColumn<DateTime> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get projectId =>
+      $composableBuilder(column: $table.projectId, builder: (column) => column);
+
+  GeneratedColumn<String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
 }
 
 class $$CachedTasksTableTableManager
@@ -1140,11 +1431,15 @@ class $$CachedTasksTableTableManager
                 Value<String> id = const Value.absent(),
                 Value<String> payload = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
+                Value<String?> projectId = const Value.absent(),
+                Value<String> kind = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => CachedTasksCompanion(
                 id: id,
                 payload: payload,
                 updatedAt: updatedAt,
+                projectId: projectId,
+                kind: kind,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -1152,11 +1447,15 @@ class $$CachedTasksTableTableManager
                 required String id,
                 required String payload,
                 required DateTime updatedAt,
+                Value<String?> projectId = const Value.absent(),
+                Value<String> kind = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => CachedTasksCompanion.insert(
                 id: id,
                 payload: payload,
                 updatedAt: updatedAt,
+                projectId: projectId,
+                kind: kind,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

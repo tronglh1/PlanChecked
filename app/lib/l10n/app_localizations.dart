@@ -1633,6 +1633,486 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Không tải được project. Thử lại nhé.'**
   String get projectDetailLoadError;
+
+  /// No description provided for @todayTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hôm nay'**
+  String get todayTitle;
+
+  /// No description provided for @todayGreeting.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chào {name}'**
+  String todayGreeting(String name);
+
+  /// No description provided for @todayWd1.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thứ Hai'**
+  String get todayWd1;
+
+  /// No description provided for @todayWd2.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thứ Ba'**
+  String get todayWd2;
+
+  /// No description provided for @todayWd3.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thứ Tư'**
+  String get todayWd3;
+
+  /// No description provided for @todayWd4.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thứ Năm'**
+  String get todayWd4;
+
+  /// No description provided for @todayWd5.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thứ Sáu'**
+  String get todayWd5;
+
+  /// No description provided for @todayWd6.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thứ Bảy'**
+  String get todayWd6;
+
+  /// No description provided for @todayWd7.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chủ nhật'**
+  String get todayWd7;
+
+  /// No description provided for @todayProgress.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã xong {done}/{total} việc'**
+  String todayProgress(int done, int total);
+
+  /// No description provided for @todayXpHint.
+  ///
+  /// In vi, this message translates to:
+  /// **'+10 XP mỗi việc đúng hạn'**
+  String get todayXpHint;
+
+  /// No description provided for @todayXpChip.
+  ///
+  /// In vi, this message translates to:
+  /// **'{xp} XP hôm nay'**
+  String todayXpChip(int xp);
+
+  /// No description provided for @todayGroupByWindow.
+  ///
+  /// In vi, this message translates to:
+  /// **'Theo khung giờ'**
+  String get todayGroupByWindow;
+
+  /// No description provided for @todayGroupByProject.
+  ///
+  /// In vi, this message translates to:
+  /// **'Theo project'**
+  String get todayGroupByProject;
+
+  /// No description provided for @todayWindowMorning.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sáng sớm · 6–8h'**
+  String get todayWindowMorning;
+
+  /// No description provided for @todayWindowAfternoon.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chiều mát · 16–18h'**
+  String get todayWindowAfternoon;
+
+  /// No description provided for @todayWindowAllDay.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cả ngày'**
+  String get todayWindowAllDay;
+
+  /// No description provided for @todayOverdue.
+  ///
+  /// In vi, this message translates to:
+  /// **'Quá hạn'**
+  String get todayOverdue;
+
+  /// No description provided for @todayCheckinDueTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đến hạn chụp ảnh check-in'**
+  String get todayCheckinDueTitle;
+
+  /// No description provided for @todayCheckinDueBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'{project} · +30 XP'**
+  String todayCheckinDueBody(String project);
+
+  /// No description provided for @todayEmptyTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hôm nay chưa có việc'**
+  String get todayEmptyTitle;
+
+  /// No description provided for @todayEmptyBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trồng cây mới để nhận kế hoạch chăm sóc mỗi ngày.'**
+  String get todayEmptyBody;
+
+  /// No description provided for @todayLoadError.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tải được việc hôm nay'**
+  String get todayLoadError;
+
+  /// No description provided for @todayOfflineBanner.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang offline · {count} thay đổi sẽ đồng bộ khi có mạng'**
+  String todayOfflineBanner(int count);
+
+  /// No description provided for @todaySyncing.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang đồng bộ...'**
+  String get todaySyncing;
+
+  /// No description provided for @todayPendingSync.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chờ đồng bộ'**
+  String get todayPendingSync;
+
+  /// No description provided for @todaySkippedLabel.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã bỏ qua'**
+  String get todaySkippedLabel;
+
+  /// No description provided for @todayMarkDone.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đánh dấu xong'**
+  String get todayMarkDone;
+
+  /// No description provided for @todayMenu.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm tuỳ chọn'**
+  String get todayMenu;
+
+  /// No description provided for @todayXpToast.
+  ///
+  /// In vi, this message translates to:
+  /// **'+{xp} XP'**
+  String todayXpToast(int xp);
+
+  /// No description provided for @todayXpToastLate.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã xong · quá hạn nên không có XP'**
+  String get todayXpToastLate;
+
+  /// No description provided for @todayXpToastCap.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã xong · hôm nay đã đủ 150 XP'**
+  String get todayXpToastCap;
+
+  /// No description provided for @todayActionError.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không lưu được thao tác'**
+  String get todayActionError;
+
+  /// No description provided for @todayPermTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bật nhắc việc?'**
+  String get todayPermTitle;
+
+  /// No description provided for @todayPermBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vườn Nhà sẽ nhắc bạn đúng giờ chăm cây, kể cả khi không có mạng.'**
+  String get todayPermBody;
+
+  /// No description provided for @todayPermAllow.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bật nhắc việc'**
+  String get todayPermAllow;
+
+  /// No description provided for @todayPermLater.
+  ///
+  /// In vi, this message translates to:
+  /// **'Để sau'**
+  String get todayPermLater;
+
+  /// No description provided for @todayNotifTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đến giờ chăm cây · {window}'**
+  String todayNotifTitle(String window);
+
+  /// No description provided for @todayNotifMore.
+  ///
+  /// In vi, this message translates to:
+  /// **'+{count} việc khác'**
+  String todayNotifMore(int count);
+
+  /// No description provided for @todayNotifDailyTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hôm nay có {count} việc chăm cây'**
+  String todayNotifDailyTitle(int count);
+
+  /// No description provided for @todayNotifCheckinTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đến hạn chụp ảnh check-in'**
+  String get todayNotifCheckinTitle;
+
+  /// No description provided for @todayNotifCheckinBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chụp ảnh {project} để cập nhật kế hoạch (+30 XP)'**
+  String todayNotifCheckinBody(String project);
+
+  /// No description provided for @taskSnooze.
+  ///
+  /// In vi, this message translates to:
+  /// **'Dời lại'**
+  String get taskSnooze;
+
+  /// No description provided for @taskSkipTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bỏ qua việc này?'**
+  String get taskSkipTitle;
+
+  /// No description provided for @taskSkipReasonHint.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lý do (không bắt buộc)'**
+  String get taskSkipReasonHint;
+
+  /// No description provided for @taskSkipReasonRain.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trời mưa'**
+  String get taskSkipReasonRain;
+
+  /// No description provided for @taskSkipReasonAway.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang vắng nhà'**
+  String get taskSkipReasonAway;
+
+  /// No description provided for @taskSkipReasonNotNeeded.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cây chưa cần'**
+  String get taskSkipReasonNotNeeded;
+
+  /// No description provided for @taskSkipReasonOther.
+  ///
+  /// In vi, this message translates to:
+  /// **'Khác'**
+  String get taskSkipReasonOther;
+
+  /// No description provided for @taskSkipConfirm.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bỏ qua'**
+  String get taskSkipConfirm;
+
+  /// No description provided for @taskSnoozeTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Dời lại đến khi nào?'**
+  String get taskSnoozeTitle;
+
+  /// No description provided for @taskSnoozeTomorrow.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngày mai'**
+  String get taskSnoozeTomorrow;
+
+  /// No description provided for @taskSnooze2Days.
+  ///
+  /// In vi, this message translates to:
+  /// **'2 ngày nữa'**
+  String get taskSnooze2Days;
+
+  /// No description provided for @taskSnoozeNextWeek.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tuần sau'**
+  String get taskSnoozeNextWeek;
+
+  /// No description provided for @taskTileWindow.
+  ///
+  /// In vi, this message translates to:
+  /// **'Khung giờ'**
+  String get taskTileWindow;
+
+  /// No description provided for @taskTileFrequency.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lặp lại'**
+  String get taskTileFrequency;
+
+  /// No description provided for @taskTileReminder.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhắc lúc'**
+  String get taskTileReminder;
+
+  /// No description provided for @taskFreqOnce.
+  ///
+  /// In vi, this message translates to:
+  /// **'Một lần'**
+  String get taskFreqOnce;
+
+  /// No description provided for @taskFreqDaily.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hằng ngày'**
+  String get taskFreqDaily;
+
+  /// No description provided for @taskFreqEveryN.
+  ///
+  /// In vi, this message translates to:
+  /// **'{n} ngày/lần'**
+  String taskFreqEveryN(int n);
+
+  /// No description provided for @taskFreqFixed.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngày {n}'**
+  String taskFreqFixed(int n);
+
+  /// No description provided for @taskReminderByWindow.
+  ///
+  /// In vi, this message translates to:
+  /// **'Theo khung giờ'**
+  String get taskReminderByWindow;
+
+  /// No description provided for @taskAssignedTo.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giao cho {name}'**
+  String taskAssignedTo(String name);
+
+  /// No description provided for @taskUnassigned.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa giao ai'**
+  String get taskUnassigned;
+
+  /// No description provided for @taskChange.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đổi'**
+  String get taskChange;
+
+  /// No description provided for @taskAssign.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giao việc'**
+  String get taskAssign;
+
+  /// No description provided for @taskHowTo.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cách làm'**
+  String get taskHowTo;
+
+  /// No description provided for @taskWhy.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vì sao?'**
+  String get taskWhy;
+
+  /// No description provided for @taskNoSteps.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có hướng dẫn chi tiết cho việc này.'**
+  String get taskNoSteps;
+
+  /// No description provided for @taskSafetyGeneric.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nếu dùng phân bón hoặc thuốc đóng gói, làm theo liều trên nhãn sản phẩm. App không đưa liều hóa chất cụ thể.'**
+  String get taskSafetyGeneric;
+
+  /// No description provided for @taskHistory.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lịch sử'**
+  String get taskHistory;
+
+  /// No description provided for @taskHistoryEmpty.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có lịch sử'**
+  String get taskHistoryEmpty;
+
+  /// No description provided for @taskHistoryDone.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xong'**
+  String get taskHistoryDone;
+
+  /// No description provided for @taskHistorySkip.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bỏ qua'**
+  String get taskHistorySkip;
+
+  /// No description provided for @taskHistorySnooze.
+  ///
+  /// In vi, this message translates to:
+  /// **'Dời lại'**
+  String get taskHistorySnooze;
+
+  /// No description provided for @taskDoneButton.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xong · +{xp} XP'**
+  String taskDoneButton(int xp);
+
+  /// No description provided for @taskNotDueToday.
+  ///
+  /// In vi, this message translates to:
+  /// **'Việc này không đến hạn hôm nay'**
+  String get taskNotDueToday;
+
+  /// No description provided for @taskNotFound.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tìm thấy việc này'**
+  String get taskNotFound;
+
+  /// No description provided for @taskAssignPlaceholder.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giao việc cho thành viên sẽ có ở bản sau.'**
+  String get taskAssignPlaceholder;
+
+  /// No description provided for @taskCheckinPlaceholder.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chụp ảnh check-in sẽ có ở bản sau.'**
+  String get taskCheckinPlaceholder;
 }
 
 class _AppLocalizationsDelegate

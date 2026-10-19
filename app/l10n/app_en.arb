@@ -329,5 +329,186 @@
   "projectDetailReviewPlan": "Review plan",
   "projectDetailOpenPlan": "Open plan",
   "projectDetailOpenCalendar": "Open calendar",
-  "projectDetailLoadError": "Couldn't load the project. Please try again."
+  "projectDetailLoadError": "Couldn't load the project. Please try again.",
+  "todayTitle": "Today",
+  "todayGreeting": "Hi {name}",
+  "@todayGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "todayWd1": "Monday",
+  "todayWd2": "Tuesday",
+  "todayWd3": "Wednesday",
+  "todayWd4": "Thursday",
+  "todayWd5": "Friday",
+  "todayWd6": "Saturday",
+  "todayWd7": "Sunday",
+  "todayProgress": "{done}/{total} tasks done",
+  "@todayProgress": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "todayXpHint": "+10 XP for each task done on time",
+  "todayXpChip": "{xp} XP today",
+  "@todayXpChip": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "todayGroupByWindow": "By time of day",
+  "todayGroupByProject": "By project",
+  "todayWindowMorning": "Early morning · 6–8am",
+  "todayWindowAfternoon": "Cool afternoon · 4–6pm",
+  "todayWindowAllDay": "All day",
+  "todayOverdue": "Overdue",
+  "todayCheckinDueTitle": "Photo check-in is due",
+  "todayCheckinDueBody": "{project} · +30 XP",
+  "@todayCheckinDueBody": {
+    "placeholders": {
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "todayEmptyTitle": "Nothing to do today",
+  "todayEmptyBody": "Start a new plant to get a daily care plan.",
+  "todayLoadError": "Could not load today's tasks",
+  "todayOfflineBanner": "Offline · {count} changes will sync when you are back online",
+  "@todayOfflineBanner": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todaySyncing": "Syncing...",
+  "todayPendingSync": "Waiting to sync",
+  "todaySkippedLabel": "Skipped",
+  "todayMarkDone": "Mark as done",
+  "todayMenu": "More options",
+  "todayXpToast": "+{xp} XP",
+  "@todayXpToast": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "todayXpToastLate": "Done · late, so no XP",
+  "todayXpToastCap": "Done · you reached today's 150 XP cap",
+  "todayActionError": "Could not save that action",
+  "todayPermTitle": "Turn on reminders?",
+  "todayPermBody": "Vườn Nhà will remind you to care for your plants on time, even offline.",
+  "todayPermAllow": "Turn on",
+  "todayPermLater": "Not now",
+  "todayNotifTitle": "Plant care time · {window}",
+  "@todayNotifTitle": {
+    "placeholders": {
+      "window": {
+        "type": "String"
+      }
+    }
+  },
+  "todayNotifMore": "+{count} more",
+  "@todayNotifMore": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todayNotifDailyTitle": "{count} plant tasks today",
+  "@todayNotifDailyTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todayNotifCheckinTitle": "Photo check-in is due",
+  "todayNotifCheckinBody": "Take a photo of {project} to update the plan (+30 XP)",
+  "@todayNotifCheckinBody": {
+    "placeholders": {
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "taskSnooze": "Snooze",
+  "taskSkipTitle": "Skip this task?",
+  "taskSkipReasonHint": "Reason (optional)",
+  "taskSkipReasonRain": "Rainy",
+  "taskSkipReasonAway": "Away from home",
+  "taskSkipReasonNotNeeded": "Plant does not need it",
+  "taskSkipReasonOther": "Other",
+  "taskSkipConfirm": "Skip",
+  "taskSnoozeTitle": "Snooze until when?",
+  "taskSnoozeTomorrow": "Tomorrow",
+  "taskSnooze2Days": "In 2 days",
+  "taskSnoozeNextWeek": "Next week",
+  "taskTileWindow": "Time of day",
+  "taskTileFrequency": "Repeats",
+  "taskTileReminder": "Remind at",
+  "taskFreqOnce": "Once",
+  "taskFreqDaily": "Daily",
+  "taskFreqEveryN": "Every {n} days",
+  "@taskFreqEveryN": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "taskFreqFixed": "Day {n}",
+  "@taskFreqFixed": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "taskReminderByWindow": "By time of day",
+  "taskAssignedTo": "Assigned to {name}",
+  "@taskAssignedTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "taskUnassigned": "Not assigned",
+  "taskChange": "Change",
+  "taskAssign": "Assign",
+  "taskHowTo": "How to",
+  "taskWhy": "Why?",
+  "taskNoSteps": "No detailed instructions for this task yet.",
+  "taskSafetyGeneric": "If you use packaged fertilizer or pesticide, follow the dose on the label. The app does not give specific chemical doses.",
+  "taskHistory": "History",
+  "taskHistoryEmpty": "No history yet",
+  "taskHistoryDone": "Done",
+  "taskHistorySkip": "Skipped",
+  "taskHistorySnooze": "Snoozed",
+  "taskDoneButton": "Done · +{xp} XP",
+  "@taskDoneButton": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "taskNotDueToday": "This task is not due today",
+  "taskNotFound": "Task not found",
+  "taskAssignPlaceholder": "Assigning tasks will arrive in a later version.",
+  "taskCheckinPlaceholder": "Photo check-ins will arrive in a later version."
 }

@@ -3,7 +3,11 @@ name: Dev APK
 # Builds an installable APK wired to a real Supabase project. The URL and anon key
 # are public values (they ship inside the app), so they are passed as run inputs.
 # Signed with the runner's debug key, so uninstall an older build before installing.
+# A push to an apk/** branch builds from app/env/apk.json instead (same two keys),
+# which works before this workflow reaches the default branch.
 on:
+  push:
+    branches: ['apk/**']
   workflow_dispatch:
     inputs:
       supabase_url:
@@ -35,7 +39,13 @@ jobs:
         env:
           SUPABASE_URL: ${{ inputs.supabase_url }}
           SUPABASE_ANON_KEY: ${{ inputs.supabase_anon_key }}
-        run: jq -n --arg u "$SUPABASE_URL" --arg k "$SUPABASE_ANON_KEY" '{SUPABASE_URL:$u, SUPABASE_ANON_KEY:$k}' > env/dev.json
+        run: |
+          if [ -n "$SUPABASE_URL" ]; then
+            jq -n --arg u "$SUPABASE_URL" --arg k "$SUPABASE_ANON_KEY" '{SUPABASE_URL:$u, SUPABASE_ANON_KEY:$k}' > env/dev.json
+          else
+            jq -e '.SUPABASE_URL and .SUPABASE_ANON_KEY' env/apk.json > /dev/null
+            cp env/apk.json env/dev.json
+          fi
       - run: flutter build apk --release --dart-define-from-file=env/dev.json
       - run: mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/vuon-nha.apk
       - uses: actions/upload-artifact@v4

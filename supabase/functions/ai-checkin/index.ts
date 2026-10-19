@@ -3,13 +3,14 @@
 // shots = [{shot, path}], tags, note), then calls this function. One call returns diagnosis + plan delta, or a retake request.
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { authenticate } from '../_shared/auth.ts';
-import { AiFailure, callClaude, estimateCost, generateWithEscalation, type ContentBlock } from '../_shared/anthropic.ts';
-import { CHECKIN_TIMEOUT_MS, MAX_IMAGE_BYTES, MILESTONE_MIN_CONFIDENCE, MODEL_DEFAULT } from '../_shared/constants.ts';
+import { AiFailure, estimateCost, generateWithEscalation, type ContentBlock } from '../_shared/anthropic.ts';
+import { CHECKIN_TIMEOUT_MS, MAX_IMAGE_BYTES, MILESTONE_MIN_CONFIDENCE } from '../_shared/constants.ts';
 import {
   buildPlantCard, buildProjectCard, buildUserCard, daysBetween, localDate, seasonFor, shouldSkipRecent, stageForDay,
   type ChangeRow, type CheckinRow, type OccurrenceRow,
 } from '../_shared/context.ts';
-import { isQuotaError, loadKnownCodes, loadPrices, loadThresholds, requireApiKey } from '../_shared/db.ts';
+import { isQuotaError, loadKnownCodes, loadPrices, loadThresholds } from '../_shared/db.ts';
+import { requireAi } from '../_shared/ai.ts';
 import { errorResponse, HttpError, isUuid, json, preflight, readJson } from '../_shared/http.ts';
 import { looksLikeJpeg, parseShots, toBase64 } from '../_shared/image.ts';
 import { checkinSystem, checkinTool } from '../_shared/prompts.ts';
@@ -128,21 +129,22 @@ async function handle(req: Request): Promise<{ body: Record<string, unknown>; st
       }
     }
 
-    const apiKey = requireApiKey();
+    const ai = requireAi();
     const system = checkinSystem(known);
     const tool = checkinTool(known);
     let result;
     try {
       result = await generateWithEscalation<CheckinOutput>({
         startStrong: !plantKnown,
+        models: ai.models,
         threshold: thresholds.escalateBelow,
         confidenceOf: minConfidence,
         validate: (input) => validateCheckinOutput(input, known, { stageCodes, today }),
-        call: (model) => callClaude({ model, system, tool, content, maxTokens: 1800, timeoutMs: CHECKIN_TIMEOUT_MS }, { apiKey }),
+        call: (model) => ai.call({ model, system, tool, content, maxTokens: 1800, timeoutMs: CHECKIN_TIMEOUT_MS }),
       });
     } catch (e) {
       if (e instanceof AiFailure) {
-        await recordUsage(admin, ctx.userId, e.model ?? MODEL_DEFAULT, e.usage);
+        await recordUsage(admin, ctx.userId, e.model ?? ai.models.default, e.usage);
         await refund();
         await admin.from('checkins').update({ ai_result: { error: e.reason } }).eq('id', checkin.id);
         // Spec §7 #38: no delta is applied, the plan stays as it is.

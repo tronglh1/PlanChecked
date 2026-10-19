@@ -15,7 +15,7 @@
    supabase login
    supabase link --project-ref <ref>
    supabase db push --include-seed          # migrations + seed cây/mã/câu hướng dẫn
-   supabase secrets set ANTHROPIC_API_KEY=sk-ant-...   # đặt giới hạn chi tiêu trên console.anthropic.com
+   supabase secrets set GEMINI_API_KEY=...   # khoá Gemini (aistudio.google.com); hoặc ANTHROPIC_API_KEY=sk-ant-... để dùng Claude
    supabase functions deploy ai-plan ai-checkin invite delete-account --no-verify-jwt
    ```
 3. Cấu hình đăng nhập Google, email OTP (SMTP riêng), Redirect URL `io.supabase.vuonnha://login-callback/`: làm theo [docs/backend.md](docs/backend.md) mục 1.
@@ -63,7 +63,7 @@ flutter run --dart-define-from-file=env/dev.json
 ## Supabase
 
 Tạo project tại https://supabase.com, lấy Project URL và anon (publishable) key ở Settings > API.
-Schema, RLS, seed và Edge Functions nằm trong thư mục `supabase/` (xem docs/architecture.md); áp dụng bằng Supabase CLI (`supabase db push`, `supabase functions deploy`). Khoá Claude API chỉ đặt trong Supabase secrets (`ANTHROPIC_API_KEY`).
+Schema, RLS, seed và Edge Functions nằm trong thư mục `supabase/` (xem docs/architecture.md); áp dụng bằng Supabase CLI (`supabase db push`, `supabase functions deploy`). Khoá AI chỉ đặt trong Supabase secrets (`GEMINI_API_KEY` hoặc `ANTHROPIC_API_KEY`).
 
 ## Lệnh thường dùng
 

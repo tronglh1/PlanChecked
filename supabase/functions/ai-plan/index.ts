@@ -3,12 +3,13 @@
 // The app then shows the plan for approval (approve_plan RPC). Returns codes + params only.
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { authenticate } from '../_shared/auth.ts';
-import { AiFailure, callClaude, estimateCost, generateWithEscalation } from '../_shared/anthropic.ts';
-import { MODEL_DEFAULT, PLAN_TIMEOUT_MS } from '../_shared/constants.ts';
+import { AiFailure, estimateCost, generateWithEscalation } from '../_shared/anthropic.ts';
+import { PLAN_TIMEOUT_MS } from '../_shared/constants.ts';
 import {
   buildPlanContext, buildPlantCard, buildUserCard, localDate, seasonFor, slugify, templateKey,
 } from '../_shared/context.ts';
-import { isQuotaError, loadKnownCodes, loadPrices, loadThresholds, requireApiKey } from '../_shared/db.ts';
+import { isQuotaError, loadKnownCodes, loadPrices, loadThresholds } from '../_shared/db.ts';
+import { requireAi } from '../_shared/ai.ts';
 import { errorResponse, HttpError, isUuid, json, preflight, readJson } from '../_shared/http.ts';
 import { planSystem, planTool } from '../_shared/prompts.ts';
 import type { PlanOutput, PlanStage, PlanTask } from '../_shared/types.ts';
@@ -103,27 +104,28 @@ async function handle(req: Request) {
     lessons: (lessonRows ?? []).map((l) => l.text as string),
   }, plantCard, userCard);
 
-  const apiKey = requireApiKey();
+  const ai = requireAi();
   const system = planSystem(known);
   const tool = planTool(known);
   let result;
   try {
     result = await generateWithEscalation<PlanOutput>({
       startStrong: !plantKnown,
+      models: ai.models,
       threshold: thresholds.escalateBelow,
       confidenceOf: (v) => v.confidence,
       validate: (input) => validatePlanOutput(input, known, { plantKnown }),
-      call: (model) => callClaude({
+      call: (model) => ai.call({
         model, system, tool, maxTokens: 3500, timeoutMs: PLAN_TIMEOUT_MS,
         content: [
           { type: 'text', text: `plant_card: ${JSON.stringify(plantCard)}`, cache_control: { type: 'ephemeral' } },
           { type: 'text', text: JSON.stringify(context) },
         ],
-      }, { apiKey }),
+      }),
     });
   } catch (e) {
     if (e instanceof AiFailure) {
-      await recordUsage(admin, ctx.userId, e.model ?? MODEL_DEFAULT, e.usage);
+      await recordUsage(admin, ctx.userId, e.model ?? ai.models.default, e.usage);
       await admin.rpc('ai_quota_refund', { p_user: ctx.userId, p_kind: 'plan' });
       console.error('ai-plan failed', e.reason, e.message);
       return await fallback(e.reason);

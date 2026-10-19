@@ -23,7 +23,10 @@ supabase/
    If your CLI has no `--include-seed`, run the three files in `supabase/seed/` (in order) in the SQL editor or with `psql "$DB_URL" -f ...`. Seed must run once per environment: the plant/code/text tables are empty without it, and the app and AI functions depend on them.
 3. **Secrets** (Edge Functions; the Anthropic key never reaches the app):
    ```bash
-   supabase secrets set ANTHROPIC_API_KEY=sk-ant-...
+   supabase secrets set GEMINI_API_KEY=...            # Gemini: gemini-3.5-flash-lite, escalates to gemini-3.8-flash
+   # or: supabase secrets set ANTHROPIC_API_KEY=sk-ant-...   (Claude: claude-haiku-5-5 -> claude-sonnet-5-5)
+   # Provider rule (_shared/ai.ts): AI_PROVIDER=gemini|anthropic wins; otherwise Gemini when only GEMINI_API_KEY is set.
+   # AI_MODEL_DEFAULT / AI_MODEL_STRONG override the model ids. Gemini uses generateContent with a JSON response schema.
    # optional
    supabase secrets set INVITE_LINK_BASE=https://vuonnha.app/i   # deep-link base used in invite links
    supabase secrets set RESEND_API_KEY=re_... INVITE_FROM_EMAIL="Vườn Nhà <hello@yourdomain>"   # email invites

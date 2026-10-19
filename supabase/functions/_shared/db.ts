@@ -40,12 +40,6 @@ export function loadPrices(): typeof DEFAULT_PRICES {
   }
 }
 
-export function requireApiKey(): string {
-  const k = Deno.env.get('ANTHROPIC_API_KEY');
-  if (!k) throw new HttpError(500, 'server_misconfigured', 'missing ANTHROPIC_API_KEY');
-  return k;
-}
-
 /** Postgres error code for quota is P0429 (consume_ai_quota). */
 export function isQuotaError(e: { message?: string; code?: string } | null): boolean {
   return !!e && (e.code === 'P0429' || /ai_quota_exceeded/.test(e.message ?? ''));

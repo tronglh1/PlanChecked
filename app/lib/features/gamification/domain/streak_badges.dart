@@ -100,9 +100,13 @@ class ProjectCountCriterion extends BadgeCriterion {
 }
 
 class BadgeDef {
-  const BadgeDef(this.code, this.nameVi, this.criterion);
+  const BadgeDef(this.code, this.nameVi, this.nameEn, this.criterion);
   final String code;
   final String nameVi;
+  final String nameEn;
+
+  String name(String lang) =>
+      lang == 'en' && nameEn.isNotEmpty ? nameEn : nameVi;
   final BadgeCriterion criterion;
 }
 
@@ -128,18 +132,39 @@ class Badges {
   /// "x/16"; the other 8 are undefined. Codes and the "Thợ chụp ảnh"
   /// threshold (10 check-ins) are proposals.
   static const List<BadgeDef> catalog = [
-    BadgeDef('FIRST_SEED', 'Hạt giống đầu tiên', ProjectCountCriterion(1)),
-    BadgeDef('SPROUT', 'Nảy mầm', MilestoneCriterion('SPROUT')),
-    BadgeDef('STREAK_7', '7 ngày liên tục', StreakCriterion(7)),
-    BadgeDef('TALL_40', 'Vươn cao', MilestoneCriterion('HEIGHT_40')),
-    BadgeDef('PHOTOGRAPHER', 'Thợ chụp ảnh', CheckinCountCriterion(10)),
-    BadgeDef('BLOOM', 'Ra hoa', MilestoneCriterion('FLOWER')),
+    BadgeDef(
+      'FIRST_SEED',
+      'Hạt giống đầu tiên',
+      'First Seed',
+      ProjectCountCriterion(1),
+    ),
+    BadgeDef('SPROUT', 'Nảy mầm', 'Sprouted', MilestoneCriterion('SPROUT')),
+    BadgeDef('STREAK_7', '7 ngày liên tục', '7-Day Streak', StreakCriterion(7)),
+    BadgeDef(
+      'TALL_40',
+      'Vươn cao',
+      'Reaching Up',
+      MilestoneCriterion('HEIGHT_40'),
+    ),
+    BadgeDef(
+      'PHOTOGRAPHER',
+      'Thợ chụp ảnh',
+      'Photographer',
+      CheckinCountCriterion(10),
+    ),
+    BadgeDef('BLOOM', 'Ra hoa', 'In Bloom', MilestoneCriterion('FLOWER')),
     BadgeDef(
       'FIRST_HARVEST',
       'Thu hoạch đầu tiên',
+      'First Harvest',
       MilestoneCriterion('HARVEST'),
     ),
-    BadgeDef('STREAK_30', '30 ngày liên tục', StreakCriterion(30)),
+    BadgeDef(
+      'STREAK_30',
+      '30 ngày liên tục',
+      '30-Day Streak',
+      StreakCriterion(30),
+    ),
   ];
 
   static const int totalInSpec = 16;

@@ -2165,7 +2165,7 @@ abstract class AppLocalizations {
   /// No description provided for @householdJoinHint.
   ///
   /// In vi, this message translates to:
-  /// **'VD: VUON-4821'**
+  /// **'VD: VUON-K7M2QX'**
   String get householdJoinHint;
 
   /// No description provided for @householdJoinAction.
@@ -2231,7 +2231,7 @@ abstract class AppLocalizations {
   /// No description provided for @householdErrorCodeFormat.
   ///
   /// In vi, this message translates to:
-  /// **'Mã có dạng VUON-1234'**
+  /// **'Mã có dạng VUON-K7M2QX'**
   String get householdErrorCodeFormat;
 
   /// No description provided for @householdJoined.
@@ -3462,6 +3462,54 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Không tải được kết quả check-in.'**
   String get checkinResultLoadError;
+
+  /// No description provided for @notifChannelTaskName.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhắc việc chăm cây'**
+  String get notifChannelTaskName;
+
+  /// No description provided for @notifChannelTaskDescription.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhắc việc chăm cây theo khung giờ'**
+  String get notifChannelTaskDescription;
+
+  /// No description provided for @notifChannelCheckinName.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhắc chụp check-in'**
+  String get notifChannelCheckinName;
+
+  /// No description provided for @notifChannelCheckinDescription.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhắc chụp ảnh check-in cho cây'**
+  String get notifChannelCheckinDescription;
+
+  /// No description provided for @householdJoinAlreadyTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn đã ở trong một gia đình'**
+  String get householdJoinAlreadyTitle;
+
+  /// No description provided for @householdJoinAlreadyBody.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mỗi người chỉ ở một gia đình tại một thời điểm nên chưa dùng được mã {code}. Muốn tham gia nhà khác, hãy rời gia đình hiện tại trong Cài đặt.'**
+  String householdJoinAlreadyBody(String code);
+
+  /// No description provided for @householdJoinAlreadyAction.
+  ///
+  /// In vi, this message translates to:
+  /// **'Về trang Gia đình'**
+  String get householdJoinAlreadyAction;
+
+  /// No description provided for @gamXpGain.
+  ///
+  /// In vi, this message translates to:
+  /// **'+{xp} XP'**
+  String gamXpGain(String xp);
 }
 
 class _AppLocalizationsDelegate

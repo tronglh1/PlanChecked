@@ -4,7 +4,35 @@ import 'package:vuon_nha/features/profile/domain/user_profile.dart';
 import 'package:vuon_nha/features/settings/domain/notification_settings.dart';
 import 'package:vuon_nha/features/settings/presentation/settings_screen.dart';
 
+import 'package:vuon_nha/features/today/data/push_service.dart';
+import 'package:vuon_nha/features/today/presentation/today_providers.dart';
+
 import '../../helpers/fakes.dart';
+
+class _FakeMessaging implements PushMessaging {
+  _FakeMessaging({this.configured = true});
+  final bool configured;
+  @override
+  Future<bool> init() async => configured;
+  @override
+  Future<String?> getToken() async => 'device-token';
+  @override
+  Stream<String> get onTokenRefresh => const Stream.empty();
+  @override
+  Stream<PushMessage> get onMessage => const Stream.empty();
+}
+
+class _FakeTokens implements PushTokenRepository {
+  final List<String> events = [];
+  @override
+  Future<void> save({
+    required String userId,
+    required String token,
+    required String platform,
+  }) async => events.add('save:$token');
+  @override
+  Future<void> delete(String token) async => events.add('delete:$token');
+}
 
 void main() {
   const profile = UserProfile(
@@ -79,6 +107,58 @@ void main() {
     await t.tap(find.text('Xóa vĩnh viễn'));
     await t.pumpAndSettle();
     expect(auth.calls, ['delete']);
+  });
+
+  testWidgets('sign out deletes this device push token first', (t) async {
+    final auth = FakeAuthRepository(userId: 'u1');
+    final tokens = _FakeTokens();
+    await pumpApp(
+      t,
+      const SettingsScreen(),
+      auth: auth,
+      profile: FakeProfileRepository(profile),
+      extra: [
+        pushMessagingProvider.overrideWithValue(_FakeMessaging()),
+        pushTokenRepositoryProvider.overrideWithValue(tokens),
+      ],
+    );
+    final out = find.byKey(const Key('sign-out'));
+    await t.scrollUntilVisible(
+      out,
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await t.tap(out);
+    await t.pumpAndSettle();
+    expect(tokens.events, ['delete:device-token']);
+    expect(auth.calls, ['signOut']);
+  });
+
+  testWidgets('sign out still works when push is not configured', (t) async {
+    final auth = FakeAuthRepository(userId: 'u1');
+    final tokens = _FakeTokens();
+    await pumpApp(
+      t,
+      const SettingsScreen(),
+      auth: auth,
+      profile: FakeProfileRepository(profile),
+      extra: [
+        pushMessagingProvider.overrideWithValue(
+          _FakeMessaging(configured: false),
+        ),
+        pushTokenRepositoryProvider.overrideWithValue(tokens),
+      ],
+    );
+    final out = find.byKey(const Key('sign-out'));
+    await t.scrollUntilVisible(
+      out,
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await t.tap(out);
+    await t.pumpAndSettle();
+    expect(tokens.events, isEmpty);
+    expect(auth.calls, ['signOut']);
   });
 
   test('notification settings encode/decode', () {

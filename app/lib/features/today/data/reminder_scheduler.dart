@@ -43,7 +43,7 @@ class ReminderScheduler {
             quiet: quiet,
           )
         : const <PlannedNotification>[];
-    await _gateway.replaceAll(plan);
+    await _gateway.replaceAll(plan, channels: texts.channels);
     lastPlan = plan;
     return plan;
   }

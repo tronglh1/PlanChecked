@@ -1157,7 +1157,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get householdJoinSub => 'Bạn sẽ là thành viên (Member)';
 
   @override
-  String get householdJoinHint => 'VD: VUON-4821';
+  String get householdJoinHint => 'VD: VUON-K7M2QX';
 
   @override
   String get householdJoinAction => 'Vào';
@@ -1192,7 +1192,7 @@ class AppLocalizationsVi extends AppLocalizations {
       'Nhập sai quá nhiều lần, thử lại sau 1 giờ';
 
   @override
-  String get householdErrorCodeFormat => 'Mã có dạng VUON-1234';
+  String get householdErrorCodeFormat => 'Mã có dạng VUON-K7M2QX';
 
   @override
   String get householdJoined => 'Đã tham gia gia đình';
@@ -1927,4 +1927,32 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get checkinResultLoadError => 'Không tải được kết quả check-in.';
+
+  @override
+  String get notifChannelTaskName => 'Nhắc việc chăm cây';
+
+  @override
+  String get notifChannelTaskDescription => 'Nhắc việc chăm cây theo khung giờ';
+
+  @override
+  String get notifChannelCheckinName => 'Nhắc chụp check-in';
+
+  @override
+  String get notifChannelCheckinDescription => 'Nhắc chụp ảnh check-in cho cây';
+
+  @override
+  String get householdJoinAlreadyTitle => 'Bạn đã ở trong một gia đình';
+
+  @override
+  String householdJoinAlreadyBody(String code) {
+    return 'Mỗi người chỉ ở một gia đình tại một thời điểm nên chưa dùng được mã $code. Muốn tham gia nhà khác, hãy rời gia đình hiện tại trong Cài đặt.';
+  }
+
+  @override
+  String get householdJoinAlreadyAction => 'Về trang Gia đình';
+
+  @override
+  String gamXpGain(String xp) {
+    return '+$xp XP';
+  }
 }

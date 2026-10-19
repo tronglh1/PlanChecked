@@ -750,7 +750,7 @@
   "householdCreateSub": "Bạn là chủ nhà (Owner)",
   "householdJoinTitle": "Tham gia bằng mã mời",
   "householdJoinSub": "Bạn sẽ là thành viên (Member)",
-  "householdJoinHint": "VD: VUON-4821",
+  "householdJoinHint": "VD: VUON-K7M2QX",
   "householdJoinAction": "Vào",
   "householdSetupFooter": "Mỗi người chỉ ở trong một gia đình. App không có kết bạn công khai.",
   "householdNameLabel": "Tên gia đình",
@@ -761,7 +761,7 @@
   "householdErrorExpired": "Mã mời đã hết hạn",
   "householdErrorAlreadyIn": "Bạn đã ở trong một gia đình",
   "householdErrorTooMany": "Nhập sai quá nhiều lần, thử lại sau 1 giờ",
-  "householdErrorCodeFormat": "Mã có dạng VUON-1234",
+  "householdErrorCodeFormat": "Mã có dạng VUON-K7M2QX",
   "householdJoined": "Đã tham gia gia đình",
   "householdEyebrow": "Gia đình · {count} người",
   "@householdEyebrow": {
@@ -1388,5 +1388,27 @@
     }
   },
   "checkinAlreadyAnswered": "Bạn đã trả lời các đề xuất này rồi.",
-  "checkinResultLoadError": "Không tải được kết quả check-in."
+  "checkinResultLoadError": "Không tải được kết quả check-in.",
+  "notifChannelTaskName": "Nhắc việc chăm cây",
+  "notifChannelTaskDescription": "Nhắc việc chăm cây theo khung giờ",
+  "notifChannelCheckinName": "Nhắc chụp check-in",
+  "notifChannelCheckinDescription": "Nhắc chụp ảnh check-in cho cây",
+  "householdJoinAlreadyTitle": "Bạn đã ở trong một gia đình",
+  "householdJoinAlreadyBody": "Mỗi người chỉ ở một gia đình tại một thời điểm nên chưa dùng được mã {code}. Muốn tham gia nhà khác, hãy rời gia đình hiện tại trong Cài đặt.",
+  "@householdJoinAlreadyBody": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "householdJoinAlreadyAction": "Về trang Gia đình",
+  "gamXpGain": "+{xp} XP",
+  "@gamXpGain": {
+    "placeholders": {
+      "xp": {
+        "type": "String"
+      }
+    }
+  }
 }

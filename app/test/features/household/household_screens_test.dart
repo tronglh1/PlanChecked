@@ -160,7 +160,7 @@ void main() {
         household: repo,
         share: share,
       );
-      expect(find.text('VUON-4821'), findsOneWidget);
+      expect(find.text('VUON-K7M2QX'), findsOneWidget);
       expect(find.text('Hết hạn sau 7 ngày'), findsOneWidget);
       expect(repo.invites.single.channel, 'code');
       expect(repo.invites.single.role, HouseholdRole.member);
@@ -168,8 +168,8 @@ void main() {
       await t.tap(find.byKey(const Key('invite-share')));
       await t.pumpAndSettle();
       expect(share.texts, hasLength(1));
-      expect(share.texts.single, contains('VUON-4821'));
-      expect(share.texts.single, contains('https://vuonnha.app/i/VUON-4821'));
+      expect(share.texts.single, contains('VUON-K7M2QX'));
+      expect(share.texts.single, contains('https://vuonnha.app/i/VUON-K7M2QX'));
       expect(share.texts.single, contains('Minh'));
     });
 

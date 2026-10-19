@@ -19,7 +19,11 @@ abstract class NotificationGateway {
   Future<bool> isPermissionGranted();
 
   /// Cancels every pending local notification and schedules [items].
-  Future<void> replaceAll(List<PlannedNotification> items);
+  /// [channels] carries the localized Android channel names.
+  Future<void> replaceAll(
+    List<PlannedNotification> items, {
+    ReminderChannels? channels,
+  });
 
   /// Route payloads of tapped notifications.
   Stream<String> get taps;
@@ -34,17 +38,19 @@ class LocalNotificationsGateway implements NotificationGateway {
   bool _ready = false;
   tz.Location? _location;
 
-  static const _taskChannel = AndroidNotificationDetails(
-    'task_reminders',
-    'Nhắc việc chăm cây',
-    channelDescription: 'Nhắc việc chăm cây theo khung giờ',
-    importance: Importance.defaultImportance,
-    priority: Priority.defaultPriority,
-  );
-  static const _checkinChannel = AndroidNotificationDetails(
-    'checkin_reminders',
-    'Nhắc chụp check-in',
-    channelDescription: 'Nhắc chụp ảnh check-in cho cây',
+  static const _taskChannelId = 'task_reminders';
+  static const _checkinChannelId = 'checkin_reminders';
+
+  /// Channel names/descriptions come from the ARB files (see
+  /// [ReminderChannels]); the ids are the fallback names if none are given.
+  static AndroidNotificationDetails _details(
+    String id,
+    String name,
+    String? description,
+  ) => AndroidNotificationDetails(
+    id,
+    name,
+    channelDescription: description,
     importance: Importance.defaultImportance,
     priority: Priority.defaultPriority,
   );
@@ -126,10 +132,49 @@ class LocalNotificationsGateway implements NotificationGateway {
   }
 
   @override
-  Future<void> replaceAll(List<PlannedNotification> items) async {
+  Future<void> replaceAll(
+    List<PlannedNotification> items, {
+    ReminderChannels? channels,
+  }) async {
     await init();
     await _plugin.cancelAllPendingNotifications();
     final loc = _location!;
+    final taskChannel = _details(
+      _taskChannelId,
+      channels?.taskName ?? _taskChannelId,
+      channels?.taskDescription,
+    );
+    final checkinChannel = _details(
+      _checkinChannelId,
+      channels?.checkinName ?? _checkinChannelId,
+      channels?.checkinDescription,
+    );
+    if (channels != null) {
+      // Re-creating a channel updates its name, so a language switch shows
+      // up in the system settings.
+      try {
+        final android = _plugin
+            .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin
+            >();
+        await android?.createNotificationChannel(
+          AndroidNotificationChannel(
+            _taskChannelId,
+            channels.taskName,
+            description: channels.taskDescription,
+          ),
+        );
+        await android?.createNotificationChannel(
+          AndroidNotificationChannel(
+            _checkinChannelId,
+            channels.checkinName,
+            description: channels.checkinDescription,
+          ),
+        );
+      } catch (e) {
+        debugPrint('Updating notification channels failed: $e');
+      }
+    }
     for (final n in items) {
       final w = n.when;
       try {
@@ -146,9 +191,7 @@ class LocalNotificationsGateway implements NotificationGateway {
             w.minute,
           ),
           notificationDetails: NotificationDetails(
-            android: n.kind == ReminderKind.task
-                ? _taskChannel
-                : _checkinChannel,
+            android: n.kind == ReminderKind.task ? taskChannel : checkinChannel,
             iOS: const DarwinNotificationDetails(),
           ),
           // Inexact on purpose: no SCHEDULE_EXACT_ALARM permission needed.
@@ -171,7 +214,10 @@ class NoopNotificationGateway implements NotificationGateway {
   @override
   Future<bool> isPermissionGranted() async => false;
   @override
-  Future<void> replaceAll(List<PlannedNotification> items) async {}
+  Future<void> replaceAll(
+    List<PlannedNotification> items, {
+    ReminderChannels? channels,
+  }) async {}
   @override
   Stream<String> get taps => const Stream.empty();
 }

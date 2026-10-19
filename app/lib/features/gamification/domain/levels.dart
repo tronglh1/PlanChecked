@@ -6,10 +6,14 @@
 library;
 
 class LevelDef {
-  const LevelDef(this.level, this.minXp, this.nameVi);
+  const LevelDef(this.level, this.minXp, this.nameVi, this.nameEn);
   final int level;
   final int minXp;
   final String nameVi;
+  final String nameEn;
+
+  String name(String lang) =>
+      lang == 'en' && nameEn.isNotEmpty ? nameEn : nameVi;
 }
 
 class LevelProgress {
@@ -42,14 +46,14 @@ class Levels {
   const Levels._();
 
   static const List<LevelDef> defaults = [
-    LevelDef(1, 0, 'Người mới'),
-    LevelDef(2, 150, 'Biết chăm cây'),
-    LevelDef(3, 400, 'Quen tay'),
-    LevelDef(4, 850, 'Người chăm chỉ'),
-    LevelDef(5, 1500, 'Thợ vườn'),
-    LevelDef(6, 2400, 'Thợ vườn lão luyện'),
-    LevelDef(7, 3600, 'Chủ vườn'),
-    LevelDef(8, 5200, 'Nhà vườn'),
+    LevelDef(1, 0, 'Người mới', 'Newcomer'),
+    LevelDef(2, 150, 'Biết chăm cây', 'Plant Friend'),
+    LevelDef(3, 400, 'Quen tay', 'Getting the Hang of It'),
+    LevelDef(4, 850, 'Người chăm chỉ', 'Dedicated Carer'),
+    LevelDef(5, 1500, 'Thợ vườn', 'Gardener'),
+    LevelDef(6, 2400, 'Thợ vườn lão luyện', 'Seasoned Gardener'),
+    LevelDef(7, 3600, 'Chủ vườn', 'Garden Owner'),
+    LevelDef(8, 5200, 'Nhà vườn', 'Grand Gardener'),
   ];
 
   /// Progress for [xp] (negative treated as 0). [table] must be ascending by

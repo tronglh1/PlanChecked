@@ -145,5 +145,186 @@
   },
   "searchFreeTextHint": "Chưa có trong danh sách? AI sẽ lập kế hoạch cho cây này ở bước sau.",
   "searchLoadError": "Không tải được danh sách cây",
-  "contextTitle": "Thông tin & bối cảnh trồng"
+  "contextTitle": "Thông tin & bối cảnh trồng",
+  "todayTitle": "Hôm nay",
+  "todayGreeting": "Chào {name}",
+  "@todayGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "todayWd1": "Thứ Hai",
+  "todayWd2": "Thứ Ba",
+  "todayWd3": "Thứ Tư",
+  "todayWd4": "Thứ Năm",
+  "todayWd5": "Thứ Sáu",
+  "todayWd6": "Thứ Bảy",
+  "todayWd7": "Chủ nhật",
+  "todayProgress": "Đã xong {done}/{total} việc",
+  "@todayProgress": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "todayXpHint": "+10 XP mỗi việc đúng hạn",
+  "todayXpChip": "{xp} XP hôm nay",
+  "@todayXpChip": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "todayGroupByWindow": "Theo khung giờ",
+  "todayGroupByProject": "Theo project",
+  "todayWindowMorning": "Sáng sớm · 6–8h",
+  "todayWindowAfternoon": "Chiều mát · 16–18h",
+  "todayWindowAllDay": "Cả ngày",
+  "todayOverdue": "Quá hạn",
+  "todayCheckinDueTitle": "Đến hạn chụp ảnh check-in",
+  "todayCheckinDueBody": "{project} · +30 XP",
+  "@todayCheckinDueBody": {
+    "placeholders": {
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "todayEmptyTitle": "Hôm nay chưa có việc",
+  "todayEmptyBody": "Trồng cây mới để nhận kế hoạch chăm sóc mỗi ngày.",
+  "todayLoadError": "Không tải được việc hôm nay",
+  "todayOfflineBanner": "Đang offline · {count} thay đổi sẽ đồng bộ khi có mạng",
+  "@todayOfflineBanner": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todaySyncing": "Đang đồng bộ...",
+  "todayPendingSync": "Chờ đồng bộ",
+  "todaySkippedLabel": "Đã bỏ qua",
+  "todayMarkDone": "Đánh dấu xong",
+  "todayMenu": "Thêm tuỳ chọn",
+  "todayXpToast": "+{xp} XP",
+  "@todayXpToast": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "todayXpToastLate": "Đã xong · quá hạn nên không có XP",
+  "todayXpToastCap": "Đã xong · hôm nay đã đủ 150 XP",
+  "todayActionError": "Không lưu được thao tác",
+  "todayPermTitle": "Bật nhắc việc?",
+  "todayPermBody": "Vườn Nhà sẽ nhắc bạn đúng giờ chăm cây, kể cả khi không có mạng.",
+  "todayPermAllow": "Bật nhắc việc",
+  "todayPermLater": "Để sau",
+  "todayNotifTitle": "Đến giờ chăm cây · {window}",
+  "@todayNotifTitle": {
+    "placeholders": {
+      "window": {
+        "type": "String"
+      }
+    }
+  },
+  "todayNotifMore": "+{count} việc khác",
+  "@todayNotifMore": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todayNotifDailyTitle": "Hôm nay có {count} việc chăm cây",
+  "@todayNotifDailyTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todayNotifCheckinTitle": "Đến hạn chụp ảnh check-in",
+  "todayNotifCheckinBody": "Chụp ảnh {project} để cập nhật kế hoạch (+30 XP)",
+  "@todayNotifCheckinBody": {
+    "placeholders": {
+      "project": {
+        "type": "String"
+      }
+    }
+  },
+  "taskSnooze": "Dời lại",
+  "taskSkipTitle": "Bỏ qua việc này?",
+  "taskSkipReasonHint": "Lý do (không bắt buộc)",
+  "taskSkipReasonRain": "Trời mưa",
+  "taskSkipReasonAway": "Đang vắng nhà",
+  "taskSkipReasonNotNeeded": "Cây chưa cần",
+  "taskSkipReasonOther": "Khác",
+  "taskSkipConfirm": "Bỏ qua",
+  "taskSnoozeTitle": "Dời lại đến khi nào?",
+  "taskSnoozeTomorrow": "Ngày mai",
+  "taskSnooze2Days": "2 ngày nữa",
+  "taskSnoozeNextWeek": "Tuần sau",
+  "taskTileWindow": "Khung giờ",
+  "taskTileFrequency": "Lặp lại",
+  "taskTileReminder": "Nhắc lúc",
+  "taskFreqOnce": "Một lần",
+  "taskFreqDaily": "Hằng ngày",
+  "taskFreqEveryN": "{n} ngày/lần",
+  "@taskFreqEveryN": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "taskFreqFixed": "Ngày {n}",
+  "@taskFreqFixed": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "taskReminderByWindow": "Theo khung giờ",
+  "taskAssignedTo": "Giao cho {name}",
+  "@taskAssignedTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "taskUnassigned": "Chưa giao ai",
+  "taskChange": "Đổi",
+  "taskAssign": "Giao việc",
+  "taskHowTo": "Cách làm",
+  "taskWhy": "Vì sao?",
+  "taskNoSteps": "Chưa có hướng dẫn chi tiết cho việc này.",
+  "taskSafetyGeneric": "Nếu dùng phân bón hoặc thuốc đóng gói, làm theo liều trên nhãn sản phẩm. App không đưa liều hóa chất cụ thể.",
+  "taskHistory": "Lịch sử",
+  "taskHistoryEmpty": "Chưa có lịch sử",
+  "taskHistoryDone": "Xong",
+  "taskHistorySkip": "Bỏ qua",
+  "taskHistorySnooze": "Dời lại",
+  "taskDoneButton": "Xong · +{xp} XP",
+  "@taskDoneButton": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "taskNotDueToday": "Việc này không đến hạn hôm nay",
+  "taskNotFound": "Không tìm thấy việc này",
+  "taskAssignPlaceholder": "Giao việc cho thành viên sẽ có ở bản sau.",
+  "taskCheckinPlaceholder": "Chụp ảnh check-in sẽ có ở bản sau."
 }

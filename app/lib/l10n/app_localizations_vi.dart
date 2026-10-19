@@ -328,4 +328,276 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get contextTitle => 'Thông tin & bối cảnh trồng';
+
+  @override
+  String get todayTitle => 'Hôm nay';
+
+  @override
+  String todayGreeting(String name) {
+    return 'Chào $name';
+  }
+
+  @override
+  String get todayWd1 => 'Thứ Hai';
+
+  @override
+  String get todayWd2 => 'Thứ Ba';
+
+  @override
+  String get todayWd3 => 'Thứ Tư';
+
+  @override
+  String get todayWd4 => 'Thứ Năm';
+
+  @override
+  String get todayWd5 => 'Thứ Sáu';
+
+  @override
+  String get todayWd6 => 'Thứ Bảy';
+
+  @override
+  String get todayWd7 => 'Chủ nhật';
+
+  @override
+  String todayProgress(int done, int total) {
+    return 'Đã xong $done/$total việc';
+  }
+
+  @override
+  String get todayXpHint => '+10 XP mỗi việc đúng hạn';
+
+  @override
+  String todayXpChip(int xp) {
+    return '$xp XP hôm nay';
+  }
+
+  @override
+  String get todayGroupByWindow => 'Theo khung giờ';
+
+  @override
+  String get todayGroupByProject => 'Theo project';
+
+  @override
+  String get todayWindowMorning => 'Sáng sớm · 6–8h';
+
+  @override
+  String get todayWindowAfternoon => 'Chiều mát · 16–18h';
+
+  @override
+  String get todayWindowAllDay => 'Cả ngày';
+
+  @override
+  String get todayOverdue => 'Quá hạn';
+
+  @override
+  String get todayCheckinDueTitle => 'Đến hạn chụp ảnh check-in';
+
+  @override
+  String todayCheckinDueBody(String project) {
+    return '$project · +30 XP';
+  }
+
+  @override
+  String get todayEmptyTitle => 'Hôm nay chưa có việc';
+
+  @override
+  String get todayEmptyBody =>
+      'Trồng cây mới để nhận kế hoạch chăm sóc mỗi ngày.';
+
+  @override
+  String get todayLoadError => 'Không tải được việc hôm nay';
+
+  @override
+  String todayOfflineBanner(int count) {
+    return 'Đang offline · $count thay đổi sẽ đồng bộ khi có mạng';
+  }
+
+  @override
+  String get todaySyncing => 'Đang đồng bộ...';
+
+  @override
+  String get todayPendingSync => 'Chờ đồng bộ';
+
+  @override
+  String get todaySkippedLabel => 'Đã bỏ qua';
+
+  @override
+  String get todayMarkDone => 'Đánh dấu xong';
+
+  @override
+  String get todayMenu => 'Thêm tuỳ chọn';
+
+  @override
+  String todayXpToast(int xp) {
+    return '+$xp XP';
+  }
+
+  @override
+  String get todayXpToastLate => 'Đã xong · quá hạn nên không có XP';
+
+  @override
+  String get todayXpToastCap => 'Đã xong · hôm nay đã đủ 150 XP';
+
+  @override
+  String get todayActionError => 'Không lưu được thao tác';
+
+  @override
+  String get todayPermTitle => 'Bật nhắc việc?';
+
+  @override
+  String get todayPermBody =>
+      'Vườn Nhà sẽ nhắc bạn đúng giờ chăm cây, kể cả khi không có mạng.';
+
+  @override
+  String get todayPermAllow => 'Bật nhắc việc';
+
+  @override
+  String get todayPermLater => 'Để sau';
+
+  @override
+  String todayNotifTitle(String window) {
+    return 'Đến giờ chăm cây · $window';
+  }
+
+  @override
+  String todayNotifMore(int count) {
+    return '+$count việc khác';
+  }
+
+  @override
+  String todayNotifDailyTitle(int count) {
+    return 'Hôm nay có $count việc chăm cây';
+  }
+
+  @override
+  String get todayNotifCheckinTitle => 'Đến hạn chụp ảnh check-in';
+
+  @override
+  String todayNotifCheckinBody(String project) {
+    return 'Chụp ảnh $project để cập nhật kế hoạch (+30 XP)';
+  }
+
+  @override
+  String get taskSnooze => 'Dời lại';
+
+  @override
+  String get taskSkipTitle => 'Bỏ qua việc này?';
+
+  @override
+  String get taskSkipReasonHint => 'Lý do (không bắt buộc)';
+
+  @override
+  String get taskSkipReasonRain => 'Trời mưa';
+
+  @override
+  String get taskSkipReasonAway => 'Đang vắng nhà';
+
+  @override
+  String get taskSkipReasonNotNeeded => 'Cây chưa cần';
+
+  @override
+  String get taskSkipReasonOther => 'Khác';
+
+  @override
+  String get taskSkipConfirm => 'Bỏ qua';
+
+  @override
+  String get taskSnoozeTitle => 'Dời lại đến khi nào?';
+
+  @override
+  String get taskSnoozeTomorrow => 'Ngày mai';
+
+  @override
+  String get taskSnooze2Days => '2 ngày nữa';
+
+  @override
+  String get taskSnoozeNextWeek => 'Tuần sau';
+
+  @override
+  String get taskTileWindow => 'Khung giờ';
+
+  @override
+  String get taskTileFrequency => 'Lặp lại';
+
+  @override
+  String get taskTileReminder => 'Nhắc lúc';
+
+  @override
+  String get taskFreqOnce => 'Một lần';
+
+  @override
+  String get taskFreqDaily => 'Hằng ngày';
+
+  @override
+  String taskFreqEveryN(int n) {
+    return '$n ngày/lần';
+  }
+
+  @override
+  String taskFreqFixed(int n) {
+    return 'Ngày $n';
+  }
+
+  @override
+  String get taskReminderByWindow => 'Theo khung giờ';
+
+  @override
+  String taskAssignedTo(String name) {
+    return 'Giao cho $name';
+  }
+
+  @override
+  String get taskUnassigned => 'Chưa giao ai';
+
+  @override
+  String get taskChange => 'Đổi';
+
+  @override
+  String get taskAssign => 'Giao việc';
+
+  @override
+  String get taskHowTo => 'Cách làm';
+
+  @override
+  String get taskWhy => 'Vì sao?';
+
+  @override
+  String get taskNoSteps => 'Chưa có hướng dẫn chi tiết cho việc này.';
+
+  @override
+  String get taskSafetyGeneric =>
+      'Nếu dùng phân bón hoặc thuốc đóng gói, làm theo liều trên nhãn sản phẩm. App không đưa liều hóa chất cụ thể.';
+
+  @override
+  String get taskHistory => 'Lịch sử';
+
+  @override
+  String get taskHistoryEmpty => 'Chưa có lịch sử';
+
+  @override
+  String get taskHistoryDone => 'Xong';
+
+  @override
+  String get taskHistorySkip => 'Bỏ qua';
+
+  @override
+  String get taskHistorySnooze => 'Dời lại';
+
+  @override
+  String taskDoneButton(int xp) {
+    return 'Xong · +$xp XP';
+  }
+
+  @override
+  String get taskNotDueToday => 'Việc này không đến hạn hôm nay';
+
+  @override
+  String get taskNotFound => 'Không tìm thấy việc này';
+
+  @override
+  String get taskAssignPlaceholder =>
+      'Giao việc cho thành viên sẽ có ở bản sau.';
+
+  @override
+  String get taskCheckinPlaceholder => 'Chụp ảnh check-in sẽ có ở bản sau.';
 }

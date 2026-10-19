@@ -330,4 +330,276 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get contextTitle => 'Growing details & context';
+
+  @override
+  String get todayTitle => 'Today';
+
+  @override
+  String todayGreeting(String name) {
+    return 'Hi $name';
+  }
+
+  @override
+  String get todayWd1 => 'Monday';
+
+  @override
+  String get todayWd2 => 'Tuesday';
+
+  @override
+  String get todayWd3 => 'Wednesday';
+
+  @override
+  String get todayWd4 => 'Thursday';
+
+  @override
+  String get todayWd5 => 'Friday';
+
+  @override
+  String get todayWd6 => 'Saturday';
+
+  @override
+  String get todayWd7 => 'Sunday';
+
+  @override
+  String todayProgress(int done, int total) {
+    return '$done/$total tasks done';
+  }
+
+  @override
+  String get todayXpHint => '+10 XP for each task done on time';
+
+  @override
+  String todayXpChip(int xp) {
+    return '$xp XP today';
+  }
+
+  @override
+  String get todayGroupByWindow => 'By time of day';
+
+  @override
+  String get todayGroupByProject => 'By project';
+
+  @override
+  String get todayWindowMorning => 'Early morning · 6–8am';
+
+  @override
+  String get todayWindowAfternoon => 'Cool afternoon · 4–6pm';
+
+  @override
+  String get todayWindowAllDay => 'All day';
+
+  @override
+  String get todayOverdue => 'Overdue';
+
+  @override
+  String get todayCheckinDueTitle => 'Photo check-in is due';
+
+  @override
+  String todayCheckinDueBody(String project) {
+    return '$project · +30 XP';
+  }
+
+  @override
+  String get todayEmptyTitle => 'Nothing to do today';
+
+  @override
+  String get todayEmptyBody => 'Start a new plant to get a daily care plan.';
+
+  @override
+  String get todayLoadError => 'Could not load today\'s tasks';
+
+  @override
+  String todayOfflineBanner(int count) {
+    return 'Offline · $count changes will sync when you are back online';
+  }
+
+  @override
+  String get todaySyncing => 'Syncing...';
+
+  @override
+  String get todayPendingSync => 'Waiting to sync';
+
+  @override
+  String get todaySkippedLabel => 'Skipped';
+
+  @override
+  String get todayMarkDone => 'Mark as done';
+
+  @override
+  String get todayMenu => 'More options';
+
+  @override
+  String todayXpToast(int xp) {
+    return '+$xp XP';
+  }
+
+  @override
+  String get todayXpToastLate => 'Done · late, so no XP';
+
+  @override
+  String get todayXpToastCap => 'Done · you reached today\'s 150 XP cap';
+
+  @override
+  String get todayActionError => 'Could not save that action';
+
+  @override
+  String get todayPermTitle => 'Turn on reminders?';
+
+  @override
+  String get todayPermBody =>
+      'Vườn Nhà will remind you to care for your plants on time, even offline.';
+
+  @override
+  String get todayPermAllow => 'Turn on';
+
+  @override
+  String get todayPermLater => 'Not now';
+
+  @override
+  String todayNotifTitle(String window) {
+    return 'Plant care time · $window';
+  }
+
+  @override
+  String todayNotifMore(int count) {
+    return '+$count more';
+  }
+
+  @override
+  String todayNotifDailyTitle(int count) {
+    return '$count plant tasks today';
+  }
+
+  @override
+  String get todayNotifCheckinTitle => 'Photo check-in is due';
+
+  @override
+  String todayNotifCheckinBody(String project) {
+    return 'Take a photo of $project to update the plan (+30 XP)';
+  }
+
+  @override
+  String get taskSnooze => 'Snooze';
+
+  @override
+  String get taskSkipTitle => 'Skip this task?';
+
+  @override
+  String get taskSkipReasonHint => 'Reason (optional)';
+
+  @override
+  String get taskSkipReasonRain => 'Rainy';
+
+  @override
+  String get taskSkipReasonAway => 'Away from home';
+
+  @override
+  String get taskSkipReasonNotNeeded => 'Plant does not need it';
+
+  @override
+  String get taskSkipReasonOther => 'Other';
+
+  @override
+  String get taskSkipConfirm => 'Skip';
+
+  @override
+  String get taskSnoozeTitle => 'Snooze until when?';
+
+  @override
+  String get taskSnoozeTomorrow => 'Tomorrow';
+
+  @override
+  String get taskSnooze2Days => 'In 2 days';
+
+  @override
+  String get taskSnoozeNextWeek => 'Next week';
+
+  @override
+  String get taskTileWindow => 'Time of day';
+
+  @override
+  String get taskTileFrequency => 'Repeats';
+
+  @override
+  String get taskTileReminder => 'Remind at';
+
+  @override
+  String get taskFreqOnce => 'Once';
+
+  @override
+  String get taskFreqDaily => 'Daily';
+
+  @override
+  String taskFreqEveryN(int n) {
+    return 'Every $n days';
+  }
+
+  @override
+  String taskFreqFixed(int n) {
+    return 'Day $n';
+  }
+
+  @override
+  String get taskReminderByWindow => 'By time of day';
+
+  @override
+  String taskAssignedTo(String name) {
+    return 'Assigned to $name';
+  }
+
+  @override
+  String get taskUnassigned => 'Not assigned';
+
+  @override
+  String get taskChange => 'Change';
+
+  @override
+  String get taskAssign => 'Assign';
+
+  @override
+  String get taskHowTo => 'How to';
+
+  @override
+  String get taskWhy => 'Why?';
+
+  @override
+  String get taskNoSteps => 'No detailed instructions for this task yet.';
+
+  @override
+  String get taskSafetyGeneric =>
+      'If you use packaged fertilizer or pesticide, follow the dose on the label. The app does not give specific chemical doses.';
+
+  @override
+  String get taskHistory => 'History';
+
+  @override
+  String get taskHistoryEmpty => 'No history yet';
+
+  @override
+  String get taskHistoryDone => 'Done';
+
+  @override
+  String get taskHistorySkip => 'Skipped';
+
+  @override
+  String get taskHistorySnooze => 'Snoozed';
+
+  @override
+  String taskDoneButton(int xp) {
+    return 'Done · +$xp XP';
+  }
+
+  @override
+  String get taskNotDueToday => 'This task is not due today';
+
+  @override
+  String get taskNotFound => 'Task not found';
+
+  @override
+  String get taskAssignPlaceholder =>
+      'Assigning tasks will arrive in a later version.';
+
+  @override
+  String get taskCheckinPlaceholder =>
+      'Photo check-ins will arrive in a later version.';
 }

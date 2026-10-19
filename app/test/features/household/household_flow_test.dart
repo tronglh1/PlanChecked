@@ -132,7 +132,10 @@ void main() {
     testWidgets('join by code normalizes input and goes to Today', (t) async {
       final repo = FakeHouseholdRepository();
       await pumpRouted(t, location: '/onboarding/household', household: repo);
-      await t.enterText(find.byKey(const Key('join-code-field')), 'vuon-4821');
+      await t.enterText(
+        find.byKey(const Key('join-code-field')),
+        'vuon-k7m2qx',
+      );
       await t.tap(find.byKey(const Key('join-submit')));
       await t.pumpAndSettle();
       expect(repo.accepted, ['VUON-K7M2QX']);
@@ -182,6 +185,69 @@ void main() {
       await t.tap(find.byKey(const Key('join-submit')));
       await t.pumpAndSettle();
       expect(repo.accepted, ['VUON-K7M2QX']);
+    });
+  });
+
+  group('join screen (B3)', () {
+    testWidgets('already in a household: explanation instead of the form', (
+      t,
+    ) async {
+      final repo = FakeHouseholdRepository(household: sampleHousehold());
+      await pumpRouted(t, location: '/join?code=VUON-K7M2QX', household: repo);
+      expect(find.byKey(const Key('join-already-member')), findsOneWidget);
+      expect(find.text('Bạn đã ở trong một gia đình'), findsOneWidget);
+      expect(find.textContaining('VUON-K7M2QX'), findsOneWidget);
+      expect(find.byKey(const Key('join-submit')), findsNothing);
+      expect(repo.accepted, isEmpty);
+    });
+
+    testWidgets('showing the code consumes the saved pending code', (t) async {
+      final prefs = MemoryLocalPrefs();
+      await prefs.set(kPendingJoinCodeKey, 'VUON-K7M2QX');
+      await pumpRouted(t, location: '/join?code=VUON-K7M2QX', prefs: prefs);
+      // shown, then forgotten so the post-sign-in redirect fires only once
+      expect(find.text('Bạn được mời bằng mã VUON-K7M2QX'), findsOneWidget);
+      expect(await prefs.get(kPendingJoinCodeKey), '');
+    });
+  });
+
+  group('pending join code storage', () {
+    test('is persisted and restored in a new session', () async {
+      final prefs = MemoryLocalPrefs();
+      final a = ProviderContainer(
+        overrides: [localPrefsProvider.overrideWithValue(prefs)],
+      );
+      addTearDown(a.dispose);
+      a.read(pendingJoinCodeProvider);
+      a.read(pendingJoinCodeProvider.notifier).set('VUON-K7M2QX');
+      await Future<void>.delayed(Duration.zero);
+      expect(await prefs.get(kPendingJoinCodeKey), 'VUON-K7M2QX');
+
+      // app restarted: a fresh container reads the same store
+      final b = ProviderContainer(
+        overrides: [localPrefsProvider.overrideWithValue(prefs)],
+      );
+      addTearDown(b.dispose);
+      expect(b.read(pendingJoinCodeProvider), isNull);
+      await Future<void>.delayed(Duration.zero);
+      expect(b.read(pendingJoinCodeProvider), 'VUON-K7M2QX');
+
+      b.read(pendingJoinCodeProvider.notifier).set(null);
+      await Future<void>.delayed(Duration.zero);
+      expect(b.read(pendingJoinCodeProvider), isNull);
+      expect(await prefs.get(kPendingJoinCodeKey), '');
+    });
+
+    test('garbage in the store is ignored', () async {
+      final prefs = MemoryLocalPrefs();
+      await prefs.set(kPendingJoinCodeKey, 'hello');
+      final c = ProviderContainer(
+        overrides: [localPrefsProvider.overrideWithValue(prefs)],
+      );
+      addTearDown(c.dispose);
+      c.read(pendingJoinCodeProvider);
+      await Future<void>.delayed(Duration.zero);
+      expect(c.read(pendingJoinCodeProvider), isNull);
     });
   });
 

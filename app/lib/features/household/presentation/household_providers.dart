@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/db/local_prefs.dart';
@@ -72,12 +74,41 @@ final householdGateProvider = Provider<HouseholdGate>((ref) {
       : HouseholdGate.needsSetup;
 });
 
+/// LocalSettings key: invite code from a deep link that still has to be shown
+/// after sign-in / onboarding. Survives an app restart in the middle of sign-in.
+const String kPendingJoinCodeKey = 'pending_join_code';
+
 /// Invite code received through a deep link, waiting for the user to sign in
-/// or open the join screen.
+/// or open the join screen. Mirrored to LocalSettings so it is not lost when
+/// the app is killed during sign-in.
 class PendingJoinCodeNotifier extends Notifier<String?> {
+  bool _touched = false;
+
   @override
-  String? build() => null;
-  void set(String? code) => state = code;
+  String? build() {
+    _restore();
+    return null;
+  }
+
+  Future<void> _restore() async {
+    try {
+      final v = await ref.read(localPrefsProvider).get(kPendingJoinCodeKey);
+      // A newer set()/clear while reading wins over the stored value.
+      if (_touched || !ref.mounted) return;
+      if (v != null && isValidInviteCode(v)) state = normalizeInviteCode(v);
+    } catch (_) {}
+  }
+
+  void set(String? code) {
+    _touched = true;
+    state = code;
+    unawaited(
+      ref
+          .read(localPrefsProvider)
+          .set(kPendingJoinCodeKey, code ?? '')
+          .catchError((_) {}),
+    );
+  }
 }
 
 final pendingJoinCodeProvider =

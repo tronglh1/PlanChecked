@@ -29,6 +29,7 @@ class AppRoutes {
   const AppRoutes._();
   static const today = '/today';
   static const garden = '/garden';
+  static const projectsAlias = '/projects';
   static const family = '/household';
   static const achievements = '/achievements';
   static const settings = '/settings';
@@ -49,6 +50,7 @@ String? authRedirect(
   String location, {
   ProfileStatus profile = ProfileStatus.complete,
   HouseholdGate household = HouseholdGate.done,
+  String? pendingJoinCode,
 }) {
   switch (status) {
     case AuthStatus.configMissing:
@@ -60,6 +62,15 @@ String? authRedirect(
         return location == AppRoutes.onboardingProfile
             ? null
             : AppRoutes.onboardingProfile;
+      }
+      // An invite link opened before / during sign-in: show it as soon as the
+      // profile and household state are known (B3). The join screen consumes
+      // the pending code, so this fires once.
+      if (pendingJoinCode != null &&
+          profile == ProfileStatus.complete &&
+          household != HouseholdGate.unknown &&
+          !location.startsWith(HouseholdPaths.join)) {
+        return '${HouseholdPaths.join}?code=${Uri.encodeQueryComponent(pendingJoinCode)}';
       }
       // Onboarding step 2: no household yet and not skipped.
       if (household == HouseholdGate.needsSetup &&
@@ -73,11 +84,18 @@ String? authRedirect(
   }
 }
 
+/// Spec §2 names the Vườn tab `/projects`; the app's tab is `/garden`.
+GoRoute projectsAliasRoute() => GoRoute(
+  path: AppRoutes.projectsAlias,
+  redirect: (_, _) => AppRoutes.garden,
+);
+
 final appRouterProvider = Provider<GoRouter>((ref) {
   final refresh = ValueNotifier<int>(0);
   ref.listen<AuthStatus>(authStateProvider, (_, _) => refresh.value++);
   ref.listen<ProfileStatus>(profileStatusProvider, (_, _) => refresh.value++);
   ref.listen<HouseholdGate>(householdGateProvider, (_, _) => refresh.value++);
+  ref.listen<String?>(pendingJoinCodeProvider, (_, _) => refresh.value++);
   ref.onDispose(refresh.dispose);
 
   final router = GoRouter(
@@ -88,6 +106,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       state.matchedLocation,
       profile: ref.read(profileStatusProvider),
       household: ref.read(householdGateProvider),
+      pendingJoinCode: ref.read(pendingJoinCodeProvider),
     ),
     routes: [
       GoRoute(path: AppRoutes.login, builder: (_, _) => const LoginScreen()),
@@ -106,6 +125,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           freeText: state.uri.queryParameters['name'],
         ),
       ),
+      projectsAliasRoute(),
       ...householdRoutes(),
       ...gamificationRoutes(),
       GoRoute(

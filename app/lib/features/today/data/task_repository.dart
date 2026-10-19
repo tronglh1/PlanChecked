@@ -49,12 +49,22 @@ class SupabaseTaskRepository implements TaskRepository {
       if (p != null) projects.add(p);
     }
 
+    // Roll the server-side occurrence window forward (best effort).
+    for (final p in projects) {
+      try {
+        await _client.rpc(
+          'materialize_occurrences',
+          params: {'p_project': p.id},
+        );
+      } catch (_) {}
+    }
+
     final since = formatIsoDate(addDays(today, -kLogLookbackDays));
     final logRows = await _client
         .from('task_logs')
         .select(
-          'id, task_id, occurrence_date, user_id, action, skip_reason, '
-          'snooze_until, client_id, created_at',
+          'id, task_id, project_id, occurrence_date, user_id, action, '
+          'skip_reason, snooze_until, client_id, acted_at, created_at',
         )
         .gte('occurrence_date', since)
         .order('created_at', ascending: true)
@@ -126,14 +136,14 @@ class SupabaseTaskRepository implements TaskRepository {
       await _client.from('task_logs').insert({
         'task_id': e.taskId,
         'occurrence_date': formatIsoDate(e.occurrenceDate),
-        'user_id': e.userId,
         'action': e.action.db,
         'skip_reason': e.skipReason,
         'snooze_until': e.snoozeUntil == null
             ? null
             : formatIsoDate(e.snoozeUntil!),
         'client_id': e.clientId,
-        'created_at': e.createdAt.toUtc().toIso8601String(),
+        // Client action time; the server clamps it to [now-7d, now].
+        'acted_at': e.createdAt.toUtc().toIso8601String(),
       });
     } on PostgrestException catch (err) {
       // 23505 = unique_violation on client_id: already stored.
@@ -169,13 +179,14 @@ class SupabaseTaskRepository implements TaskRepository {
 }
 
 /// `task_logs` row -> [TaskLog]. `acted_on` is not a column, so it is derived
-/// from `created_at` in the device's local calendar.
+/// from `acted_at` (else `created_at`) in the device's local calendar, and
+/// `acted_at` is used as the log's timestamp for ordering.
 TaskLog parseTaskLog(Map<String, dynamic> row) {
   final j = Map<String, dynamic>.from(row);
-  if (j['acted_on'] == null && j['created_at'] != null) {
-    j['acted_on'] = formatIsoDate(
-      DateTime.parse(j['created_at'] as String).toLocal(),
-    );
+  final at = (j['acted_at'] ?? j['created_at']) as String?;
+  if (at != null) {
+    j['created_at'] = at;
+    j['acted_on'] ??= formatIsoDate(DateTime.parse(at).toLocal());
   }
   return TaskLog.fromJson(j);
 }

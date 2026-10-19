@@ -102,12 +102,11 @@ class _SheetFrame extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+                style: Theme.of(context).textTheme.titleMedium
+                    ?.copyWith(fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: AppSpacing.md),
-              child,
+              Material(type: MaterialType.transparency, child: child),
             ],
           ),
         ),
@@ -142,9 +141,8 @@ class _SkipSheetState extends State<_SkipSheet> {
         children: [
           Text(
             l.taskSkipReasonHint,
-            style: Theme.of(
-              context,
-            ).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary),
+            style: Theme.of(context).textTheme.bodySmall
+                ?.copyWith(color: AppColors.textSecondary),
           ),
           const SizedBox(height: AppSpacing.sm),
           Wrap(
@@ -155,7 +153,8 @@ class _SkipSheetState extends State<_SkipSheet> {
                 TagChip(
                   label: r,
                   selected: _reason == r,
-                  onTap: () => setState(() => _reason = _reason == r ? null : r),
+                  onTap: () =>
+                      setState(() => _reason = _reason == r ? null : r),
                 ),
             ],
           ),

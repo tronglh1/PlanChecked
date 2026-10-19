@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../gamification/domain/xp.dart';
 import '../../plan/domain/enums.dart';
 import '../../plan/domain/models.dart';
 import '../domain/today_builder.dart';
@@ -86,7 +85,9 @@ class _Body extends ConsumerWidget {
             ),
             children: [
               Text(
-                stage == null ? project.name : '${project.name} · ${stage.name}',
+                stage == null
+                    ? project.name
+                    : '${project.name} · ${stage.name}',
                 style: t.bodySmall?.copyWith(color: AppColors.textSecondary),
               ),
               const SizedBox(height: 2),
@@ -103,10 +104,7 @@ class _Body extends ConsumerWidget {
                     value: _windowShort(l, task.window),
                   ),
                   const SizedBox(width: AppSpacing.sm),
-                  _Tile(
-                    label: l.taskTileFrequency,
-                    value: _frequency(l, task),
-                  ),
+                  _Tile(label: l.taskTileFrequency, value: _frequency(l, task)),
                   const SizedBox(width: AppSpacing.sm),
                   _Tile(
                     label: l.taskTileReminder,
@@ -273,9 +271,10 @@ String _frequency(AppLocalizations l, Task t) => switch (t.frequency) {
   Frequency.once => l.taskFreqOnce,
   Frequency.daily => l.taskFreqDaily,
   Frequency.everyNDays => l.taskFreqEveryN(t.intervalDays ?? 1),
-  Frequency.fixedDate => t.fixedDate != null
-      ? shortDate(t.fixedDate!)
-      : l.taskFreqFixed(t.intervalDays ?? 1),
+  Frequency.fixedDate =>
+    t.fixedDate != null
+        ? shortDate(t.fixedDate!)
+        : l.taskFreqFixed(t.intervalDays ?? 1),
 };
 
 class _Tile extends StatelessWidget {
@@ -393,9 +392,8 @@ class _ActionBar extends ConsumerWidget {
                 child: Text(
                   l.taskNotDueToday,
                   key: const Key('task-not-due'),
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary),
+                  style: Theme.of(context).textTheme.bodySmall
+                      ?.copyWith(color: AppColors.textSecondary),
                 ),
               ),
             Row(
@@ -403,7 +401,9 @@ class _ActionBar extends ConsumerWidget {
                 _SecondaryAction(
                   key: const Key('task-skip'),
                   label: l.commonSkip,
-                  onTap: actionable ? () => skipWithSheet(context, ref, it!) : null,
+                  onTap: actionable
+                      ? () => skipWithSheet(context, ref, it!)
+                      : null,
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 _SecondaryAction(
@@ -456,9 +456,8 @@ class _SecondaryAction extends StatelessWidget {
           child: Center(
             child: Text(
               label,
-              style: Theme.of(
-                context,
-              ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+              style: Theme.of(context).textTheme.labelLarge
+                  ?.copyWith(fontWeight: FontWeight.w600),
             ),
           ),
         ),

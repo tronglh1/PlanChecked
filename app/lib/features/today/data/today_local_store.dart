@@ -77,10 +77,11 @@ class DriftTodayLocalStore implements TodayLocalStore {
     final projectRows = <Map<String, dynamic>>[];
     for (final r in rows) {
       final data = jsonDecode(r.payload);
+      final rid = r.id.substring(r.kind.length + 1); // ids are `kind:id`
       try {
         switch (r.kind) {
           case 'meta':
-            if (r.id == _metaUser) userId = (data as Map)['value'] as String?;
+            if (rid == _metaUser) userId = (data as Map)['value'] as String?;
           case 'project':
             projectRows.add(Map<String, dynamic>.from(data as Map));
           case 'task':
@@ -90,9 +91,9 @@ class DriftTodayLocalStore implements TodayLocalStore {
           case 'log':
             logs.add(parseTaskLog(Map<String, dynamic>.from(data as Map)));
           case 'checkin':
-            checkins[r.id] = parseIsoDate((data as Map)['date'] as String);
+            checkins[rid] = parseIsoDate((data as Map)['date'] as String);
           case 'member':
-            members[r.id] = (data as Map)['name'] as String? ?? '';
+            members[rid] = (data as Map)['name'] as String? ?? '';
           case 'template':
             templates.add(
               TextTemplate.fromJson(Map<String, dynamic>.from(data as Map)),
@@ -188,11 +189,11 @@ class DriftTodayLocalStore implements TodayLocalStore {
             'created_at': l.createdAt.toUtc().toIso8601String(),
             'acted_on': formatIsoDate(l.actedOn),
           }),
-        for (final e in (snapshot.lastCheckins ?? const <String, DateTime>{})
-            .entries)
+        for (final e
+            in (snapshot.lastCheckins ?? const <String, DateTime>{}).entries)
           _row(e.key, 'checkin', {'date': formatIsoDate(e.value)}),
-        for (final e in (snapshot.memberNames ?? const <String, String>{})
-            .entries)
+        for (final e
+            in (snapshot.memberNames ?? const <String, String>{}).entries)
           _row(e.key, 'member', {'name': e.value}),
         for (final t in templates ?? const <TextTemplate>[])
           _row('${t.lang}|${t.kind}|${t.code}|${t.field}', 'template', {
@@ -259,17 +260,16 @@ class DriftTodayLocalStore implements TodayLocalStore {
   }
 
   @override
-  Future<void> removeOutbox(String clientId) => (_db.delete(
-    _db.outbox,
-  )..where((t) => t.clientId.equals(clientId))).go();
+  Future<void> removeOutbox(String clientId) =>
+      (_db.delete(_db.outbox)..where((t) => t.clientId.equals(clientId))).go();
 
   @override
   Future<void> recordFailure(
     String clientId, {
     required int attempts,
     required DateTime nextAttemptAt,
-  }) => (_db.update(_db.outbox)..where((t) => t.clientId.equals(clientId)))
-      .write(
+  }) =>
+      (_db.update(_db.outbox)..where((t) => t.clientId.equals(clientId))).write(
         OutboxCompanion(
           attempts: Value(attempts),
           nextAttemptAt: Value(nextAttemptAt),

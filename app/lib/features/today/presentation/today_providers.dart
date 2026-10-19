@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../core/db/app_database.dart';
 import '../../../core/db/local_prefs.dart';
 import '../../../core/env.dart';
 import '../../../core/utils/date_only.dart';
@@ -15,6 +14,7 @@ import '../../gamification/domain/xp.dart';
 import '../../plan/domain/enums.dart';
 import '../../plan/domain/template_renderer.dart' as domain;
 import '../../plants/presentation/plant_providers.dart';
+import '../../settings/presentation/locale_provider.dart';
 import '../../settings/presentation/settings_providers.dart';
 import '../data/notification_gateway.dart';
 import '../data/outbox_syncer.dart';
@@ -343,7 +343,9 @@ class ReminderPermission {
     try {
       final asked = await _ref.read(localPrefsProvider).get(kNotifPermAskedKey);
       if (asked != null) return false;
-      return !await _ref.read(notificationGatewayProvider).isPermissionGranted();
+      return !await _ref
+          .read(notificationGatewayProvider)
+          .isPermissionGranted();
     } catch (_) {
       return false;
     }

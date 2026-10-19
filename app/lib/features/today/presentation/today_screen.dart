@@ -96,9 +96,8 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
             Text(
               l.todayOfflineBanner(model.pendingCount),
               key: const Key('offline-banner'),
-              style: Theme.of(
-                context,
-              ).textTheme.bodySmall?.copyWith(color: AppColors.orangeTintInk),
+              style: Theme.of(context).textTheme.bodySmall
+                  ?.copyWith(color: AppColors.orangeTintInk),
             ),
           ],
           for (final c in model.checkins) ...[
@@ -211,10 +210,8 @@ class _XpChip extends StatelessWidget {
       child: Text(
         l.todayXpChip(xp),
         key: const Key('xp-chip'),
-        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-          color: AppColors.greenDeep,
-          fontWeight: FontWeight.w600,
-        ),
+        style: Theme.of(context).textTheme.labelLarge
+            ?.copyWith(color: AppColors.greenDeep, fontWeight: FontWeight.w600),
       ),
     );
   }
@@ -357,7 +354,9 @@ class _GroupLabel extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: Text(
         label.toUpperCase(),
-        key: Key('group-${group.overdue ? 'overdue' : group.window?.db ?? group.projectId}'),
+        key: Key(
+          'group-${group.overdue ? 'overdue' : group.window?.db ?? group.projectId}',
+        ),
         style: Theme.of(context).textTheme.labelMedium?.copyWith(
           fontWeight: FontWeight.w600,
           letterSpacing: 0.4,
@@ -407,7 +406,9 @@ class _TaskRow extends ConsumerWidget {
               key: Key('done-${item.task.id}'),
               size: 32,
               value: item.isDone,
-              onChanged: _actionable ? (_) => markDone(context, ref, item) : null,
+              onChanged: _actionable
+                  ? (_) => markDone(context, ref, item)
+                  : null,
             ),
           ),
           const SizedBox(width: AppSpacing.md),

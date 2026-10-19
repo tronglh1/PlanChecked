@@ -47,6 +47,7 @@ class FirebasePushMessaging implements PushMessaging {
   Future<String?> getToken() async {
     if (!_ready) return null;
     try {
+      // ignore: deprecated_member_use
       return await FirebaseMessaging.instance.getToken();
     } catch (e) {
       debugPrint('FCM getToken failed: $e');
@@ -55,8 +56,12 @@ class FirebasePushMessaging implements PushMessaging {
   }
 
   @override
-  Stream<String> get onTokenRefresh =>
-      _ready ? FirebaseMessaging.instance.onTokenRefresh : const Stream.empty();
+  // ignore: deprecated_member_use
+  Stream<String> get onTokenRefresh => _ready
+      ? FirebaseMessaging
+            .instance
+            .onTokenRefresh // ignore: deprecated_member_use
+      : const Stream.empty();
 
   @override
   Stream<PushMessage> get onMessage => !_ready
@@ -95,7 +100,7 @@ class SupabasePushTokenRepository implements PushTokenRepository {
       'user_id': userId,
       'token': token,
       'platform': platform,
-    }, onConflict: 'user_id,token');
+    }, onConflict: 'token');
   }
 }
 

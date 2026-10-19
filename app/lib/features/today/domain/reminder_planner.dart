@@ -186,9 +186,7 @@ class ReminderPlanner {
       );
     }
     shifted.sort((a, b) => a.when.compareTo(b.when));
-    return shifted.length > maxCount
-        ? shifted.sublist(0, maxCount)
-        : shifted;
+    return shifted.length > maxCount ? shifted.sublist(0, maxCount) : shifted;
   }
 
   static List<PlannedNotification> _tasks({
@@ -206,7 +204,10 @@ class ReminderPlanner {
     // (date, window) -> entries
     final entries = <DateTime, List<_Entry>>{};
     void add(DateTime date, Task t, TaskWindow w) {
-      (entries[date] ??= []).add(_Entry(t, w, parseHm(t.reminderTime)));
+      final list = entries[date] ??= [];
+      // An overdue and a due-today occurrence of one task remind once.
+      if (list.any((e) => e.task.id == t.id && e.window == w)) return;
+      list.add(_Entry(t, w, parseHm(t.reminderTime)));
     }
 
     // Today (and carried-over overdue / snoozed-due) via the Today rules.
@@ -241,7 +242,9 @@ class ReminderPlanner {
         final byId = {for (final t in p.tasks) t.id: t};
         for (final o in occs) {
           final t = byId[o.taskId]!;
-          if (userId != null && t.assigneeId != null && t.assigneeId != userId) {
+          if (userId != null &&
+              t.assigneeId != null &&
+              t.assigneeId != userId) {
             continue;
           }
           if (latest.containsKey(o.key)) continue; // already acted on / moved
@@ -341,7 +344,10 @@ class ReminderPlanner {
     required int horizonDays,
   }) {
     final end = addDays(today, horizonDays - 1);
-    final next = nextCheckinDates(projects: projects, lastCheckins: lastCheckins);
+    final next = nextCheckinDates(
+      projects: projects,
+      lastCheckins: lastCheckins,
+    );
     final out = <PlannedNotification>[];
     for (final p in projects) {
       var date = next[p.id]!;

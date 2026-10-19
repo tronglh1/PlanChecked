@@ -18,7 +18,8 @@ class TodayRoutes {
 final List<RouteBase> todayRoutes = [
   GoRoute(
     path: '/task/:id',
-    builder: (_, state) => TaskDetailScreen(taskId: state.pathParameters['id']!),
+    builder: (_, state) =>
+        TaskDetailScreen(taskId: state.pathParameters['id']!),
   ),
   GoRoute(
     path: '/task/:id/assign',

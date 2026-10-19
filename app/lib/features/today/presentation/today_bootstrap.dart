@@ -39,6 +39,16 @@ class _TodayBootstrapState extends ConsumerState<TodayBootstrap>
   PushService? _push;
   StreamSubscription<String>? _taps;
   Timer? _bannerTimer;
+  bool _initialUserHandled = false;
+
+  void _onUser(String? uid) {
+    if (uid != null) {
+      _startPush(uid);
+      _listenTaps();
+    } else {
+      _push?.stop();
+    }
+  }
 
   @override
   void initState() {
@@ -106,14 +116,14 @@ class _TodayBootstrapState extends ConsumerState<TodayBootstrap>
     // Instantiate the controller as soon as the user is signed in, even when
     // the Today tab is not visible, so reminders are always planned.
     ref.listen(todayModelProvider, (_, _) {});
-    ref.listen<String?>(currentUserIdProvider, (_, uid) {
+    ref.listen<String?>(currentUserIdProvider, (_, uid) => _onUser(uid));
+    if (!_initialUserHandled) {
+      _initialUserHandled = true;
+      final uid = ref.read(currentUserIdProvider);
       if (uid != null) {
-        _startPush(uid);
-        _listenTaps();
-      } else {
-        _push?.stop();
+        WidgetsBinding.instance.addPostFrameCallback((_) => _onUser(uid));
       }
-    }, fireImmediately: true);
+    }
 
     final banner = ref.watch(pushBannerProvider);
     return Stack(

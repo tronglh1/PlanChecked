@@ -6,6 +6,7 @@ import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'core/widgets/glass_config.dart';
 import 'features/settings/presentation/locale_provider.dart';
+import 'features/today/presentation/today_bootstrap.dart';
 import 'l10n/app_localizations.dart';
 
 /// Global switch for BackdropFilter blur (disable on low-end devices).
@@ -38,8 +39,10 @@ class VuonNhaApp extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      builder: (context, child) =>
-          GlassConfig(blur: blur, child: child ?? const SizedBox.shrink()),
+      builder: (context, child) => GlassConfig(
+        blur: blur,
+        child: TodayBootstrap(child: child ?? const SizedBox.shrink()),
+      ),
     );
   }
 }

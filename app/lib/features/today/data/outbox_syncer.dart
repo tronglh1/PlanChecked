@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import '../domain/outbox_entry.dart';
 import 'task_repository.dart';
 import 'today_local_store.dart';
 
@@ -57,7 +56,7 @@ class OutboxSyncer {
     required TaskRepository repository,
     DateTime Function()? clock,
     this.maxAttempts = 12,
-  }) : _store = store,
+  }) : _store = store, // ignore: prefer_initializing_formals
        _repo = repository,
        _clock = clock ?? DateTime.now;
 

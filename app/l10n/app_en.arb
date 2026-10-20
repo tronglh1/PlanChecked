@@ -1205,6 +1205,7 @@
     }
   },
   "checkinTakePhoto": "Take photo",
+  "checkinPickError": "Couldn't open the camera or gallery ({detail}).",
   "checkinRetakeShot": "Retake this photo",
   "checkinGallery": "Choose from gallery",
   "checkinTips": "Photo tips",

@@ -320,6 +320,20 @@ void main() {
       expect(find.text('Kết quả check-in'), findsOneWidget);
     });
 
+    testWidgets('a camera failure is shown instead of doing nothing', (
+      t,
+    ) async {
+      await pumpCheckinApp(
+        t,
+        initial: '/projects/new1/checkin',
+        source: FailingImageSource(),
+      );
+      await tapKey(t, 'shutter');
+      expect(find.textContaining('Không mở được máy ảnh'), findsOneWidget);
+      expect(find.textContaining('No cameras available'), findsOneWidget);
+      expect(find.text('Đã chụp 0/3 ảnh'), findsOneWidget);
+    });
+
     testWidgets('gallery fallback adds a photo', (t) async {
       final src = FakeImageSource([jpegOf(sharpImage(800, 600))]);
       await pumpCheckinApp(t, initial: '/projects/new1/checkin', source: src);

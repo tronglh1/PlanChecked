@@ -1,7 +1,7 @@
 import 'dart:math' as math;
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -239,7 +239,7 @@ Future<GoRouter> pumpCheckinApp(
   WidgetTester tester, {
   required String initial,
   FakeCheckinRepository? checkins,
-  FakeImageSource? source,
+  CheckinImageSource? source,
   PlanBundle? bundle,
   List<Override> extra = const [],
 }) async {
@@ -303,4 +303,16 @@ Future<GoRouter> pumpCheckinApp(
   );
   await tester.pumpAndSettle();
   return router;
+}
+
+/// A camera that fails the way image_picker does on a broken device.
+class FailingImageSource implements CheckinImageSource {
+  @override
+  Future<Uint8List?> takePhoto() async => throw PlatformException(
+    code: 'no_available_camera',
+    message: 'No cameras available for taking pictures.',
+  );
+
+  @override
+  Future<Uint8List?> pickFromGallery() async => null;
 }

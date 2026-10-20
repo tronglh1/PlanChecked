@@ -1711,6 +1711,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get checkinTakePhoto => 'Take photo';
 
   @override
+  String checkinPickError(String detail) {
+    return 'Couldn\'t open the camera or gallery ($detail).';
+  }
+
+  @override
   String get checkinRetakeShot => 'Retake this photo';
 
   @override

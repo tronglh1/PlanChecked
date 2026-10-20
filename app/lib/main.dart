@@ -14,6 +14,7 @@ Future<void> main() async {
         publishableKey: Env.supabaseAnonKey,
       );
     } catch (e) {
+      Env.initError = '$e';
       debugPrint('Supabase init failed: $e');
     }
   }

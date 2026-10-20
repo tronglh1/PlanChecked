@@ -49,16 +49,55 @@ jobs:
             jq -e '.SUPABASE_URL and .SUPABASE_ANON_KEY' env/apk.json > /dev/null
             cp env/apk.json env/dev.json
           fi
-      - run: flutter build apk --release --dart-define-from-file=env/dev.json
+      - run: flutter build apk --release --build-number=${{ github.run_number }} --dart-define-from-file=env/dev.json
       - run: mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/vuon-nha.apk
       - uses: actions/upload-artifact@v4
         with:
           name: vuon-nha-apk
           path: app/build/app/outputs/flutter-apk/vuon-nha.apk
           retention-days: 14
+
+  smoke:
+    # Installs the release APK on an emulator and fails if Supabase/plugins crash at startup
+    # (the R8 + JNI NoSuchMethodError only showed up on real devices before this check).
+    needs: apk
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules && sudo udevadm trigger --name-match=kvm
+      - uses: actions/download-artifact@v4
+        with:
+          name: vuon-nha-apk
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          arch: x86_64
+          target: google_apis
+          disable-animations: true
+          script: |
+            adb install -r vuon-nha.apk
+            adb logcat -c
+            adb shell monkey -p com.planchecked.vuonnha -c android.intent.category.LAUNCHER 1
+            sleep 25
+            adb logcat -d > logcat.txt || true
+            grep -E "flutter|AndroidRuntime" logcat.txt | tail -60 || true
+            ! grep -E "NoSuchMethodError|Supabase init failed|FATAL EXCEPTION" logcat.txt
+
+  publish:
+    needs: smoke
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: vuon-nha-apk
       - name: Publish to the dev-apk release (direct phone download)
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
         run: |
           gh release view dev-apk >/dev/null 2>&1 || gh release create dev-apk --prerelease --target "$GITHUB_SHA" --title "Vườn Nhà – bản thử" --notes "Bản thử nội bộ. Gỡ bản cũ trước khi cài."
-          gh release upload dev-apk build/app/outputs/flutter-apk/vuon-nha.apk --clobber
+          gh release upload dev-apk vuon-nha.apk --clobber

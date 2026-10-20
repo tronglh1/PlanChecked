@@ -548,6 +548,12 @@ abstract class AppLocalizations {
   /// **'Xóa tài khoản và toàn bộ dữ liệu'**
   String get settingsDeleteAccount;
 
+  /// No description provided for @appVersion.
+  ///
+  /// In vi, this message translates to:
+  /// **'Phiên bản {version}'**
+  String appVersion(String version);
+
   /// No description provided for @deleteConfirm1Title.
   ///
   /// In vi, this message translates to:

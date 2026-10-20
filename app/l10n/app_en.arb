@@ -82,6 +82,7 @@
   "settingsLeaveHousehold": "Leave household",
   "settingsSignOut": "Sign out",
   "settingsDeleteAccount": "Delete account and all data",
+  "appVersion": "Version {version}",
   "deleteConfirm1Title": "Delete account?",
   "deleteConfirm1Body": "All your projects, check-ins, photos and achievements will be deleted.",
   "deleteConfirm2Title": "Are you absolutely sure?",

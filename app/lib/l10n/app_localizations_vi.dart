@@ -240,6 +240,11 @@ class AppLocalizationsVi extends AppLocalizations {
   String get settingsDeleteAccount => 'Xóa tài khoản và toàn bộ dữ liệu';
 
   @override
+  String appVersion(String version) {
+    return 'Phiên bản $version';
+  }
+
+  @override
   String get deleteConfirm1Title => 'Xóa tài khoản?';
 
   @override

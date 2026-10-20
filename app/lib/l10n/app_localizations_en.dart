@@ -242,6 +242,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsDeleteAccount => 'Delete account and all data';
 
   @override
+  String appVersion(String version) {
+    return 'Version $version';
+  }
+
+  @override
   String get deleteConfirm1Title => 'Delete account?';
 
   @override

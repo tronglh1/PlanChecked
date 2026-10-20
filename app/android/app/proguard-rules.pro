@@ -48,3 +48,10 @@
 -keep class io.flutter.plugins.** { *; }
 -keep class dev.flutter.pigeon.** { *; }
 -keep class com.llfbandit.app_links.** { *; }
+
+# --- shared_preferences (and other jni/jnigen-based plugins) look up Kotlin methods from
+# native code by their full JNI signature. Keeping the classes is not enough: R8 still
+# renamed kotlin.coroutines.Continuation in getAll(String, List, Continuation), so the
+# lookup failed. Shrink, but never rename.
+-dontobfuscate
+-keep class com.github.dart_lang.jni.** { *; }

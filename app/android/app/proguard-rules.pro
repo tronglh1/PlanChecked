@@ -41,3 +41,10 @@
 # Keep line numbers for readable crash stack traces (upload mapping.txt to Play Console).
 -keepattributes SourceFile,LineNumberTable
 -renamesourcefileattribute SourceFile
+
+# --- Flutter plugins talk to Dart through Pigeon-generated channels; R8 stripped
+# SharedPreferencesApiRegistrar.getAll in the first release build (NoSuchMethodError
+# at Supabase.initialize). Keep every plugin package and the Pigeon runtime.
+-keep class io.flutter.plugins.** { *; }
+-keep class dev.flutter.pigeon.** { *; }
+-keep class com.llfbandit.app_links.** { *; }

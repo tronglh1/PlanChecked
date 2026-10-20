@@ -1212,6 +1212,14 @@
     }
   },
   "checkinTakePhoto": "Chụp ảnh",
+  "checkinPickError": "Không mở được máy ảnh hoặc thư viện ảnh ({detail}).",
+  "@checkinPickError": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
   "checkinRetakeShot": "Chụp lại ảnh này",
   "checkinGallery": "Chọn từ thư viện ảnh",
   "checkinTips": "Xem mẹo chụp",

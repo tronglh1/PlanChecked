@@ -3013,6 +3013,12 @@ abstract class AppLocalizations {
   /// **'Chụp ảnh'**
   String get checkinTakePhoto;
 
+  /// No description provided for @checkinPickError.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không mở được máy ảnh hoặc thư viện ảnh ({detail}).'**
+  String checkinPickError(String detail);
+
   /// No description provided for @checkinRetakeShot.
   ///
   /// In vi, this message translates to:

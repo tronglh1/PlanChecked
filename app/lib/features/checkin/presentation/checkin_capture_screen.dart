@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -48,9 +49,26 @@ class _CheckinCaptureScreenState extends ConsumerState<CheckinCaptureScreen> {
 
   Future<void> _pick({required bool gallery}) async {
     final source = ref.read(checkinImageSourceProvider);
-    final raw = gallery
-        ? await source.pickFromGallery()
-        : await source.takePhoto();
+    final Uint8List? raw;
+    try {
+      raw = gallery ? await source.pickFromGallery() : await source.takePhoto();
+    } catch (e) {
+      // Without this the tap did nothing visible when the camera/picker failed.
+      if (!mounted) return;
+      final detail = e is PlatformException
+          ? (e.message ?? e.code)
+          : e.toString();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            AppLocalizations.of(context).checkinPickError(
+              detail.length > 160 ? '${detail.substring(0, 160)}…' : detail,
+            ),
+          ),
+        ),
+      );
+      return;
+    }
     if (raw == null || !mounted) return;
     final retake = await _ctrl.addPhoto(raw);
     if (!mounted) return;

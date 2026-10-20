@@ -148,7 +148,7 @@ async function handle(req: Request): Promise<{ body: Record<string, unknown>; st
         await refund();
         await admin.from('checkins').update({ ai_result: { error: e.reason } }).eq('id', checkin.id);
         // Spec §7 #38: no delta is applied, the plan stays as it is.
-        return { status: 502, body: { status: 'error', code: 'AI_UNAVAILABLE', reason: e.reason, checkin_id: checkin.id } };
+        return { status: 502, body: { status: 'error', code: 'AI_UNAVAILABLE', reason: e.reason, detail: e.message.slice(0, 200), checkin_id: checkin.id } };
       }
       throw e;
     }

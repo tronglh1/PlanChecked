@@ -1674,6 +1674,11 @@ class AppLocalizationsVi extends AppLocalizations {
   String get checkinTakePhoto => 'Chụp ảnh';
 
   @override
+  String checkinPickError(String detail) {
+    return 'Không mở được máy ảnh hoặc thư viện ảnh ($detail).';
+  }
+
+  @override
   String get checkinRetakeShot => 'Chụp lại ảnh này';
 
   @override

@@ -5,7 +5,10 @@ import { GEMINI_URL_BASE } from './constants.ts';
 import { ClaudeError, type ClaudeDeps, type ClaudeRequest } from './anthropic.ts';
 import type { ClaudeResult } from './types.ts';
 
-export function buildGeminiBody(req: ClaudeRequest) {
+/** Gemini 3.x thinks at "medium" by default; thinking tokens count toward maxOutputTokens and add
+ * latency, which truncated plans and hit the timeout. Low thinking plus a larger budget avoids both. */
+export function buildGeminiBody(req: ClaudeRequest, opts: { thinking?: boolean } = {}) {
+  const thinking = opts.thinking ?? true;
   return {
     systemInstruction: { parts: req.system.map((b) => ({ text: b.text })) },
     contents: [{
@@ -15,7 +18,8 @@ export function buildGeminiBody(req: ClaudeRequest) {
         : { inlineData: { mimeType: b.source.media_type, data: b.source.data } }),
     }],
     generationConfig: {
-      maxOutputTokens: req.maxTokens,
+      maxOutputTokens: Math.max(req.maxTokens * 3, 8192),
+      ...(thinking ? { thinkingConfig: { thinkingLevel: 'low' } } : {}),
       responseMimeType: 'application/json',
       responseJsonSchema: req.tool.input_schema,
     },
@@ -27,7 +31,8 @@ export async function callGemini(req: ClaudeRequest, deps: ClaudeDeps): Promise<
   const doFetch = deps.fetchImpl ?? fetch;
   const sleep = deps.sleep ?? ((ms: number) => new Promise<void>((r) => setTimeout(r, ms)));
   let lastErr: ClaudeError | null = null;
-  for (let attempt = 0; attempt < 2; attempt++) {
+  let thinking = true;   // dropped once if a model rejects thinkingConfig
+  for (let attempt = 0; attempt < 3; attempt++) {
     if (attempt > 0) await sleep(700);
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), req.timeoutMs);
@@ -35,25 +40,26 @@ export async function callGemini(req: ClaudeRequest, deps: ClaudeDeps): Promise<
       const res = await doFetch(`${GEMINI_URL_BASE}/${req.model}:generateContent`, {
         method: 'POST',
         headers: { 'content-type': 'application/json', 'x-goog-api-key': deps.apiKey },
-        body: JSON.stringify(buildGeminiBody(req)),
+        body: JSON.stringify(buildGeminiBody(req, { thinking })),
         signal: ctrl.signal,
       });
       if (!res.ok) {
         const retryable = res.status === 429 || res.status >= 500;
-        lastErr = new ClaudeError(`gemini ${res.status}`, res.status, retryable);
-        await res.text().catch(() => '');
-        if (!retryable) throw lastErr;
+        const text = await res.text().catch(() => '');
+        lastErr = new ClaudeError(`gemini ${res.status}: ${text.slice(0, 300)}`, res.status, retryable);
+        if (res.status === 400 && thinking && /thinking/i.test(text)) { thinking = false; continue; }
+        if (!retryable || attempt >= 1) throw lastErr;
         continue;
       }
       const data = await res.json();
       const parts: { text?: string; thought?: boolean }[] = data.candidates?.[0]?.content?.parts ?? [];
       const text = parts.filter((p) => !p.thought && typeof p.text === 'string').map((p) => p.text).join('');
-      if (!text) throw new ClaudeError(`no text in response (${data.candidates?.[0]?.finishReason ?? 'no candidate'})`, res.status, false);
+      if (!text) throw new ClaudeError(`no text in response (${data.candidates?.[0]?.finishReason ?? data.promptFeedback?.blockReason ?? 'no candidate'})`, res.status, false);
       let input: unknown;
       try {
         input = JSON.parse(text);
       } catch (_) {
-        throw new ClaudeError('response is not valid JSON', res.status, false);
+        throw new ClaudeError(`response is not valid JSON (${data.candidates?.[0]?.finishReason ?? '?'})`, res.status, false);
       }
       const u = data.usageMetadata ?? {};
       const cached = u.cachedContentTokenCount ?? 0;
@@ -70,6 +76,7 @@ export async function callGemini(req: ClaudeRequest, deps: ClaudeDeps): Promise<
     } catch (e) {
       if (e instanceof ClaudeError) { lastErr = e; if (!e.retryable) throw e; continue; }
       lastErr = new ClaudeError(e instanceof Error ? e.message : 'network error', null, true);   // abort / network
+      if (attempt >= 1) break;
     } finally {
       clearTimeout(timer);
     }

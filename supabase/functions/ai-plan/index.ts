@@ -76,7 +76,7 @@ async function handle(req: Request) {
     return respond(planId, 'template', tpl.confidence, key, null, bodyJson, true, null, false);
   }
 
-  const fallback = async (reason: FallbackReason) => {
+  const fallback = async (reason: FallbackReason, detail?: string) => {
     const { data: fb } = await admin.rpc('fallback_plan', {
       p_plant: plantKnown ? plantId : group === 'cay_canh' ? 'generic_ornamental' : 'generic_edible',
       p_start: project.start_stage,
@@ -84,7 +84,8 @@ async function handle(req: Request) {
     const fbBody = (fb ?? (await admin.rpc('fallback_plan', { p_plant: group === 'cay_canh' ? 'generic_ornamental' : 'generic_edible', p_start: 'seed' })).data) as PlanBody | null;
     if (!fbBody) throw new HttpError(500, 'no_fallback_plan');
     const planId = await createDraft(admin, project.id, 'fallback', null, key, null, fbBody);
-    return respond(planId, 'fallback', null, key, null, fbBody, false, reason, false);
+    // fallback_detail: short provider error, shown in test builds so failures can be read off a screenshot.
+    return { ...respond(planId, 'fallback', null, key, null, fbBody, false, reason, false), fallback_detail: detail?.slice(0, 200) ?? null };
   };
 
   // ---- 2. AI, guarded by the daily quota
@@ -128,7 +129,7 @@ async function handle(req: Request) {
       await recordUsage(admin, ctx.userId, e.model ?? ai.models.default, e.usage);
       await admin.rpc('ai_quota_refund', { p_user: ctx.userId, p_kind: 'plan' });
       console.error('ai-plan failed', e.reason, e.message);
-      return await fallback(e.reason);
+      return await fallback(e.reason, e.message);
     }
     throw e;
   }

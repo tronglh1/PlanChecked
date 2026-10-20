@@ -97,7 +97,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String loginOtpSent(String email) {
-    return 'Chúng tôi đã gửi mã 6 số tới $email';
+    return 'Đã gửi email tới $email. Bấm link trong email hoặc nhập mã.';
   }
 
   @override

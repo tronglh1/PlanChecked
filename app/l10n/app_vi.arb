@@ -28,7 +28,7 @@
   "loginSendCode": "Nhận mã đăng nhập",
   "loginEmailInvalid": "Email chưa hợp lệ",
   "loginOtpTitle": "Nhập mã xác nhận",
-  "loginOtpSent": "Chúng tôi đã gửi mã 6 số tới {email}",
+  "loginOtpSent": "Đã gửi email tới {email}. Bấm link trong email hoặc nhập mã.",
   "@loginOtpSent": {
     "placeholders": {
       "email": {

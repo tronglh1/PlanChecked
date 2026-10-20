@@ -28,7 +28,7 @@
   "loginSendCode": "Get sign-in code",
   "loginEmailInvalid": "Enter a valid email",
   "loginOtpTitle": "Enter the code",
-  "loginOtpSent": "We sent a 6-digit code to {email}",
+  "loginOtpSent": "Email sent to {email}. Tap its link or enter the code.",
   "@loginOtpSent": {
     "placeholders": {
       "email": {

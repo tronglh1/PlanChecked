@@ -82,6 +82,14 @@
   "settingsLeaveHousehold": "Rời gia đình",
   "settingsSignOut": "Đăng xuất",
   "settingsDeleteAccount": "Xóa tài khoản và toàn bộ dữ liệu",
+  "appVersion": "Phiên bản {version}",
+  "@appVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "deleteConfirm1Title": "Xóa tài khoản?",
   "deleteConfirm1Body": "Toàn bộ dự án, check-in, ảnh và thành tích của bạn sẽ bị xóa.",
   "deleteConfirm2Title": "Bạn chắc chắn chứ?",

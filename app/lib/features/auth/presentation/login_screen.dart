@@ -45,7 +45,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       // Keep the server's reason visible (rate limit, mailer not allowed, provider off)
       // so a failed sign-in can be diagnosed from a screenshot.
       final cause = e is AuthException ? e.message : '${e.runtimeType}: $e';
-      final raw = Env.initError == null ? cause : 'init: ${Env.initError} | $cause';
+      final raw = Env.initError == null
+          ? cause
+          : 'init: ${Env.initError} | $cause';
       final detail = raw.length > 200 ? '${raw.substring(0, 200)}…' : raw;
       if (mounted) setState(() => _error = '$failure\n($detail)');
     } finally {
@@ -165,6 +167,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ],
                 const SizedBox(height: AppSpacing.xl),
                 _Footer(l10n: l10n),
+                const SizedBox(height: AppSpacing.md),
+                const AppVersionLabel(),
               ],
             ),
           ),

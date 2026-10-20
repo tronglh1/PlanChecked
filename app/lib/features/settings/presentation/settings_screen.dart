@@ -287,6 +287,8 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
         ),
+        const SizedBox(height: AppSpacing.lg),
+        const AppVersionLabel(),
       ],
     );
   }

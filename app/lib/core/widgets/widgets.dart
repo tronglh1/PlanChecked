@@ -1,3 +1,4 @@
+export 'app_version_label.dart';
 export 'empty_state.dart';
 export 'glass_card.dart';
 export 'glass_config.dart';

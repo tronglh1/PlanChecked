@@ -13,6 +13,7 @@ import 'package:vuon_nha/features/checkin/checkin_routes.dart';
 import 'package:vuon_nha/features/checkin/data/checkin_repository.dart';
 import 'package:vuon_nha/features/checkin/domain/checkin_models.dart';
 import 'package:vuon_nha/features/checkin/domain/image_quality.dart';
+import 'package:vuon_nha/features/checkin/presentation/checkin_camera.dart';
 import 'package:vuon_nha/features/checkin/presentation/checkin_providers.dart';
 import 'package:vuon_nha/features/plan/domain/plan_bundle.dart';
 import 'package:vuon_nha/features/plan/domain/enums.dart';
@@ -240,6 +241,7 @@ Future<GoRouter> pumpCheckinApp(
   required String initial,
   FakeCheckinRepository? checkins,
   CheckinImageSource? source,
+  CheckinCamera Function()? camera,
   PlanBundle? bundle,
   List<Override> extra = const [],
 }) async {
@@ -281,6 +283,10 @@ Future<GoRouter> pumpCheckinApp(
         checkinImageSourceProvider.overrideWithValue(
           source ?? FakeImageSource([]),
         ),
+        // Default: live camera unavailable, so the shutter uses the image source.
+        checkinCameraFactoryProvider.overrideWithValue(
+          camera ?? () => FakeCheckinCamera(failInit: true),
+        ),
         imageProcessorProvider.overrideWithValue(
           (b) async => processImageBytes(b),
         ),
@@ -315,4 +321,37 @@ class FailingImageSource implements CheckinImageSource {
 
   @override
   Future<Uint8List?> pickFromGallery() async => null;
+}
+
+class FakeCheckinCamera implements CheckinCamera {
+  FakeCheckinCamera({this.failInit = false, List<Uint8List>? photos})
+    : photos = photos ?? [];
+
+  final bool failInit;
+
+  /// Photos handed out one per capture, in order.
+  final List<Uint8List> photos;
+  int captured = 0;
+  bool disposed = false;
+
+  @override
+  Future<void> initialize() async {
+    if (failInit) throw StateError('permission denied');
+  }
+
+  @override
+  Future<Uint8List> capture() async {
+    captured++;
+    return photos.removeAt(0);
+  }
+
+  @override
+  double get previewAspect => 0.75;
+
+  @override
+  Widget buildPreview() =>
+      const ColoredBox(key: Key('fake-camera-preview'), color: Colors.teal);
+
+  @override
+  Future<void> dispose() async => disposed = true;
 }

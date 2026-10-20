@@ -1703,6 +1703,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get checkinFrameHint => 'Keep the whole plant in frame';
 
   @override
+  String get checkinCameraUnavailable =>
+      'Couldn\'t open the camera. Tap the shutter to use your phone\'s camera app.';
+
+  @override
   String checkinShotsTaken(int count, int max) {
     return '$count/$max photos taken';
   }

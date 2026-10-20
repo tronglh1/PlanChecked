@@ -9,6 +9,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../plan/presentation/plan_labels.dart';
 import '../../projects/presentation/projects_providers.dart';
 import '../domain/checkin_models.dart';
+import 'checkin_camera.dart';
 import 'checkin_labels.dart';
 import 'checkin_providers.dart';
 
@@ -25,13 +26,82 @@ class CheckinCaptureScreen extends ConsumerStatefulWidget {
       _CheckinCaptureScreenState();
 }
 
-class _CheckinCaptureScreenState extends ConsumerState<CheckinCaptureScreen> {
+enum _CamState { initializing, ready, failed }
+
+class _CheckinCaptureScreenState extends ConsumerState<CheckinCaptureScreen>
+    with WidgetsBindingObserver {
   final _note = TextEditingController();
+  CheckinCamera? _camera;
+  _CamState _camState = _CamState.initializing;
+  bool _shooting = false;
+  int _camGen = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _initCamera();
+  }
+
+  Future<void> _initCamera() async {
+    final gen = ++_camGen;
+    final camera = ref.read(checkinCameraFactoryProvider)();
+    setState(() => _camState = _CamState.initializing);
+    try {
+      await camera.initialize();
+    } catch (_) {
+      await _safeDispose(camera);
+      if (mounted && gen == _camGen) {
+        setState(() => _camState = _CamState.failed);
+      }
+      return;
+    }
+    if (!mounted || gen != _camGen) {
+      await _safeDispose(camera);
+      return;
+    }
+    setState(() {
+      _camera = camera;
+      _camState = _CamState.ready;
+    });
+  }
+
+  Future<void> _safeDispose(CheckinCamera camera) async {
+    try {
+      await camera.dispose();
+    } catch (_) {}
+  }
+
+  void _releaseCamera() {
+    _camGen++;
+    final camera = _camera;
+    _camera = null;
+    if (camera != null) _safeDispose(camera);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.paused:
+        if (_camera != null || _camState == _CamState.initializing) {
+          _releaseCamera();
+          setState(() => _camState = _CamState.initializing);
+        }
+      case AppLifecycleState.resumed:
+        if (_camera == null) _initCamera();
+      case AppLifecycleState.detached:
+      case AppLifecycleState.hidden:
+        break;
+    }
+  }
 
   String get _base => '/projects/${widget.projectId}';
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _releaseCamera();
     _note.dispose();
     super.dispose();
   }
@@ -47,34 +117,63 @@ class _CheckinCaptureScreenState extends ConsumerState<CheckinCaptureScreen> {
     }
   }
 
+  void _showPickError(Object e) {
+    // Without this the tap did nothing visible when the camera/picker failed.
+    if (!mounted) return;
+    final detail = e is PlatformException
+        ? (e.message ?? e.code)
+        : e.toString();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          AppLocalizations.of(context).checkinPickError(
+            detail.length > 160 ? '${detail.substring(0, 160)}…' : detail,
+          ),
+        ),
+      ),
+    );
+  }
+
   Future<void> _pick({required bool gallery}) async {
     final source = ref.read(checkinImageSourceProvider);
     final Uint8List? raw;
     try {
       raw = gallery ? await source.pickFromGallery() : await source.takePhoto();
     } catch (e) {
-      // Without this the tap did nothing visible when the camera/picker failed.
-      if (!mounted) return;
-      final detail = e is PlatformException
-          ? (e.message ?? e.code)
-          : e.toString();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            AppLocalizations.of(context).checkinPickError(
-              detail.length > 160 ? '${detail.substring(0, 160)}…' : detail,
-            ),
-          ),
-        ),
-      );
+      _showPickError(e);
       return;
     }
+    await _handleRaw(raw);
+  }
+
+  Future<void> _handleRaw(Uint8List? raw) async {
     if (raw == null || !mounted) return;
     final retake = await _ctrl.addPhoto(raw);
     if (!mounted) return;
     if (retake != null) {
       context.push('$_base/checkin/retake', extra: retake);
     }
+  }
+
+  /// Shutter: live camera when ready, system camera when the live one failed.
+  Future<void> _shutter() async {
+    if (_shooting) return;
+    final camera = _camera;
+    if (_camState == _CamState.failed || camera == null) {
+      if (_camState == _CamState.failed) await _pick(gallery: false);
+      return;
+    }
+    setState(() => _shooting = true);
+    final Uint8List raw;
+    try {
+      raw = await camera.capture();
+    } catch (e) {
+      if (mounted) setState(() => _shooting = false);
+      _showPickError(e);
+      return;
+    }
+    if (mounted) setState(() => _shooting = false);
+    await _handleRaw(raw);
   }
 
   Future<void> _submit() async {
@@ -281,22 +380,57 @@ class _CheckinCaptureScreenState extends ConsumerState<CheckinCaptureScreen> {
                     ),
                   ],
                 )
-              : Center(
-                  child: Container(
-                    width: 190,
-                    height: 250,
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(AppSpacing.md),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(120),
-                      border: Border.all(color: Colors.white54, width: 1.5),
+              : Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    if (_camState == _CamState.ready && _camera != null)
+                      Positioned.fill(
+                        child: ClipRect(
+                          child: FittedBox(
+                            fit: BoxFit.cover,
+                            child: SizedBox(
+                              width: 1000 * _camera!.previewAspect,
+                              height: 1000,
+                              child: _camera!.buildPreview(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    Center(
+                      child: Container(
+                        width: 190,
+                        height: 250,
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(AppSpacing.md),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(120),
+                          border: Border.all(color: Colors.white54, width: 1.5),
+                        ),
+                        child: Text(
+                          l10n.checkinFrameHint,
+                          textAlign: TextAlign.center,
+                          style: t.bodyMedium?.copyWith(
+                            color: Colors.white70,
+                            shadows: const [
+                              Shadow(blurRadius: 4, color: Colors.black54),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                    child: Text(
-                      l10n.checkinFrameHint,
-                      textAlign: TextAlign.center,
-                      style: t.bodyMedium?.copyWith(color: Colors.white70),
-                    ),
-                  ),
+                    if (_camState == _CamState.failed)
+                      Positioned(
+                        left: AppSpacing.md,
+                        right: AppSpacing.md,
+                        bottom: AppSpacing.sm,
+                        child: Text(
+                          l10n.checkinCameraUnavailable,
+                          key: const Key('camera-unavailable'),
+                          textAlign: TextAlign.center,
+                          style: t.bodySmall?.copyWith(color: Colors.white70),
+                        ),
+                      ),
+                  ],
                 ),
         ),
         const SizedBox(height: AppSpacing.md),
@@ -363,7 +497,9 @@ class _CheckinCaptureScreenState extends ConsumerState<CheckinCaptureScreen> {
               label: l10n.checkinTakePhoto,
               child: GestureDetector(
                 key: const Key('shutter'),
-                onTap: busy ? null : () => _pick(gallery: false),
+                onTap: busy || _shooting || _camState == _CamState.initializing
+                    ? null
+                    : _shutter,
                 child: Container(
                   width: 76,
                   height: 76,

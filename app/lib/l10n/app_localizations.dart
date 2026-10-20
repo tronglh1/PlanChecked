@@ -3001,6 +3001,12 @@ abstract class AppLocalizations {
   /// **'Đặt cả cây trong khung'**
   String get checkinFrameHint;
 
+  /// No description provided for @checkinCameraUnavailable.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không mở được máy ảnh. Bấm nút chụp để dùng máy ảnh của điện thoại.'**
+  String get checkinCameraUnavailable;
+
   /// No description provided for @checkinShotsTaken.
   ///
   /// In vi, this message translates to:

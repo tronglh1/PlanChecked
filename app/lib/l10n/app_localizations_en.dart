@@ -97,7 +97,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String loginOtpSent(String email) {
-    return 'We sent a 6-digit code to $email';
+    return 'Email sent to $email. Tap its link or enter the code.';
   }
 
   @override

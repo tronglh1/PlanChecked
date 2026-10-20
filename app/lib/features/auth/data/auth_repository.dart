@@ -47,8 +47,13 @@ class SupabaseAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<void> sendEmailOtp(String email) =>
-      _client.auth.signInWithOtp(email: email.trim(), shouldCreateUser: true);
+  Future<void> sendEmailOtp(String email) => _client.auth.signInWithOtp(
+    email: email.trim(),
+    shouldCreateUser: true,
+    // The default Supabase mailer sends a link (no code) on the free tier;
+    // the link must come back into the app.
+    emailRedirectTo: kAuthRedirectUrl,
+  );
 
   @override
   Future<void> verifyEmailOtp(String email, String code) => _client.auth

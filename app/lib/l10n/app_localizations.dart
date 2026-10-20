@@ -269,7 +269,7 @@ abstract class AppLocalizations {
   /// No description provided for @loginOtpSent.
   ///
   /// In vi, this message translates to:
-  /// **'Chúng tôi đã gửi mã 6 số tới {email}'**
+  /// **'Đã gửi email tới {email}. Bấm link trong email hoặc nhập mã.'**
   String loginOtpSent(String email);
 
   /// No description provided for @loginOtpLabel.

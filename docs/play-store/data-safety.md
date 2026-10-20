@@ -15,7 +15,7 @@ Derived from the code in `app/lib` and `supabase/` on branch `mvp` (M8). Re-veri
 | FCM push token + platform | `today/data/push_service.dart` -> table `push_tokens` (only if `google-services.json` is bundled) | Supabase; Firebase Cloud Messaging (Google) |
 | Not present | no analytics SDK, no ads SDK, no Crashlytics/Sentry in `pubspec.yaml`, no GPS/location permission, no contacts, no microphone | - |
 
-Android permissions in the manifest: `INTERNET`, `POST_NOTIFICATIONS`, `RECEIVE_BOOT_COMPLETED`, `VIBRATE`. Camera and gallery are reached through `image_picker` system intents (no `CAMERA` permission declared).
+Android permissions in the manifest: `INTERNET`, `POST_NOTIFICATIONS`, `RECEIVE_BOOT_COMPLETED`, `VIBRATE`, `CAMERA` (live preview on the check-in screen via the `camera` plugin; photos are only taken when the user taps the shutter). The plugin's `RECORD_AUDIO` is removed in the manifest (`tools:node="remove"`), so no microphone. The gallery is reached through the `image_picker` system picker.
 
 ## Section 1 – Data collection and security
 

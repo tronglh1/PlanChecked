@@ -300,10 +300,12 @@ void main() {
         'plan_id': 'p',
         'source': 'fallback',
         'fallback_reason': 'ai_failure',
+        'fallback_detail': 'gemini 400: model not found',
       });
       expect(f.planId, 'p');
       expect(f.source, PlanSource.fallback);
       expect(f.fallbackReason, FallbackReason.aiFailure);
+      expect(f.fallbackDetail, 'gemini 400: model not found');
       final ok = AiPlanResult.fromJson({'plan_id': 'p', 'source': 'ai'});
       expect(ok.isFallback, isFalse);
     });

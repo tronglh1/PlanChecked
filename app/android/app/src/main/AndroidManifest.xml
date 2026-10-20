@@ -1,7 +1,12 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- Local task reminders (inexact alarms: no SCHEDULE_EXACT_ALARM needed). -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <!-- Photos only: drop the microphone permission the camera plugin declares, and keep
+         the app installable on devices without a camera. -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" tools:node="remove"/>
+    <uses-feature android:name="android.hardware.camera.any" android:required="false"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.VIBRATE"/>

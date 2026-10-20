@@ -147,11 +147,26 @@ class GeneratingScreen extends ConsumerWidget {
                 padding: const EdgeInsets.only(bottom: AppSpacing.md),
                 child: GlassCard(
                   key: const Key('fallback-message'),
-                  child: Text(
-                    state.fallbackReason == FallbackReason.quotaExceeded
-                        ? l10n.planFallbackQuota
-                        : l10n.planFallbackAiFailure,
-                    style: t.bodyMedium,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        state.fallbackReason == FallbackReason.quotaExceeded
+                            ? l10n.planFallbackQuota
+                            : l10n.planFallbackAiFailure,
+                        style: t.bodyMedium,
+                      ),
+                      if (state.fallbackDetail != null) ...[
+                        const SizedBox(height: AppSpacing.xs),
+                        Text(
+                          state.fallbackDetail!,
+                          key: const Key('fallback-detail'),
+                          style: t.bodySmall?.copyWith(
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                 ),
               )

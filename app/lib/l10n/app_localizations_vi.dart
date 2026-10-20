@@ -1666,6 +1666,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get checkinFrameHint => 'Đặt cả cây trong khung';
 
   @override
+  String get checkinCameraUnavailable =>
+      'Không mở được máy ảnh. Bấm nút chụp để dùng máy ảnh của điện thoại.';
+
+  @override
   String checkinShotsTaken(int count, int max) {
     return 'Đã chụp $count/$max ảnh';
   }

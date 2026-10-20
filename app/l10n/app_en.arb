@@ -1193,6 +1193,7 @@
   "checkinShotLeaf": "Close-up leaf",
   "checkinShotUnder": "Underside of leaf",
   "checkinFrameHint": "Keep the whole plant in frame",
+  "checkinCameraUnavailable": "Couldn't open the camera. Tap the shutter to use your phone's camera app.",
   "checkinShotsTaken": "{count}/{max} photos taken",
   "@checkinShotsTaken": {
     "placeholders": {

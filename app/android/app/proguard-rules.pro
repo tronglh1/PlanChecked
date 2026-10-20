@@ -31,6 +31,9 @@
 -keep class io.flutter.plugins.imagepicker.** { *; }
 -keep class androidx.exifinterface.** { *; }
 
+# --- camera (in-app live preview + capture)
+-keep class io.flutter.plugins.camera.** { *; }
+
 # --- share_plus uses plain Android APIs (FileProvider / intents)
 -keep class dev.fluttercommunity.plus.share.** { *; }
 

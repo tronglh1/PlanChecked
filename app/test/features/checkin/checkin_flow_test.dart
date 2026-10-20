@@ -329,9 +329,61 @@ void main() {
         source: FailingImageSource(),
       );
       await tapKey(t, 'shutter');
-      expect(find.textContaining('Không mở được máy ảnh'), findsOneWidget);
+      // The in-frame fallback hint also starts with "Không mở được máy ảnh".
+      expect(
+        find.textContaining('Không mở được máy ảnh hoặc thư viện'),
+        findsOneWidget,
+      );
       expect(find.textContaining('No cameras available'), findsOneWidget);
       expect(find.text('Đã chụp 0/3 ảnh'), findsOneWidget);
+    });
+
+    testWidgets('live camera: preview shows when ready', (t) async {
+      await pumpCheckinApp(
+        t,
+        initial: '/projects/new1/checkin',
+        camera: () => FakeCheckinCamera(),
+      );
+      expect(find.byKey(const Key('fake-camera-preview')), findsOneWidget);
+      expect(find.byKey(const Key('camera-unavailable')), findsNothing);
+      expect(find.text('Đặt cả cây trong khung'), findsOneWidget);
+    });
+
+    testWidgets('live camera: shutter captures via the fake camera', (t) async {
+      final cam = FakeCheckinCamera(photos: [jpegOf(sharpImage(800, 600))]);
+      final src = FakeImageSource([]);
+      await pumpCheckinApp(
+        t,
+        initial: '/projects/new1/checkin',
+        camera: () => cam,
+        source: src,
+      );
+      expect(find.text('Đã chụp 0/3 ảnh'), findsOneWidget);
+      await tapKey(t, 'shutter');
+      expect(cam.captured, 1);
+      expect(src.taken, 0);
+      expect(find.text('Đã chụp 1/3 ảnh'), findsOneWidget);
+    });
+
+    testWidgets('camera init failure falls back to the image source', (
+      t,
+    ) async {
+      final src = FakeImageSource([jpegOf(sharpImage(800, 600))]);
+      await pumpCheckinApp(
+        t,
+        initial: '/projects/new1/checkin',
+        camera: () => FakeCheckinCamera(failInit: true),
+        source: src,
+      );
+      expect(find.byKey(const Key('fake-camera-preview')), findsNothing);
+      expect(find.byKey(const Key('camera-unavailable')), findsOneWidget);
+      expect(
+        find.textContaining('Bấm nút chụp để dùng máy ảnh của điện thoại'),
+        findsOneWidget,
+      );
+      await tapKey(t, 'shutter');
+      expect(src.taken, 1);
+      expect(find.text('Đã chụp 1/3 ảnh'), findsOneWidget);
     });
 
     testWidgets('gallery fallback adds a photo', (t) async {

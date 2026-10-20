@@ -1200,6 +1200,7 @@
   "checkinShotLeaf": "Cận lá",
   "checkinShotUnder": "Mặt dưới lá",
   "checkinFrameHint": "Đặt cả cây trong khung",
+  "checkinCameraUnavailable": "Không mở được máy ảnh. Bấm nút chụp để dùng máy ảnh của điện thoại.",
   "checkinShotsTaken": "Đã chụp {count}/{max} ảnh",
   "@checkinShotsTaken": {
     "placeholders": {

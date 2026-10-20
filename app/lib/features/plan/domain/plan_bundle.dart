@@ -58,11 +58,15 @@ class AiPlanResult {
     this.planId,
     this.source = PlanSource.ai,
     this.fallbackReason = FallbackReason.none,
+    this.fallbackDetail,
   });
 
   final String? planId;
   final PlanSource source;
   final FallbackReason fallbackReason;
+
+  /// Short provider error behind a fallback (test builds show it).
+  final String? fallbackDetail;
 
   bool get isFallback =>
       source == PlanSource.fallback || fallbackReason != FallbackReason.none;
@@ -86,6 +90,7 @@ class AiPlanResult {
       planId: (j['plan_id'] ?? j['planId'])?.toString(),
       source: src,
       fallbackReason: reason,
+      fallbackDetail: j['fallback_detail']?.toString(),
     );
   }
 }

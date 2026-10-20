@@ -106,6 +106,7 @@ class GenerationState {
     this.completedSteps = 0,
     this.planId,
     this.fallbackReason = FallbackReason.none,
+    this.fallbackDetail,
   });
 
   final GenerationPhase phase;
@@ -114,6 +115,9 @@ class GenerationState {
   final int completedSteps;
   final String? planId;
   final FallbackReason fallbackReason;
+
+  /// Why the AI failed, as reported by the server (may be null).
+  final String? fallbackDetail;
 
   bool get usedFallback => fallbackReason != FallbackReason.none;
 
@@ -127,6 +131,7 @@ class GenerationState {
     completedSteps: completedSteps ?? this.completedSteps,
     planId: planId ?? this.planId,
     fallbackReason: fallbackReason ?? this.fallbackReason,
+    fallbackDetail: fallbackDetail,
   );
 }
 
@@ -229,6 +234,7 @@ class GenerationController extends Notifier<GenerationState> {
         completedSteps: 4,
         planId: planId,
         fallbackReason: reason,
+        fallbackDetail: result?.fallbackDetail,
       );
     }
   }

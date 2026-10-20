@@ -31,7 +31,8 @@ file_size_limit = "5MiB"
 
 [auth]
 enabled = true
-site_url = "https://vuonnha.app"
+# No website yet: links in auth emails open the app. Sign-in uses the 6-digit code.
+site_url = "io.supabase.vuonnha://login-callback/"
 additional_redirect_urls = ["io.supabase.vuonnha://login-callback/", "com.planchecked.vuonnha://login-callback", "http://localhost:3000"]
 jwt_expiry = 3600
 enable_refresh_token_rotation = true
@@ -48,9 +49,20 @@ otp_length = 6
 otp_expiry = 3600
 max_frequency = "60s"
 
+# The app asks for the 6-digit code, so both emails show {{ .Token }} instead of only a link
+# (new users get the confirmation mail, existing users the magic-link mail).
+[auth.email.template.magic_link]
+subject = "Mã đăng nhập Vườn Nhà: {{ .Token }}"
+content_path = "./supabase/templates/otp_code.html"
+
+[auth.email.template.confirmation]
+subject = "Mã đăng nhập Vườn Nhà: {{ .Token }}"
+content_path = "./supabase/templates/otp_code.html"
+
 # Google OAuth. Client id/secret come from env (see docs/backend.md).
 [auth.external.google]
-enabled = true
+# Off until the Google OAuth clients exist (docs/backend.md §1.5); then set true and push.
+enabled = false
 client_id = "env(GOOGLE_OAUTH_CLIENT_ID)"
 secret = "env(GOOGLE_OAUTH_SECRET)"
 skip_nonce_check = true # native Google Sign-In (ID token) on Android

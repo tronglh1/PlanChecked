@@ -26,8 +26,11 @@ export function resolveAi(env: (k: string) => string | undefined, fetchImpl?: ty
     ? { default: GEMINI_MODEL_DEFAULT, strong: GEMINI_MODEL_STRONG }
     : { default: MODEL_DEFAULT, strong: MODEL_STRONG };
   const models = { default: env('AI_MODEL_DEFAULT') || defaults.default, strong: env('AI_MODEL_STRONG') || defaults.strong };
-  const call = provider === 'gemini' ? callGemini : callClaude;
-  return { provider, models, call: (req) => call(req, { apiKey, fetchImpl }) };
+  if (provider === 'gemini') {
+    // Gemini 3.x answers slower than Haiku; give it twice the budget.
+    return { provider, models, call: (req) => callGemini({ ...req, timeoutMs: req.timeoutMs * 2 }, { apiKey, fetchImpl }) };
+  }
+  return { provider, models, call: (req) => callClaude(req, { apiKey, fetchImpl }) };
 }
 
 export const requireAi = (): AiClient => resolveAi((k) => Deno.env.get(k));

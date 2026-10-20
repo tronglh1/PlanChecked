@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/widgets.dart';
@@ -39,8 +40,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     });
     try {
       await action();
-    } catch (_) {
-      if (mounted) setState(() => _error = failure);
+    } catch (e) {
+      // Keep the server's reason visible (rate limit, mailer not allowed, provider off)
+      // so a failed sign-in can be diagnosed from a screenshot.
+      final detail = e is AuthException ? e.message : null;
+      if (mounted) {
+        setState(() => _error = detail == null ? failure : '$failure\n($detail)');
+      }
     } finally {
       if (mounted) setState(() => _busy = false);
     }

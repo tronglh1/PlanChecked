@@ -63,7 +63,7 @@ void main() {
     await t.enterText(find.byKey(const Key('otp-field')), '000000');
     await t.tap(find.byKey(const Key('verify-button')));
     await t.pumpAndSettle();
-    expect(find.text('Mã không đúng hoặc đã hết hạn'), findsOneWidget);
+    expect(find.textContaining('Mã không đúng hoặc đã hết hạn'), findsOneWidget);
 
     await t.ensureVisible(find.byKey(const Key('change-email-button')));
     await t.tap(find.byKey(const Key('change-email-button')));

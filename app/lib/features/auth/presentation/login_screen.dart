@@ -43,10 +43,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     } catch (e) {
       // Keep the server's reason visible (rate limit, mailer not allowed, provider off)
       // so a failed sign-in can be diagnosed from a screenshot.
-      final detail = e is AuthException ? e.message : null;
-      if (mounted) {
-        setState(() => _error = detail == null ? failure : '$failure\n($detail)');
-      }
+      final raw = e is AuthException ? e.message : '${e.runtimeType}: $e';
+      final detail = raw.length > 200 ? '${raw.substring(0, 200)}…' : raw;
+      if (mounted) setState(() => _error = '$failure\n($detail)');
     } finally {
       if (mounted) setState(() => _busy = false);
     }

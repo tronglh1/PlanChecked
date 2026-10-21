@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { checkinCtx, goodCheckin, goodPlan, known } from './test_helpers.ts';
 import { confidenceBand, containsDose, ensureCheckins, minConfidence, validateCheckinOutput, validatePlanOutput } from './validate.ts';
 import type { CheckinOutput } from './types.ts';
+import { checkinTool } from './prompts.ts';
 
 Deno.test('plan: valid output passes, check-in task is injected, offsets/windows defaulted', () => {
   const r = validatePlanOutput(goodPlan(), known, { plantKnown: true });
@@ -130,4 +131,31 @@ Deno.test('checkin: delta capped, min confidence and bands', () => {
   assert.equal(confidenceBand(0.86), 'high');
   assert.equal(confidenceBand(0.58), 'medium');
   assert.equal(confidenceBand(0.3), 'low');
+});
+
+Deno.test('checkinTool schema: every top-level property is required (Gemini omits optional ones)', () => {
+  const schema = checkinTool(known).input_schema as { required: string[]; properties: Record<string, unknown> };
+  for (const k of Object.keys(schema.properties)) assert.ok(schema.required.includes(k), `${k} must be required`);
+  assert.equal(schema.required.length, Object.keys(schema.properties).length);
+});
+
+Deno.test('checkin: retake output carrying health and nulls/empty arrays is accepted', () => {
+  const r = validateCheckinOutput({
+    status: 'retake', reason: 'BLUR', hint_code: 'H_RETAKE_BLUR',
+    stage_est: null, health: { value: 'fair', confidence: 0.3 }, issues: [], milestone_seen: null, delta: [], reason_codes: [],
+  }, known, checkinCtx);
+  assert.ok(r.ok);
+  if (r.ok) assert.equal(r.value.status, 'retake');
+});
+
+Deno.test('checkin: ok output with reason/hint_code/stage_est null and empty arrays is accepted', () => {
+  const r = validateCheckinOutput({
+    status: 'ok', reason: null, hint_code: null, stage_est: null, health: { value: 'good', confidence: 0.8 },
+    issues: [], milestone_seen: null, delta: [], reason_codes: [],
+  }, known, checkinCtx);
+  assert.ok(r.ok);
+  if (r.ok && r.value.status === 'ok') {
+    assert.equal(r.value.stage_est, null);
+    assert.equal(r.value.issues.length, 0);
+  }
 });

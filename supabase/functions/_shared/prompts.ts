@@ -44,8 +44,9 @@ export function checkinSystem(known: KnownCodes): SystemBlock[] {
     text: `You assess plant health from photos for a home-grower app and suggest small changes to the care plan by calling the tool submit_checkin.
 
 Rules:
-- If the photo is too blurry, too dark, too far away or does not show a plant, return status "retake" with a reason (${RETAKE_REASONS.join('|')}) and a hint_code (${HINT_CODES.join('|')}).
-- Otherwise status "ok": estimate stage (S-code from the project plan, optional suffix like _late), health (good|fair|poor) with confidence 0..1, up to ${4} issues using problem codes with confidence, severity 1..3 and suggested safe action task codes, an optional milestone_seen (only when clearly visible), and a delta.
+- Always fill every field of the tool call; never omit one. Use null or an empty array when a field does not apply.
+- If the photo is too blurry, too dark, too far away or does not show a plant, return status "retake" with a reason (${RETAKE_REASONS.join('|')}) and a hint_code (${HINT_CODES.join('|')}). Still fill health with your best guess and use null for stage_est and milestone_seen and empty arrays for issues, delta and reason_codes.
+- Otherwise status "ok" with reason and hint_code both null: estimate stage (S-code from the project plan, optional suffix like _late), health (good|fair|poor) with confidence 0..1, up to ${4} issues using problem codes with confidence, severity 1..3 and suggested safe action task codes, an optional milestone_seen (only when clearly visible), and a delta.
 - delta is at most ${MAX_DELTA} operations: add (task, stage), remove (task), change_freq (task, every_d), shift (milestone, to = ISO date). Only propose a change when the photo or the project card supports it. Prefer fewer, safer changes. No change is a valid answer.
 - Use the project card history (adherence, skipped tasks, active issues, previous check-ins) to avoid repeating advice that was already applied.
 - Tags given by the user (LEAF_YELLOW, WILT, PESTS, SPOTS) are hints, not facts: confirm from the image.
@@ -124,20 +125,20 @@ export function checkinTool(known: KnownCodes): ToolDef {
     description: 'Submit the photo assessment and plan delta, or ask for a retake.',
     input_schema: {
       type: 'object',
-      required: ['status'],
+      required: ['status', 'reason', 'hint_code', 'stage_est', 'health', 'issues', 'milestone_seen', 'delta', 'reason_codes'],
       properties: {
         status: { enum: ['ok', 'retake'] },
-        reason: { enum: [...RETAKE_REASONS] },
-        hint_code: { enum: [...HINT_CODES] },
-        stage_est: { type: 'object', properties: { code: { type: 'string' }, confidence: conf } },
-        health: { type: 'object', properties: { value: { enum: ['good', 'fair', 'poor'] }, confidence: conf } },
+        reason: { enum: [...RETAKE_REASONS, null] },
+        hint_code: { enum: [...HINT_CODES, null] },
+        stage_est: { anyOf: [{ type: 'null' }, { type: 'object', required: ['code', 'confidence'], properties: { code: { type: 'string' }, confidence: conf } }] },
+        health: { type: 'object', required: ['value', 'confidence'], properties: { value: { enum: ['good', 'fair', 'poor'] }, confidence: conf } },
         issues: {
           type: 'array', maxItems: 4,
           items: { type: 'object', required: ['code', 'confidence', 'severity'], properties: {
             code: { enum: [...known.problems] }, confidence: conf, severity: { type: 'integer', minimum: 1, maximum: 3 },
-            actions: { type: 'array', maxItems: 4, items: { type: 'object', properties: { task: taskEnum } } } } },
+            actions: { type: 'array', maxItems: 4, items: { type: 'object', required: ['task'], properties: { task: taskEnum } } } } },
         },
-        milestone_seen: { anyOf: [{ type: 'null' }, { type: 'object', properties: { code: { enum: [...known.milestones] }, confidence: conf } }] },
+        milestone_seen: { anyOf: [{ type: 'null' }, { type: 'object', required: ['code', 'confidence'], properties: { code: { enum: [...known.milestones] }, confidence: conf } }] },
         delta: {
           type: 'array', maxItems: MAX_DELTA,
           items: { type: 'object', required: ['op'], properties: {

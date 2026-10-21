@@ -123,6 +123,16 @@ void main() {
       mapFunctionError(502, {'status': 'error', 'code': 'AI_UNAVAILABLE'}),
       isA<CheckinAiUnavailable>(),
     );
+    final down = mapFunctionError(502, {
+      'status': 'error',
+      'code': 'AI_UNAVAILABLE',
+      'reason': 'provider_error',
+      'detail': 'HTTP 503 overloaded',
+      'checkin_id': 'c1',
+    });
+    expect(down, isA<CheckinAiUnavailable>());
+    expect((down as CheckinAiUnavailable).reason, 'provider_error');
+    expect(down.detail, 'HTTP 503 overloaded');
     expect(
       mapFunctionError(400, {'error': 'no_valid_shots'}).code,
       'no_valid_shots',

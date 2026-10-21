@@ -416,5 +416,10 @@ class CheckinQuotaExceeded extends CheckinException {
 
 /// 502 `AI_UNAVAILABLE`: nothing was applied, quota refunded.
 class CheckinAiUnavailable extends CheckinException {
-  const CheckinAiUnavailable() : super('AI_UNAVAILABLE');
+  const CheckinAiUnavailable({this.reason, this.detail})
+    : super('AI_UNAVAILABLE');
+
+  /// Server-reported reason code and short provider error (may be null).
+  final String? reason;
+  final String? detail;
 }

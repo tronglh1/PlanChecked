@@ -147,6 +147,7 @@ class CaptureState {
     this.quotaUsed,
     this.quotaCap,
     this.previousCheckinId,
+    this.aiErrorDetail,
   });
 
   final CapturePhase phase;
@@ -160,6 +161,9 @@ class CaptureState {
   final int? quotaUsed;
   final int? quotaCap;
   final String? previousCheckinId;
+
+  /// Why the AI or the upload failed (shown on the stop panel; may be null).
+  final String? aiErrorDetail;
 
   bool get canSubmit =>
       shots.isNotEmpty &&
@@ -175,6 +179,7 @@ class CaptureState {
     int? quotaUsed,
     int? quotaCap,
     String? previousCheckinId,
+    String? aiErrorDetail,
   }) => CaptureState(
     phase: phase ?? this.phase,
     shots: shots ?? this.shots,
@@ -185,6 +190,8 @@ class CaptureState {
     quotaUsed: quotaUsed ?? this.quotaUsed,
     quotaCap: quotaCap ?? this.quotaCap,
     previousCheckinId: previousCheckinId ?? this.previousCheckinId,
+    // Not sticky: any other state change clears it.
+    aiErrorDetail: aiErrorDetail,
   );
 }
 
@@ -319,10 +326,20 @@ class CaptureController extends Notifier<CaptureState> {
         quotaUsed: e.used,
         quotaCap: e.cap,
       );
-    } on CheckinAiUnavailable {
-      state = state.copyWith(phase: CapturePhase.aiUnavailable);
-    } catch (_) {
-      state = state.copyWith(phase: CapturePhase.failed);
+    } on CheckinAiUnavailable catch (e) {
+      final parts = [
+        if (e.reason != null) e.reason!,
+        if (e.detail != null) e.detail!,
+      ];
+      state = state.copyWith(
+        phase: CapturePhase.aiUnavailable,
+        aiErrorDetail: parts.isEmpty ? null : _cap(parts.join(': ')),
+      );
+    } catch (e) {
+      state = state.copyWith(
+        phase: CapturePhase.failed,
+        aiErrorDetail: _cap('${e.runtimeType}: $e'),
+      );
     }
     return const SubmitStopped();
   }
@@ -330,6 +347,8 @@ class CaptureController extends Notifier<CaptureState> {
   /// Back to capturing after a stop screen.
   void dismissStop() => state = state.copyWith(phase: CapturePhase.capturing);
 }
+
+String _cap(String s) => s.length <= 200 ? s : '${s.substring(0, 199)}…';
 
 final captureControllerProvider = NotifierProvider.autoDispose
     .family<CaptureController, CaptureState, String>(CaptureController.new);

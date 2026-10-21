@@ -235,7 +235,15 @@ CheckinException mapFunctionError(int status, Object? details) {
     return CheckinQuotaExceeded(used: used, cap: cap);
   }
   if (status == 502 || code == 'AI_UNAVAILABLE') {
-    return const CheckinAiUnavailable();
+    String? str(Object? v) {
+      final s = v?.toString().trim();
+      return s == null || s.isEmpty ? null : s;
+    }
+
+    return CheckinAiUnavailable(
+      reason: str(map['reason']),
+      detail: str(map['detail']),
+    );
   }
   return CheckinException(code.isEmpty ? 'http_$status' : code);
 }

@@ -303,6 +303,31 @@ void main() {
       expect(find.text('Kết quả check-in'), findsOneWidget);
     });
 
+    testWidgets('AI down panel shows the server reason and detail', (t) async {
+      final repo = FakeCheckinRepository(
+        analyzeError: const CheckinAiUnavailable(
+          reason: 'provider_error',
+          detail: 'HTTP 503 overloaded',
+        ),
+      );
+      await pumpCheckinApp(
+        t,
+        initial: '/projects/new1/checkin',
+        checkins: repo,
+        source: FakeImageSource([jpegOf(sharpImage(800, 600))]),
+      );
+      await tapKey(t, 'shutter');
+      await tapKey(t, 'analyze');
+      expect(find.byKey(const Key('checkin-ai-down')), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byKey(const Key('stop-detail')),
+          matching: find.textContaining('provider_error: HTTP 503 overloaded'),
+        ),
+        findsOneWidget,
+      );
+    });
+
     testWidgets('skipped_recent offers the previous result', (t) async {
       final repo = FakeCheckinRepository(
         outcome: const CheckinSkippedRecent(previousCheckinId: 'old'),

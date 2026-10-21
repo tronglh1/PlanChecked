@@ -289,6 +289,7 @@ class _CheckinCaptureScreenState extends ConsumerState<CheckinCaptureScreen>
           icon: Icons.cloud_off_rounded,
           title: l10n.checkinAiDownTitle,
           body: l10n.checkinAiDownBody,
+          detail: state.aiErrorDetail,
           primaryLabel: l10n.commonRetry,
           onPrimary: _submit,
           secondaryLabel: l10n.checkinClose,
@@ -300,6 +301,7 @@ class _CheckinCaptureScreenState extends ConsumerState<CheckinCaptureScreen>
           icon: Icons.wifi_off_rounded,
           title: l10n.checkinFailedTitle,
           body: l10n.checkinFailedBody,
+          detail: state.aiErrorDetail,
           primaryLabel: l10n.commonRetry,
           onPrimary: _submit,
           secondaryLabel: l10n.checkinBackToCapture,
@@ -678,6 +680,7 @@ class _StopPanel extends StatelessWidget {
     required this.body,
     required this.primaryLabel,
     required this.onPrimary,
+    this.detail,
     this.secondaryLabel,
     this.onSecondary,
   });
@@ -685,6 +688,9 @@ class _StopPanel extends StatelessWidget {
   final IconData icon;
   final String title;
   final String body;
+
+  /// Technical error text so a screenshot shows what went wrong.
+  final String? detail;
   final String primaryLabel;
   final VoidCallback onPrimary;
   final String? secondaryLabel;
@@ -715,6 +721,15 @@ class _StopPanel extends StatelessWidget {
               textAlign: TextAlign.center,
               style: t.bodyMedium?.copyWith(color: Colors.white70),
             ),
+            if (detail != null && detail!.isNotEmpty) ...[
+              const SizedBox(height: AppSpacing.xs),
+              SelectableText(
+                detail!,
+                key: const Key('stop-detail'),
+                textAlign: TextAlign.center,
+                style: t.bodySmall?.copyWith(color: AppColors.textSecondary),
+              ),
+            ],
             const SizedBox(height: AppSpacing.xl),
             GlowButton(
               key: const Key('stop-primary'),

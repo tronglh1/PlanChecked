@@ -146,7 +146,8 @@ async function handle(req: Request): Promise<{ body: Record<string, unknown>; st
       if (e instanceof AiFailure) {
         await recordUsage(admin, ctx.userId, e.model ?? ai.models.default, e.usage);
         await refund();
-        await admin.from('checkins').update({ ai_result: { error: e.reason } }).eq('id', checkin.id);
+        // Keep the provider's reply so a failed check-in can be diagnosed from the table.
+        await admin.from('checkins').update({ ai_result: { error: e.reason, detail: e.message.slice(0, 300) } }).eq('id', checkin.id);
         // Spec §7 #38: no delta is applied, the plan stays as it is.
         return { status: 502, body: { status: 'error', code: 'AI_UNAVAILABLE', reason: e.reason, detail: e.message.slice(0, 200), checkin_id: checkin.id } };
       }

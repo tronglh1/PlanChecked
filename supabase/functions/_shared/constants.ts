@@ -9,6 +9,8 @@ export const ANTHROPIC_VERSION = '2023-06-01';
 /** Gemini (used when GEMINI_API_KEY is set, or AI_PROVIDER=gemini). Cheap model first, stronger one on escalation. */
 export const GEMINI_MODEL_DEFAULT = 'gemini-3.5-flash-lite';
 export const GEMINI_MODEL_STRONG = 'gemini-3.8-flash';
+/** Tried once when the requested Gemini model is overloaded / 5xx / unreachable (env AI_MODEL_FALLBACK overrides). */
+export const GEMINI_MODEL_FALLBACK = 'gemini-3.6-flash';
 export const GEMINI_URL_BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
 
 /** Escalate Haiku -> Sonnet below this confidence (app_config.ai_escalate_below overrides). */
@@ -48,6 +50,7 @@ export const DEFAULT_PRICES: Record<string, { in: number; out: number; cache_rea
   // Estimates; override with MODEL_PRICES_JSON once the real Gemini prices are known.
   [GEMINI_MODEL_DEFAULT]: { in: 0.1, out: 0.4, cache_read: 0.025 },
   [GEMINI_MODEL_STRONG]: { in: 0.5, out: 3, cache_read: 0.05 },
+  [GEMINI_MODEL_FALLBACK]: { in: 0.3, out: 2, cache_read: 0.03 },
 };
 
 /** Anything that looks like a dose, amount or concentration is rejected from AI-written text (spec §5.3). */

@@ -166,7 +166,8 @@ export async function generateWithEscalation<T>(a: EscalationArgs<T>): Promise<E
   if (first === models.default) {
     const r2 = await tryModel(models.strong);
     if ('value' in r2) return { ...r2, model: models.strong, usage, escalated: true };
-    throw new AiFailure(r2.transport && r1.transport ? 'ai_error' : 'invalid_output', r2.error, usage, lastModel);
+    const short = (m: string) => (m.length > 120 ? `${m.slice(0, 120)}...` : m);
+    throw new AiFailure(r2.transport && r1.transport ? 'ai_error' : 'invalid_output', `default: ${short(r1.error)} | strong: ${short(r2.error)}`, usage, lastModel);
   }
   throw new AiFailure(r1.transport ? 'ai_error' : 'invalid_output', r1.error, usage, lastModel);
 }

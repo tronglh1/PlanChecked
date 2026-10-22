@@ -1,7 +1,7 @@
 // Picks the AI provider from Supabase secrets. Gemini when AI_PROVIDER=gemini, or when only
 // GEMINI_API_KEY is set; otherwise Anthropic. AI_MODEL_DEFAULT / AI_MODEL_STRONG override the models.
-import { callClaude, type ClaudeRequest } from './anthropic.ts';
-import { GEMINI_MODEL_DEFAULT, GEMINI_MODEL_STRONG, MODEL_DEFAULT, MODEL_STRONG } from './constants.ts';
+import { callClaude, ClaudeError, type ClaudeRequest } from './anthropic.ts';
+import { GEMINI_MODEL_DEFAULT, GEMINI_MODEL_FALLBACK, GEMINI_MODEL_STRONG, MODEL_DEFAULT, MODEL_STRONG } from './constants.ts';
 import { callGemini } from './gemini.ts';
 import { HttpError } from './http.ts';
 import type { ClaudeResult } from './types.ts';
@@ -14,7 +14,7 @@ export interface AiClient {
   call: (req: ClaudeRequest) => Promise<ClaudeResult>;
 }
 
-export function resolveAi(env: (k: string) => string | undefined, fetchImpl?: typeof fetch): AiClient {
+export function resolveAi(env: (k: string) => string | undefined, fetchImpl?: typeof fetch, sleep?: (ms: number) => Promise<void>): AiClient {
   const explicit = env('AI_PROVIDER')?.trim().toLowerCase();
   const provider: AiProvider = explicit === 'gemini' || explicit === 'anthropic'
     ? explicit
@@ -28,7 +28,20 @@ export function resolveAi(env: (k: string) => string | undefined, fetchImpl?: ty
   const models = { default: env('AI_MODEL_DEFAULT') || defaults.default, strong: env('AI_MODEL_STRONG') || defaults.strong };
   if (provider === 'gemini') {
     // Gemini 3.x answers slower than Haiku; give it twice the budget.
-    return { provider, models, call: (req) => callGemini({ ...req, timeoutMs: req.timeoutMs * 2 }, { apiKey, fetchImpl }) };
+    const fallback = env('AI_MODEL_FALLBACK') || GEMINI_MODEL_FALLBACK;
+    const one = (req: ClaudeRequest) => callGemini({ ...req, timeoutMs: req.timeoutMs * 2 }, { apiKey, fetchImpl, sleep });
+    return {
+      provider, models,
+      // Overloaded / 5xx / 429 / network errors (all flagged retryable) get one try on the fallback model.
+      call: async (req) => {
+        try {
+          return await one(req);
+        } catch (e) {
+          if (e instanceof ClaudeError && e.retryable && fallback !== req.model) return await one({ ...req, model: fallback });
+          throw e;
+        }
+      },
+    };
   }
   return { provider, models, call: (req) => callClaude(req, { apiKey, fetchImpl }) };
 }

@@ -1,0 +1,104 @@
+name: Dev APK
+
+# Builds an installable APK wired to a real Supabase project. The URL and anon key
+# are public values (they ship inside the app), so they are passed as run inputs.
+# Signed with the runner's debug key, so uninstall an older build before installing.
+# A push to an apk/** branch builds from app/env/apk.json instead (same two keys),
+# which works before this workflow reaches the default branch.
+on:
+  push:
+    branches: ['apk/**']
+  workflow_dispatch:
+    inputs:
+      supabase_url:
+        description: Supabase project URL
+        required: true
+      supabase_anon_key:
+        description: Supabase anon / publishable key
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.7'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Write env
+        env:
+          SUPABASE_URL: ${{ inputs.supabase_url }}
+          SUPABASE_ANON_KEY: ${{ inputs.supabase_anon_key }}
+        run: |
+          if [ -n "$SUPABASE_URL" ]; then
+            jq -n --arg u "$SUPABASE_URL" --arg k "$SUPABASE_ANON_KEY" '{SUPABASE_URL:$u, SUPABASE_ANON_KEY:$k}' > env/dev.json
+          else
+            jq -e '.SUPABASE_URL and .SUPABASE_ANON_KEY' env/apk.json > /dev/null
+            cp env/apk.json env/dev.json
+          fi
+      # Build number = run number, APP_BUILD = commit: both shown in the app footer.
+      - run: flutter build apk --release --build-number=${{ github.run_number }} --dart-define=APP_BUILD=${{ github.sha }} --dart-define-from-file=env/dev.json
+      - run: mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/vuon-nha.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vuon-nha-apk
+          path: app/build/app/outputs/flutter-apk/vuon-nha.apk
+          retention-days: 14
+
+  smoke:
+    # Installs the release APK on an emulator and fails if Supabase/plugins crash at startup
+    # (the R8 + JNI NoSuchMethodError only showed up on real devices before this check).
+    needs: apk
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules && sudo udevadm trigger --name-match=kvm
+      - uses: actions/download-artifact@v4
+        with:
+          name: vuon-nha-apk
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          arch: x86_64
+          target: google_apis
+          disable-animations: true
+          script: |
+            adb install -r vuon-nha.apk
+            adb logcat -c
+            adb shell monkey -p com.planchecked.vuonnha -c android.intent.category.LAUNCHER 1
+            sleep 25
+            adb logcat -d > logcat.txt || true
+            grep -E "flutter|AndroidRuntime" logcat.txt | tail -60 || true
+            ! grep -E "NoSuchMethodError|Supabase init failed|FATAL EXCEPTION" logcat.txt
+
+  publish:
+    needs: smoke
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: vuon-nha-apk
+      - name: Publish to the dev-apk release (direct phone download)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release view dev-apk >/dev/null 2>&1 || gh release create dev-apk --prerelease --target "$GITHUB_SHA" --title "Vườn Nhà – bản thử" --notes "Bản thử nội bộ. Gỡ bản cũ trước khi cài."
+          gh release upload dev-apk vuon-nha.apk --clobber

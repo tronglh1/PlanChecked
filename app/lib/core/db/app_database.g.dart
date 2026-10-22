@@ -1,0 +1,1652 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'app_database.dart';
+
+// ignore_for_file: type=lint
+class $OutboxTable extends Outbox with TableInfo<$OutboxTable, OutboxData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $OutboxTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _opMeta = const VerificationMeta('op');
+  @override
+  late final GeneratedColumn<String> op = GeneratedColumn<String>(
+    'op',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _payloadMeta = const VerificationMeta(
+    'payload',
+  );
+  @override
+  late final GeneratedColumn<String> payload = GeneratedColumn<String>(
+    'payload',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _attemptsMeta = const VerificationMeta(
+    'attempts',
+  );
+  @override
+  late final GeneratedColumn<int> attempts = GeneratedColumn<int>(
+    'attempts',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _clientIdMeta = const VerificationMeta(
+    'clientId',
+  );
+  @override
+  late final GeneratedColumn<String> clientId = GeneratedColumn<String>(
+    'client_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _nextAttemptAtMeta = const VerificationMeta(
+    'nextAttemptAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> nextAttemptAt =
+      GeneratedColumn<DateTime>(
+        'next_attempt_at',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    op,
+    payload,
+    createdAt,
+    attempts,
+    clientId,
+    nextAttemptAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'outbox';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<OutboxData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('op')) {
+      context.handle(_opMeta, op.isAcceptableOrUnknown(data['op']!, _opMeta));
+    } else if (isInserting) {
+      context.missing(_opMeta);
+    }
+    if (data.containsKey('payload')) {
+      context.handle(
+        _payloadMeta,
+        payload.isAcceptableOrUnknown(data['payload']!, _payloadMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_payloadMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('attempts')) {
+      context.handle(
+        _attemptsMeta,
+        attempts.isAcceptableOrUnknown(data['attempts']!, _attemptsMeta),
+      );
+    }
+    if (data.containsKey('client_id')) {
+      context.handle(
+        _clientIdMeta,
+        clientId.isAcceptableOrUnknown(data['client_id']!, _clientIdMeta),
+      );
+    }
+    if (data.containsKey('next_attempt_at')) {
+      context.handle(
+        _nextAttemptAtMeta,
+        nextAttemptAt.isAcceptableOrUnknown(
+          data['next_attempt_at']!,
+          _nextAttemptAtMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  OutboxData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return OutboxData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      op: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}op'],
+      )!,
+      payload: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}payload'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      attempts: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}attempts'],
+      )!,
+      clientId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}client_id'],
+      )!,
+      nextAttemptAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}next_attempt_at'],
+      ),
+    );
+  }
+
+  @override
+  $OutboxTable createAlias(String alias) {
+    return $OutboxTable(attachedDatabase, alias);
+  }
+}
+
+class OutboxData extends DataClass implements Insertable<OutboxData> {
+  final int id;
+  final String op;
+  final String payload;
+  final DateTime createdAt;
+  final int attempts;
+
+  /// `task_logs.client_id` of the queued action (dedup key). v3.
+  final String clientId;
+
+  /// Backoff: do not retry before this time. v3.
+  final DateTime? nextAttemptAt;
+  const OutboxData({
+    required this.id,
+    required this.op,
+    required this.payload,
+    required this.createdAt,
+    required this.attempts,
+    required this.clientId,
+    this.nextAttemptAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['op'] = Variable<String>(op);
+    map['payload'] = Variable<String>(payload);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['attempts'] = Variable<int>(attempts);
+    map['client_id'] = Variable<String>(clientId);
+    if (!nullToAbsent || nextAttemptAt != null) {
+      map['next_attempt_at'] = Variable<DateTime>(nextAttemptAt);
+    }
+    return map;
+  }
+
+  OutboxCompanion toCompanion(bool nullToAbsent) {
+    return OutboxCompanion(
+      id: Value(id),
+      op: Value(op),
+      payload: Value(payload),
+      createdAt: Value(createdAt),
+      attempts: Value(attempts),
+      clientId: Value(clientId),
+      nextAttemptAt: nextAttemptAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nextAttemptAt),
+    );
+  }
+
+  factory OutboxData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return OutboxData(
+      id: serializer.fromJson<int>(json['id']),
+      op: serializer.fromJson<String>(json['op']),
+      payload: serializer.fromJson<String>(json['payload']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      attempts: serializer.fromJson<int>(json['attempts']),
+      clientId: serializer.fromJson<String>(json['clientId']),
+      nextAttemptAt: serializer.fromJson<DateTime?>(json['nextAttemptAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'op': serializer.toJson<String>(op),
+      'payload': serializer.toJson<String>(payload),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'attempts': serializer.toJson<int>(attempts),
+      'clientId': serializer.toJson<String>(clientId),
+      'nextAttemptAt': serializer.toJson<DateTime?>(nextAttemptAt),
+    };
+  }
+
+  OutboxData copyWith({
+    int? id,
+    String? op,
+    String? payload,
+    DateTime? createdAt,
+    int? attempts,
+    String? clientId,
+    Value<DateTime?> nextAttemptAt = const Value.absent(),
+  }) => OutboxData(
+    id: id ?? this.id,
+    op: op ?? this.op,
+    payload: payload ?? this.payload,
+    createdAt: createdAt ?? this.createdAt,
+    attempts: attempts ?? this.attempts,
+    clientId: clientId ?? this.clientId,
+    nextAttemptAt: nextAttemptAt.present
+        ? nextAttemptAt.value
+        : this.nextAttemptAt,
+  );
+  OutboxData copyWithCompanion(OutboxCompanion data) {
+    return OutboxData(
+      id: data.id.present ? data.id.value : this.id,
+      op: data.op.present ? data.op.value : this.op,
+      payload: data.payload.present ? data.payload.value : this.payload,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      attempts: data.attempts.present ? data.attempts.value : this.attempts,
+      clientId: data.clientId.present ? data.clientId.value : this.clientId,
+      nextAttemptAt: data.nextAttemptAt.present
+          ? data.nextAttemptAt.value
+          : this.nextAttemptAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('OutboxData(')
+          ..write('id: $id, ')
+          ..write('op: $op, ')
+          ..write('payload: $payload, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('attempts: $attempts, ')
+          ..write('clientId: $clientId, ')
+          ..write('nextAttemptAt: $nextAttemptAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    op,
+    payload,
+    createdAt,
+    attempts,
+    clientId,
+    nextAttemptAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is OutboxData &&
+          other.id == this.id &&
+          other.op == this.op &&
+          other.payload == this.payload &&
+          other.createdAt == this.createdAt &&
+          other.attempts == this.attempts &&
+          other.clientId == this.clientId &&
+          other.nextAttemptAt == this.nextAttemptAt);
+}
+
+class OutboxCompanion extends UpdateCompanion<OutboxData> {
+  final Value<int> id;
+  final Value<String> op;
+  final Value<String> payload;
+  final Value<DateTime> createdAt;
+  final Value<int> attempts;
+  final Value<String> clientId;
+  final Value<DateTime?> nextAttemptAt;
+  const OutboxCompanion({
+    this.id = const Value.absent(),
+    this.op = const Value.absent(),
+    this.payload = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.attempts = const Value.absent(),
+    this.clientId = const Value.absent(),
+    this.nextAttemptAt = const Value.absent(),
+  });
+  OutboxCompanion.insert({
+    this.id = const Value.absent(),
+    required String op,
+    required String payload,
+    required DateTime createdAt,
+    this.attempts = const Value.absent(),
+    this.clientId = const Value.absent(),
+    this.nextAttemptAt = const Value.absent(),
+  }) : op = Value(op),
+       payload = Value(payload),
+       createdAt = Value(createdAt);
+  static Insertable<OutboxData> custom({
+    Expression<int>? id,
+    Expression<String>? op,
+    Expression<String>? payload,
+    Expression<DateTime>? createdAt,
+    Expression<int>? attempts,
+    Expression<String>? clientId,
+    Expression<DateTime>? nextAttemptAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (op != null) 'op': op,
+      if (payload != null) 'payload': payload,
+      if (createdAt != null) 'created_at': createdAt,
+      if (attempts != null) 'attempts': attempts,
+      if (clientId != null) 'client_id': clientId,
+      if (nextAttemptAt != null) 'next_attempt_at': nextAttemptAt,
+    });
+  }
+
+  OutboxCompanion copyWith({
+    Value<int>? id,
+    Value<String>? op,
+    Value<String>? payload,
+    Value<DateTime>? createdAt,
+    Value<int>? attempts,
+    Value<String>? clientId,
+    Value<DateTime?>? nextAttemptAt,
+  }) {
+    return OutboxCompanion(
+      id: id ?? this.id,
+      op: op ?? this.op,
+      payload: payload ?? this.payload,
+      createdAt: createdAt ?? this.createdAt,
+      attempts: attempts ?? this.attempts,
+      clientId: clientId ?? this.clientId,
+      nextAttemptAt: nextAttemptAt ?? this.nextAttemptAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (op.present) {
+      map['op'] = Variable<String>(op.value);
+    }
+    if (payload.present) {
+      map['payload'] = Variable<String>(payload.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (attempts.present) {
+      map['attempts'] = Variable<int>(attempts.value);
+    }
+    if (clientId.present) {
+      map['client_id'] = Variable<String>(clientId.value);
+    }
+    if (nextAttemptAt.present) {
+      map['next_attempt_at'] = Variable<DateTime>(nextAttemptAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('OutboxCompanion(')
+          ..write('id: $id, ')
+          ..write('op: $op, ')
+          ..write('payload: $payload, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('attempts: $attempts, ')
+          ..write('clientId: $clientId, ')
+          ..write('nextAttemptAt: $nextAttemptAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CachedTasksTable extends CachedTasks
+    with TableInfo<$CachedTasksTable, CachedTask> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CachedTasksTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _payloadMeta = const VerificationMeta(
+    'payload',
+  );
+  @override
+  late final GeneratedColumn<String> payload = GeneratedColumn<String>(
+    'payload',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _projectIdMeta = const VerificationMeta(
+    'projectId',
+  );
+  @override
+  late final GeneratedColumn<String> projectId = GeneratedColumn<String>(
+    'project_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _kindMeta = const VerificationMeta('kind');
+  @override
+  late final GeneratedColumn<String> kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('task'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    payload,
+    updatedAt,
+    projectId,
+    kind,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'cached_tasks';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CachedTask> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('payload')) {
+      context.handle(
+        _payloadMeta,
+        payload.isAcceptableOrUnknown(data['payload']!, _payloadMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_payloadMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('project_id')) {
+      context.handle(
+        _projectIdMeta,
+        projectId.isAcceptableOrUnknown(data['project_id']!, _projectIdMeta),
+      );
+    }
+    if (data.containsKey('kind')) {
+      context.handle(
+        _kindMeta,
+        kind.isAcceptableOrUnknown(data['kind']!, _kindMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CachedTask map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CachedTask(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      payload: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}payload'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      projectId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}project_id'],
+      ),
+      kind: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kind'],
+      )!,
+    );
+  }
+
+  @override
+  $CachedTasksTable createAlias(String alias) {
+    return $CachedTasksTable(attachedDatabase, alias);
+  }
+}
+
+class CachedTask extends DataClass implements Insertable<CachedTask> {
+  final String id;
+  final String payload;
+  final DateTime updatedAt;
+
+  /// Owning project, for `task` rows. v3.
+  final String? projectId;
+
+  /// Row type, see class doc. v3.
+  final String kind;
+  const CachedTask({
+    required this.id,
+    required this.payload,
+    required this.updatedAt,
+    this.projectId,
+    required this.kind,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['payload'] = Variable<String>(payload);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || projectId != null) {
+      map['project_id'] = Variable<String>(projectId);
+    }
+    map['kind'] = Variable<String>(kind);
+    return map;
+  }
+
+  CachedTasksCompanion toCompanion(bool nullToAbsent) {
+    return CachedTasksCompanion(
+      id: Value(id),
+      payload: Value(payload),
+      updatedAt: Value(updatedAt),
+      projectId: projectId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(projectId),
+      kind: Value(kind),
+    );
+  }
+
+  factory CachedTask.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CachedTask(
+      id: serializer.fromJson<String>(json['id']),
+      payload: serializer.fromJson<String>(json['payload']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      projectId: serializer.fromJson<String?>(json['projectId']),
+      kind: serializer.fromJson<String>(json['kind']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'payload': serializer.toJson<String>(payload),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'projectId': serializer.toJson<String?>(projectId),
+      'kind': serializer.toJson<String>(kind),
+    };
+  }
+
+  CachedTask copyWith({
+    String? id,
+    String? payload,
+    DateTime? updatedAt,
+    Value<String?> projectId = const Value.absent(),
+    String? kind,
+  }) => CachedTask(
+    id: id ?? this.id,
+    payload: payload ?? this.payload,
+    updatedAt: updatedAt ?? this.updatedAt,
+    projectId: projectId.present ? projectId.value : this.projectId,
+    kind: kind ?? this.kind,
+  );
+  CachedTask copyWithCompanion(CachedTasksCompanion data) {
+    return CachedTask(
+      id: data.id.present ? data.id.value : this.id,
+      payload: data.payload.present ? data.payload.value : this.payload,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      projectId: data.projectId.present ? data.projectId.value : this.projectId,
+      kind: data.kind.present ? data.kind.value : this.kind,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CachedTask(')
+          ..write('id: $id, ')
+          ..write('payload: $payload, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('projectId: $projectId, ')
+          ..write('kind: $kind')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, payload, updatedAt, projectId, kind);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CachedTask &&
+          other.id == this.id &&
+          other.payload == this.payload &&
+          other.updatedAt == this.updatedAt &&
+          other.projectId == this.projectId &&
+          other.kind == this.kind);
+}
+
+class CachedTasksCompanion extends UpdateCompanion<CachedTask> {
+  final Value<String> id;
+  final Value<String> payload;
+  final Value<DateTime> updatedAt;
+  final Value<String?> projectId;
+  final Value<String> kind;
+  final Value<int> rowid;
+  const CachedTasksCompanion({
+    this.id = const Value.absent(),
+    this.payload = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.projectId = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CachedTasksCompanion.insert({
+    required String id,
+    required String payload,
+    required DateTime updatedAt,
+    this.projectId = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       payload = Value(payload),
+       updatedAt = Value(updatedAt);
+  static Insertable<CachedTask> custom({
+    Expression<String>? id,
+    Expression<String>? payload,
+    Expression<DateTime>? updatedAt,
+    Expression<String>? projectId,
+    Expression<String>? kind,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (payload != null) 'payload': payload,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (projectId != null) 'project_id': projectId,
+      if (kind != null) 'kind': kind,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CachedTasksCompanion copyWith({
+    Value<String>? id,
+    Value<String>? payload,
+    Value<DateTime>? updatedAt,
+    Value<String?>? projectId,
+    Value<String>? kind,
+    Value<int>? rowid,
+  }) {
+    return CachedTasksCompanion(
+      id: id ?? this.id,
+      payload: payload ?? this.payload,
+      updatedAt: updatedAt ?? this.updatedAt,
+      projectId: projectId ?? this.projectId,
+      kind: kind ?? this.kind,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (payload.present) {
+      map['payload'] = Variable<String>(payload.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (projectId.present) {
+      map['project_id'] = Variable<String>(projectId.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(kind.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CachedTasksCompanion(')
+          ..write('id: $id, ')
+          ..write('payload: $payload, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('projectId: $projectId, ')
+          ..write('kind: $kind, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $LocalSettingsTable extends LocalSettings
+    with TableInfo<$LocalSettingsTable, LocalSetting> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LocalSettingsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _keyMeta = const VerificationMeta('key');
+  @override
+  late final GeneratedColumn<String> key = GeneratedColumn<String>(
+    'key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _valueMeta = const VerificationMeta('value');
+  @override
+  late final GeneratedColumn<String> value = GeneratedColumn<String>(
+    'value',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [key, value];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'local_settings';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<LocalSetting> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('key')) {
+      context.handle(
+        _keyMeta,
+        key.isAcceptableOrUnknown(data['key']!, _keyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_keyMeta);
+    }
+    if (data.containsKey('value')) {
+      context.handle(
+        _valueMeta,
+        value.isAcceptableOrUnknown(data['value']!, _valueMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_valueMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {key};
+  @override
+  LocalSetting map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LocalSetting(
+      key: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}key'],
+      )!,
+      value: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}value'],
+      )!,
+    );
+  }
+
+  @override
+  $LocalSettingsTable createAlias(String alias) {
+    return $LocalSettingsTable(attachedDatabase, alias);
+  }
+}
+
+class LocalSetting extends DataClass implements Insertable<LocalSetting> {
+  final String key;
+  final String value;
+  const LocalSetting({required this.key, required this.value});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['key'] = Variable<String>(key);
+    map['value'] = Variable<String>(value);
+    return map;
+  }
+
+  LocalSettingsCompanion toCompanion(bool nullToAbsent) {
+    return LocalSettingsCompanion(key: Value(key), value: Value(value));
+  }
+
+  factory LocalSetting.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LocalSetting(
+      key: serializer.fromJson<String>(json['key']),
+      value: serializer.fromJson<String>(json['value']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'key': serializer.toJson<String>(key),
+      'value': serializer.toJson<String>(value),
+    };
+  }
+
+  LocalSetting copyWith({String? key, String? value}) =>
+      LocalSetting(key: key ?? this.key, value: value ?? this.value);
+  LocalSetting copyWithCompanion(LocalSettingsCompanion data) {
+    return LocalSetting(
+      key: data.key.present ? data.key.value : this.key,
+      value: data.value.present ? data.value.value : this.value,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalSetting(')
+          ..write('key: $key, ')
+          ..write('value: $value')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(key, value);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LocalSetting &&
+          other.key == this.key &&
+          other.value == this.value);
+}
+
+class LocalSettingsCompanion extends UpdateCompanion<LocalSetting> {
+  final Value<String> key;
+  final Value<String> value;
+  final Value<int> rowid;
+  const LocalSettingsCompanion({
+    this.key = const Value.absent(),
+    this.value = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LocalSettingsCompanion.insert({
+    required String key,
+    required String value,
+    this.rowid = const Value.absent(),
+  }) : key = Value(key),
+       value = Value(value);
+  static Insertable<LocalSetting> custom({
+    Expression<String>? key,
+    Expression<String>? value,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (key != null) 'key': key,
+      if (value != null) 'value': value,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LocalSettingsCompanion copyWith({
+    Value<String>? key,
+    Value<String>? value,
+    Value<int>? rowid,
+  }) {
+    return LocalSettingsCompanion(
+      key: key ?? this.key,
+      value: value ?? this.value,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (key.present) {
+      map['key'] = Variable<String>(key.value);
+    }
+    if (value.present) {
+      map['value'] = Variable<String>(value.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalSettingsCompanion(')
+          ..write('key: $key, ')
+          ..write('value: $value, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+abstract class _$AppDatabase extends GeneratedDatabase {
+  _$AppDatabase(QueryExecutor e) : super(e);
+  $AppDatabaseManager get managers => $AppDatabaseManager(this);
+  late final $OutboxTable outbox = $OutboxTable(this);
+  late final $CachedTasksTable cachedTasks = $CachedTasksTable(this);
+  late final $LocalSettingsTable localSettings = $LocalSettingsTable(this);
+  @override
+  Iterable<TableInfo<Table, Object?>> get allTables =>
+      allSchemaEntities.whereType<TableInfo<Table, Object?>>();
+  @override
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+    outbox,
+    cachedTasks,
+    localSettings,
+  ];
+}
+
+typedef $$OutboxTableCreateCompanionBuilder = OutboxCompanion Function({
+  Value<int> id,
+  required String op,
+  required String payload,
+  required DateTime createdAt,
+  Value<int> attempts,
+  Value<String> clientId,
+  Value<DateTime?> nextAttemptAt,
+});
+typedef $$OutboxTableUpdateCompanionBuilder = OutboxCompanion Function({
+  Value<int> id,
+  Value<String> op,
+  Value<String> payload,
+  Value<DateTime> createdAt,
+  Value<int> attempts,
+  Value<String> clientId,
+  Value<DateTime?> nextAttemptAt,
+});
+
+class $$OutboxTableFilterComposer
+    extends Composer<_$AppDatabase, $OutboxTable> {
+  $$OutboxTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get op => $composableBuilder(
+    column: $table.op,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get payload => $composableBuilder(
+    column: $table.payload,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get attempts => $composableBuilder(
+    column: $table.attempts,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get clientId => $composableBuilder(
+    column: $table.clientId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get nextAttemptAt => $composableBuilder(
+    column: $table.nextAttemptAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$OutboxTableOrderingComposer
+    extends Composer<_$AppDatabase, $OutboxTable> {
+  $$OutboxTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get op => $composableBuilder(
+    column: $table.op,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get payload => $composableBuilder(
+    column: $table.payload,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get attempts => $composableBuilder(
+    column: $table.attempts,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get clientId => $composableBuilder(
+    column: $table.clientId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get nextAttemptAt => $composableBuilder(
+    column: $table.nextAttemptAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$OutboxTableAnnotationComposer
+    extends Composer<_$AppDatabase, $OutboxTable> {
+  $$OutboxTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get op =>
+      $composableBuilder(column: $table.op, builder: (column) => column);
+
+  GeneratedColumn<String> get payload =>
+      $composableBuilder(column: $table.payload, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<int> get attempts =>
+      $composableBuilder(column: $table.attempts, builder: (column) => column);
+
+  GeneratedColumn<String> get clientId =>
+      $composableBuilder(column: $table.clientId, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get nextAttemptAt => $composableBuilder(
+    column: $table.nextAttemptAt,
+    builder: (column) => column,
+  );
+}
+
+class $$OutboxTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $OutboxTable,
+          OutboxData,
+          $$OutboxTableFilterComposer,
+          $$OutboxTableOrderingComposer,
+          $$OutboxTableAnnotationComposer,
+          $$OutboxTableCreateCompanionBuilder,
+          $$OutboxTableUpdateCompanionBuilder,
+          (OutboxData, BaseReferences<_$AppDatabase, $OutboxTable, OutboxData>),
+          OutboxData,
+          PrefetchHooks Function()
+        > {
+  $$OutboxTableTableManager(_$AppDatabase db, $OutboxTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$OutboxTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$OutboxTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$OutboxTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> op = const Value.absent(),
+                Value<String> payload = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> attempts = const Value.absent(),
+                Value<String> clientId = const Value.absent(),
+                Value<DateTime?> nextAttemptAt = const Value.absent(),
+              }) => OutboxCompanion(
+                id: id,
+                op: op,
+                payload: payload,
+                createdAt: createdAt,
+                attempts: attempts,
+                clientId: clientId,
+                nextAttemptAt: nextAttemptAt,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String op,
+                required String payload,
+                required DateTime createdAt,
+                Value<int> attempts = const Value.absent(),
+                Value<String> clientId = const Value.absent(),
+                Value<DateTime?> nextAttemptAt = const Value.absent(),
+              }) => OutboxCompanion.insert(
+                id: id,
+                op: op,
+                payload: payload,
+                createdAt: createdAt,
+                attempts: attempts,
+                clientId: clientId,
+                nextAttemptAt: nextAttemptAt,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$OutboxTable, OutboxData>(table),
+                  BaseReferences<_$AppDatabase, $OutboxTable, OutboxData>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$OutboxTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $OutboxTable,
+      OutboxData,
+      $$OutboxTableFilterComposer,
+      $$OutboxTableOrderingComposer,
+      $$OutboxTableAnnotationComposer,
+      $$OutboxTableCreateCompanionBuilder,
+      $$OutboxTableUpdateCompanionBuilder,
+      (OutboxData, BaseReferences<_$AppDatabase, $OutboxTable, OutboxData>),
+      OutboxData,
+      PrefetchHooks Function()
+    >;
+typedef $$CachedTasksTableCreateCompanionBuilder =
+    CachedTasksCompanion Function({
+      required String id,
+      required String payload,
+      required DateTime updatedAt,
+      Value<String?> projectId,
+      Value<String> kind,
+      Value<int> rowid,
+    });
+typedef $$CachedTasksTableUpdateCompanionBuilder =
+    CachedTasksCompanion Function({
+      Value<String> id,
+      Value<String> payload,
+      Value<DateTime> updatedAt,
+      Value<String?> projectId,
+      Value<String> kind,
+      Value<int> rowid,
+    });
+
+class $$CachedTasksTableFilterComposer
+    extends Composer<_$AppDatabase, $CachedTasksTable> {
+  $$CachedTasksTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get payload => $composableBuilder(
+    column: $table.payload,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get projectId => $composableBuilder(
+    column: $table.projectId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$CachedTasksTableOrderingComposer
+    extends Composer<_$AppDatabase, $CachedTasksTable> {
+  $$CachedTasksTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get payload => $composableBuilder(
+    column: $table.payload,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get projectId => $composableBuilder(
+    column: $table.projectId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CachedTasksTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CachedTasksTable> {
+  $$CachedTasksTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get payload =>
+      $composableBuilder(column: $table.payload, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get projectId =>
+      $composableBuilder(column: $table.projectId, builder: (column) => column);
+
+  GeneratedColumn<String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+}
+
+class $$CachedTasksTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CachedTasksTable,
+          CachedTask,
+          $$CachedTasksTableFilterComposer,
+          $$CachedTasksTableOrderingComposer,
+          $$CachedTasksTableAnnotationComposer,
+          $$CachedTasksTableCreateCompanionBuilder,
+          $$CachedTasksTableUpdateCompanionBuilder,
+          (
+            CachedTask,
+            BaseReferences<_$AppDatabase, $CachedTasksTable, CachedTask>,
+          ),
+          CachedTask,
+          PrefetchHooks Function()
+        > {
+  $$CachedTasksTableTableManager(_$AppDatabase db, $CachedTasksTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CachedTasksTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CachedTasksTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CachedTasksTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> payload = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<String?> projectId = const Value.absent(),
+                Value<String> kind = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CachedTasksCompanion(
+                id: id,
+                payload: payload,
+                updatedAt: updatedAt,
+                projectId: projectId,
+                kind: kind,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String payload,
+                required DateTime updatedAt,
+                Value<String?> projectId = const Value.absent(),
+                Value<String> kind = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CachedTasksCompanion.insert(
+                id: id,
+                payload: payload,
+                updatedAt: updatedAt,
+                projectId: projectId,
+                kind: kind,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$CachedTasksTable, CachedTask>(table),
+                  BaseReferences<_$AppDatabase, $CachedTasksTable, CachedTask>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$CachedTasksTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CachedTasksTable,
+      CachedTask,
+      $$CachedTasksTableFilterComposer,
+      $$CachedTasksTableOrderingComposer,
+      $$CachedTasksTableAnnotationComposer,
+      $$CachedTasksTableCreateCompanionBuilder,
+      $$CachedTasksTableUpdateCompanionBuilder,
+      (
+        CachedTask,
+        BaseReferences<_$AppDatabase, $CachedTasksTable, CachedTask>,
+      ),
+      CachedTask,
+      PrefetchHooks Function()
+    >;
+typedef $$LocalSettingsTableCreateCompanionBuilder =
+    LocalSettingsCompanion Function({
+      required String key,
+      required String value,
+      Value<int> rowid,
+    });
+typedef $$LocalSettingsTableUpdateCompanionBuilder =
+    LocalSettingsCompanion Function({
+      Value<String> key,
+      Value<String> value,
+      Value<int> rowid,
+    });
+
+class $$LocalSettingsTableFilterComposer
+    extends Composer<_$AppDatabase, $LocalSettingsTable> {
+  $$LocalSettingsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get key => $composableBuilder(
+    column: $table.key,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$LocalSettingsTableOrderingComposer
+    extends Composer<_$AppDatabase, $LocalSettingsTable> {
+  $$LocalSettingsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get key => $composableBuilder(
+    column: $table.key,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$LocalSettingsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $LocalSettingsTable> {
+  $$LocalSettingsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get key =>
+      $composableBuilder(column: $table.key, builder: (column) => column);
+
+  GeneratedColumn<String> get value =>
+      $composableBuilder(column: $table.value, builder: (column) => column);
+}
+
+class $$LocalSettingsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $LocalSettingsTable,
+          LocalSetting,
+          $$LocalSettingsTableFilterComposer,
+          $$LocalSettingsTableOrderingComposer,
+          $$LocalSettingsTableAnnotationComposer,
+          $$LocalSettingsTableCreateCompanionBuilder,
+          $$LocalSettingsTableUpdateCompanionBuilder,
+          (
+            LocalSetting,
+            BaseReferences<_$AppDatabase, $LocalSettingsTable, LocalSetting>,
+          ),
+          LocalSetting,
+          PrefetchHooks Function()
+        > {
+  $$LocalSettingsTableTableManager(_$AppDatabase db, $LocalSettingsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$LocalSettingsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$LocalSettingsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$LocalSettingsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> key = const Value.absent(),
+            Value<String> value = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) => LocalSettingsCompanion(key: key, value: value, rowid: rowid),
+          createCompanionCallback:
+              ({
+                required String key,
+                required String value,
+                Value<int> rowid = const Value.absent(),
+              }) => LocalSettingsCompanion.insert(
+                key: key,
+                value: value,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$LocalSettingsTable, LocalSetting>(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $LocalSettingsTable,
+                    LocalSetting
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$LocalSettingsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $LocalSettingsTable,
+      LocalSetting,
+      $$LocalSettingsTableFilterComposer,
+      $$LocalSettingsTableOrderingComposer,
+      $$LocalSettingsTableAnnotationComposer,
+      $$LocalSettingsTableCreateCompanionBuilder,
+      $$LocalSettingsTableUpdateCompanionBuilder,
+      (
+        LocalSetting,
+        BaseReferences<_$AppDatabase, $LocalSettingsTable, LocalSetting>,
+      ),
+      LocalSetting,
+      PrefetchHooks Function()
+    >;
+
+class $AppDatabaseManager {
+  final _$AppDatabase _db;
+  $AppDatabaseManager(this._db);
+  $$OutboxTableTableManager get outbox =>
+      $$OutboxTableTableManager(_db, _db.outbox);
+  $$CachedTasksTableTableManager get cachedTasks =>
+      $$CachedTasksTableTableManager(_db, _db.cachedTasks);
+  $$LocalSettingsTableTableManager get localSettings =>
+      $$LocalSettingsTableTableManager(_db, _db.localSettings);
+}

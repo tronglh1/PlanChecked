@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Placeholder adaptive-icon foreground: orange sun + green leaf (108dp canvas, safe zone 66dp centred). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- sun -->
+    <path
+        android:fillColor="#FF8A1F"
+        android:pathData="M68,30m-11,0a11,11 0,1 1,22 0a11,11 0,1 1,-22 0" />
+    <!-- leaf -->
+    <path
+        android:fillColor="#4CAF50"
+        android:pathData="M30,74C30,52 46,38 70,38C70,62 56,78 34,78Z" />
+    <!-- leaf vein -->
+    <path
+        android:strokeColor="#FFF6E9"
+        android:strokeWidth="2.4"
+        android:strokeLineCap="round"
+        android:pathData="M34,74L58,50" />
+</vector>
